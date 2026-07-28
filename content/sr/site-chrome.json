@@ -1,0 +1,16 @@
+{
+  "navHome": "navHome",
+  "navProducts": "navProducts",
+  "navAbout": "navAbout",
+  "navContact": "navContact",
+  "logoTagline": "logoTagline",
+  "menuOpenLabel": "menuOpenLabel",
+  "menuCloseLabel": "menuCloseLabel",
+  "skipToContent": "skipToContent",
+  "footerTagline": "footerTagline",
+  "footerCompanyHeading": "footerCompanyHeading",
+  "footerLegalHeading": "footerLegalHeading",
+  "footerProductsHeading": "footerProductsHeading",
+  "supplementDisclaimer": "supplementDisclaimer",
+  "copyright": "copyright"
+}
