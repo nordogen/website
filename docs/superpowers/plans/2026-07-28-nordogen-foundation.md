@@ -56,9 +56,18 @@ These apply to every task. Do not restate them per-task; they are always in forc
 | `src/components/layout/Footer.tsx` | Footer incl. mandatory statement |
 | `src/components/ui/Section.tsx` | Section wrapper: padding, container, tone |
 | `src/components/ui/Eyebrow.tsx` | Letterspaced uppercase label |
-| `src/app/[locale]/layout.tsx` | **Root layout** — renders `<html lang>`, font, Header, Footer |
-| `src/app/[locale]/page.tsx` | Home |
+| `src/app/(site)/[locale]/layout.tsx` | **Root layout 1** — `<html lang={locale}>`, font, Header, Footer |
+| `src/app/(site)/[locale]/page.tsx` | Home |
+| `src/app/(admin)/keystatic/layout.tsx` | **Root layout 2** — `<html lang="en">`, admin only |
 | `src/app/globals.css` | `@import "tailwindcss"` + `@theme` tokens |
+
+**Why two route groups.** `(site)` and `(admin)` do not appear in URLs — `/sr`, `/en` and
+`/keystatic` are unchanged, and the `●` SSG markers are identical either way (verified).
+They exist because `[locale]/layout.tsx` is a root layout, so any route outside it has **no**
+root layout at all: `/keystatic` would serve no doctype, no `<html>`, no `<head>` and no
+`<body>` — just bare tags that browsers quirks-mode-repair, which is precisely why a
+screenshot of the admin looks fine while the markup is invalid. Two route groups give each
+branch its own root layout, Next's supported pattern for this case.
 | `scripts/extract-logo.mjs` | PDF → two cleaned SVG files |
 | `content/{sr,en}/…` | Keystatic-managed content |
 
@@ -526,7 +535,7 @@ text so it localises."
 **Files:**
 - Create: `src/i18n/locales.ts`, `src/i18n/urls.ts`
 - Create: `src/i18n/locales.test.ts`, `src/i18n/urls.test.ts`
-- Create: `src/app/[locale]/layout.tsx` (becomes the root layout), `src/app/[locale]/page.tsx`
+- Create: `src/app/(site)/[locale]/layout.tsx` (becomes a root layout), `src/app/(site)/[locale]/page.tsx`
 - Delete: `src/app/layout.tsx`, `src/app/page.tsx`
 - Modify: `package.json` (add vitest)
 
@@ -680,10 +689,10 @@ Delete the temporary root layout and page first — `app/layout.tsx` and `app/[l
 rm src/app/layout.tsx src/app/page.tsx
 ```
 
-Create `src/app/[locale]/layout.tsx`. It renders `<html>` itself, so `lang` comes straight from the route param with no request-time lookup and every page stays statically prerendered. In Next 16 `params` is a Promise and must be awaited.
+Create `src/app/(site)/[locale]/layout.tsx`. It renders `<html>` itself, so `lang` comes straight from the route param with no request-time lookup and every page stays statically prerendered. In Next 16 `params` is a Promise and must be awaited.
 
 ```tsx
-import '../globals.css'
+import '../../globals.css'
 import { notFound } from 'next/navigation'
 import { jost } from '@/lib/fonts'
 import { LOCALES, isLocale } from '@/i18n/locales'
@@ -712,7 +721,7 @@ export default async function LocaleLayout({
 
 - [ ] **Step 8: Create a temporary Home**
 
-`src/app/[locale]/page.tsx`:
+`src/app/(site)/[locale]/page.tsx`:
 
 ```tsx
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
@@ -764,7 +773,8 @@ emits x-default pointing at sr."
 
 **Files:**
 - Create: `keystatic.config.ts`, `src/keystatic/schema.ts`
-- Create: `src/app/keystatic/[[...params]]/page.tsx`, `src/app/api/keystatic/[...params]/route.ts`
+- Create: `src/app/(admin)/keystatic/layout.tsx`, `src/app/(admin)/keystatic/[[...params]]/page.tsx`, `src/app/api/keystatic/[...params]/route.ts`
+- Move: `src/app/[locale]/` → `src/app/(site)/[locale]/`
 - Create: `src/content/reader.ts`, `src/content/queries.ts`
 - Modify: `package.json`
 
@@ -855,16 +865,23 @@ import { fields } from '@keystatic/core'
 
 // Local storage is dev-only: under `next start` Keystatic renders blank by
 // design, because local mode writes to the filesystem. Production uses github.
-const storage =
-  process.env.NODE_ENV === 'development'
-    ? ({ kind: 'local' } as const)
-    : ({
-        kind: 'github',
-        repo: {
-          owner: process.env.KEYSTATIC_GITHUB_OWNER ?? 'nordogen',
-          name: process.env.KEYSTATIC_GITHUB_REPO ?? 'nordogen',
-        },
-      } as const)
+//
+// Switch on the presence of GitHub credentials, NOT on NODE_ENV. Keying off
+// NODE_ENV makes `next build` select github storage, and Keystatic's route
+// handler then hard-fails the build with "Missing required config in Keystatic
+// API setup" unless KEYSTATIC_GITHUB_CLIENT_ID, KEYSTATIC_GITHUB_CLIENT_SECRET
+// and KEYSTATIC_SECRET are all set — so the project could not build at all
+// before the GitHub app exists. Presence-based detection builds fine without
+// credentials and upgrades itself once Vercel supplies them.
+const storage = process.env.KEYSTATIC_GITHUB_CLIENT_ID
+  ? ({
+      kind: 'github',
+      repo: {
+        owner: process.env.KEYSTATIC_GITHUB_OWNER ?? 'nordogen',
+        name: process.env.KEYSTATIC_GITHUB_REPO ?? 'nordogen',
+      },
+    } as const)
+  : ({ kind: 'local' } as const)
 
 export default config({
   storage,
@@ -918,17 +935,38 @@ export default config({
 })
 ```
 
-Set `KEYSTATIC_GITHUB_OWNER` and `KEYSTATIC_GITHUB_REPO` in Vercel's environment
-variables once the GitHub repo exists. Local development needs neither.
+Before the first Vercel deploy, create a Keystatic GitHub app and set all five environment
+variables there: `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`,
+`KEYSTATIC_SECRET`, `KEYSTATIC_GITHUB_OWNER`, `KEYSTATIC_GITHUB_REPO`. Local development
+needs none of them — with `KEYSTATIC_GITHUB_CLIENT_ID` unset the config falls back to
+`local` storage and the build succeeds.
 
 - [ ] **Step 4: Create the admin page — `'use client'` is mandatory**
 
-`src/app/keystatic/[[...params]]/page.tsx`:
+First `src/app/(admin)/keystatic/layout.tsx` — the admin branch's own root layout, without
+which `/keystatic` serves no `<html>`/`<body>` at all:
+
+```tsx
+import '../../globals.css'
+
+export default function KeystaticLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+`lang="en"` is correct here: Keystatic's own interface is English regardless of which
+locale's content is being edited.
+
+Then `src/app/(admin)/keystatic/[[...params]]/page.tsx`:
 
 ```tsx
 'use client'
 import { makePage } from '@keystatic/next/ui/app'
-import config from '../../../../keystatic.config'
+import config from '../../../../../keystatic.config'
 
 export default makePage(config)
 ```
@@ -1057,7 +1095,7 @@ blank 200 with no errors."
 
 **Files:**
 - Create: `src/components/layout/Header.tsx`, `src/components/layout/MobileNav.tsx`, `src/components/layout/LanguageSwitcher.tsx`, `src/components/ui/Container.tsx`
-- Modify: `src/app/[locale]/layout.tsx`
+- Modify: `src/app/(site)/[locale]/layout.tsx`
 
 **Interfaces:**
 - Consumes: `getSiteChrome`, `Logo`, `Locale`, `LOCALES`.
@@ -1271,11 +1309,11 @@ export async function Header({ locale }: { locale: Locale }) {
 
 - [ ] **Step 5: Mount it with a skip link**
 
-Modify `src/app/[locale]/layout.tsx`. It remains the root layout, so it keeps rendering
+Modify `src/app/(site)/[locale]/layout.tsx`. It remains a root layout, so it keeps rendering
 `<html>` and `<body>`:
 
 ```tsx
-import '../globals.css'
+import '../../globals.css'
 import { notFound } from 'next/navigation'
 import { Header } from '@/components/layout/Header'
 import { jost } from '@/lib/fonts'
@@ -1343,7 +1381,7 @@ affordance. 44px minimum tap targets throughout."
 
 **Files:**
 - Create: `src/components/layout/Footer.tsx`
-- Modify: `src/app/[locale]/layout.tsx`
+- Modify: `src/app/(site)/[locale]/layout.tsx`
 
 **Interfaces:**
 - Consumes: `getSiteChrome`, `getSettings`, `Logo`, `Container`.
@@ -1436,7 +1474,7 @@ export async function Footer({ locale }: { locale: Locale }) {
 
 - [ ] **Step 2: Mount it**
 
-In `src/app/[locale]/layout.tsx`, add `import { Footer } from '@/components/layout/Footer'`
+In `src/app/(site)/[locale]/layout.tsx`, add `import { Footer } from '@/components/layout/Footer'`
 and place `<Footer locale={locale} />` immediately after `</main>`, still inside `<body>`.
 
 - [ ] **Step 3: Verify**
@@ -1460,7 +1498,7 @@ git commit -m "feat: add footer with legally required supplement statement"
 
 **Files:**
 - Create: `src/components/ui/Eyebrow.tsx`, `src/components/ui/Section.tsx`, `src/components/ui/Button.tsx`, `src/components/brand/ArcMotif.tsx`
-- Modify: `src/app/[locale]/page.tsx`
+- Modify: `src/app/(site)/[locale]/page.tsx`
 
 **Interfaces:**
 - Consumes: `getHome`, `Container`, `Locale`, `localeAlternates`.
@@ -1567,7 +1605,7 @@ export function ArcMotif({ className }: { className?: string }) {
 
 - [ ] **Step 3: Write the Home page**
 
-Replace `src/app/[locale]/page.tsx`. Mobile-first: the hero is content-driven with `min-h`, never a fixed `vh`.
+Replace `src/app/(site)/[locale]/page.tsx`. Mobile-first: the hero is content-driven with `min-h`, never a fixed `vh`.
 
 ```tsx
 import type { Metadata } from 'next'
