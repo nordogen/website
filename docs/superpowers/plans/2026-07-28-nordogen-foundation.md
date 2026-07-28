@@ -20,7 +20,7 @@ These apply to every task. Do not restate them per-task; they are always in forc
 - **No inline hex in components, ever.** Only Tailwind tokens from `@theme`.
 - **`data/style.css` is a wrong reference.** It records the third brand colour as `#B7D0DB` (a blue — it is a crimson) and invents six per-product accents that exist nowhere in the brand. Do not copy values from it.
 - **Mobile-first is structural.** Every unprefixed Tailwind utility is the mobile style; `sm:` / `md:` / `lg:` may only add. A component written desktop-first with `max-*` overrides is a defect. Design targets 375 / 768 / 1440.
-- **Body text never below 16px.** Smaller triggers iOS input zoom.
+- **Running prose never below 16px.** Paragraphs and any body copy stay at `text-base` (16px) or larger — smaller harms readability and triggers iOS input zoom. This floor does **not** apply to interface furniture: nav links and footer meta may use `text-sm` (14px), and eyebrow labels, column headings, the copyright line and the mandatory legal statement may use `text-xs` (12px). The letterspaced 12px uppercase label is a deliberate brand cue taken from the logobook, not an oversight — do not "fix" it.
 - **Use `svh`, never `vh`,** for viewport-height sizing.
 - **Copy rules.** Medical, ingredient, dosage, population and warning wording is copied **verbatim** from `data/tekstovi deklaracija/*.docx` — never paraphrased, never "improved", never softened. Any copy authored fresh is suffixed ` [REVIEW]`. Borderline claims inherited from `data/products.html` are carried as-is and marked ` [REVIEW]`, not rewritten.
 - **Mandatory footer statement, both locales:** `Dodaci ishrani nisu zamena za raznovrsnu i uravnoteženu ishranu i zdrav način života.` Present on all six declarations; it is not optional and is not marked `[REVIEW]`.
@@ -974,9 +974,41 @@ Failing loudly beats rendering a page full of blank strings — a missing file b
 Run: `npm run dev`, open `http://localhost:3000/keystatic`.
 Expected: the Keystatic dashboard with a sidebar containing `Serbian / Srpski`, `English`, `Settings`. **A blank white page means `'use client'` is missing from Step 4.**
 
-- [ ] **Step 8: Create all five content files through the admin UI**
+- [ ] **Step 8: Create the five content files on disk**
 
-In the browser, open each entry, fill every field with placeholder text, and save. This creates `content/settings.json`, `content/sr/site-chrome.json`, `content/en/site-chrome.json`, `content/sr/home.json`, `content/en/home.json`. Real copy lands in Task 9.
+Keystatic reads and writes plain JSON, so write the files directly — every key from the
+schema must be present, or `getSiteChrome`/`getHome` will surface a missing field. Real
+copy lands in Task 9; these are structural stubs.
+
+```bash
+mkdir -p content/sr content/en
+node --input-type=module -e "
+import { writeFileSync } from 'node:fs'
+const chromeKeys = ['navHome','navProducts','navAbout','navContact','logoTagline',
+  'menuOpenLabel','menuCloseLabel','skipToContent','footerTagline','footerCompanyHeading',
+  'footerLegalHeading','footerProductsHeading','supplementDisclaimer','copyright']
+const homeKeys = ['heroEyebrow','heroHeading','heroBody','heroPrimaryCta','heroSecondaryCta',
+  'aboutEyebrow','aboutHeading','aboutBody','aboutCta','productsEyebrow','productsHeading',
+  'productsBody','scienceEyebrow','scienceHeading','scienceBody','scienceCta',
+  'metaTitle','metaDescription']
+const stub = (keys) => JSON.stringify(Object.fromEntries(keys.map(k => [k, k])), null, 2) + '\n'
+writeFileSync('content/settings.json', JSON.stringify({
+  legalName:'NORDOGEN d.o.o.', street:'Mileševska 24/9', city:'Beograd',
+  country:'Republika Srbija', email:'info@nordogen.com',
+  manufacturer:'ELEPHANT PHARMA d.o.o., Beograd, Republika Srbija',
+}, null, 2) + '\n')
+for (const l of ['sr','en']) {
+  writeFileSync(\`content/\${l}/site-chrome.json\`, stub(chromeKeys))
+  writeFileSync(\`content/\${l}/home.json\`, stub(homeKeys))
+}
+console.log('wrote 5 content files')
+"
+```
+
+Then confirm Keystatic round-trips them: with `npm run dev` running, open
+`http://localhost:3000/keystatic`, open `Home page (Serbian)`, and check the fields are
+populated. If a field shows as empty, its key is missing from the stub or misspelled
+relative to `homeSchema()`.
 
 - [ ] **Step 9: Verify the build reads content**
 
