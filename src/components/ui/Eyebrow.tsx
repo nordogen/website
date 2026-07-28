@@ -1,5 +1,5 @@
 const TONE = {
-  blue: 'text-brand-blue',
+  blue: 'text-brand-teal',
   tint: 'text-brand-blue-tint',
 } as const
 

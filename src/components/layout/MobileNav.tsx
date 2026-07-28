@@ -10,10 +10,12 @@ export function MobileNav({
   items,
   openLabel,
   closeLabel,
+  switcher,
 }: {
   items: NavItem[]
   openLabel: string
   closeLabel: string
+  switcher?: React.ReactNode
 }) {
   const [open, setOpen] = useState(false)
   const triggerRef = useRef<HTMLButtonElement>(null)
@@ -93,9 +95,11 @@ export function MobileNav({
             ref={panelRef}
             role="dialog"
             aria-modal="true"
+            aria-label={openLabel}
             className="fixed inset-0 z-50 flex flex-col bg-surface lg:hidden"
           >
-            <div className="flex items-center justify-end px-5 py-4">
+            <div className="flex items-center justify-between px-5 py-4">
+              {switcher}
               <button
                 ref={closeButtonRef}
                 type="button"

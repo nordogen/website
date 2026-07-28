@@ -32,7 +32,7 @@ export async function Header({ locale }: { locale: Locale }) {
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm font-medium text-brand-teal hover:text-brand-blue"
+              className="text-sm font-medium text-brand-teal hover:text-brand-crimson"
             >
               {item.label}
             </Link>
@@ -45,6 +45,7 @@ export async function Header({ locale }: { locale: Locale }) {
             items={items}
             openLabel={chrome.menuOpenLabel}
             closeLabel={chrome.menuCloseLabel}
+            switcher={<LanguageSwitcher locale={locale} path="" />}
           />
         </div>
       </Container>

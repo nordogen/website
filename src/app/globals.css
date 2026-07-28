@@ -29,8 +29,12 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-brand-blue);
+    outline: 2px solid var(--color-brand-teal);
     outline-offset: 2px;
+  }
+
+  .bg-brand-teal :focus-visible {
+    outline-color: #fff;
   }
 }
 

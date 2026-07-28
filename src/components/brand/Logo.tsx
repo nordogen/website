@@ -19,6 +19,7 @@ export function Logo({ tagline, orientation = 'horizontal', className }: Props) 
         .filter(Boolean)
         .join(' ')}
     >
+      <span className="sr-only">NORDOGEN</span>
       <LogoMark className={stacked ? 'block w-16' : 'block w-9 shrink-0'} />
       <span className={stacked ? 'flex flex-col items-center' : 'flex flex-col'}>
         <LogoWordmark className="block w-32" />

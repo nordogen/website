@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 const VARIANT = {
-  primary: 'bg-brand-blue text-white hover:bg-brand-teal',
+  primary: 'bg-brand-teal text-white hover:opacity-90',
   secondary: 'border border-brand-teal text-brand-teal hover:bg-brand-blue-tint/30',
   light: 'bg-white text-brand-teal hover:bg-brand-blue-tint',
 } as const
