@@ -420,14 +420,27 @@ Expected: `wrote logo-mark.svg and logo-wordmark.svg`
 
 - [ ] **Step 4: Verify the split visually — do not skip this**
 
+`rsvg-convert`, ImageMagick and Inkscape are all absent in this environment. Use headless
+Chrome, which is present and — verified — both rasterises SVG and resolves `currentColor`:
+
 ```bash
-cd public/brand && for f in logo-mark logo-wordmark; do
-  rsvg-convert -w 400 -o "$f.png" "$f.svg" 2>/dev/null \
-    || echo "rsvg-convert unavailable — open $f.svg in a browser instead"
+for f in logo-mark logo-wordmark; do
+  timeout 60 google-chrome --headless --disable-gpu --no-sandbox --hide-scrollbars \
+    --screenshot="/tmp/$f.png" --window-size=600,600 \
+    "file://$PWD/public/brand/$f.svg"
 done
 ```
 
-Expected: `logo-mark.png` shows the circle-with-mountain-and-leaf and nothing else; `logo-wordmark.png` shows `nordogen` and nothing else. If either contains fragments of the other, or the tagline appears, adjust `--split` and repeat. If `rsvg-convert` is unavailable, open both SVGs in a browser instead.
+Then view `/tmp/logo-mark.png` and `/tmp/logo-wordmark.png` with the Read tool.
+
+Expected: `logo-mark.png` shows the circle-with-mountain-and-leaf glyph and nothing else;
+`logo-wordmark.png` shows the word `nordogen` and nothing else. If either contains
+fragments of the other, or the `UROLOGIJA • GINEKOLOGIJA • REGENERACIJA` tagline appears in
+the wordmark file, adjust `--split` and repeat.
+
+The tagline **must not** survive into either SVG — it is re-rendered as live text in Step 6
+so it can localise. If the wordmark file contains it, raise `--split` is not the fix; you
+need a second threshold that also drops the lowest band. Report this if you hit it.
 
 - [ ] **Step 5: Write the two glyph components**
 
