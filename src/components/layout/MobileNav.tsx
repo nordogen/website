@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 export type NavItem = { href: string; label: string }
@@ -16,6 +16,9 @@ export function MobileNav({
   closeLabel: string
 }) {
   const [open, setOpen] = useState(false)
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const panelRef = useRef<HTMLDivElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
 
   // Prevent the page scrolling behind the open panel.
   useEffect(() => {
@@ -25,10 +28,40 @@ export function MobileNav({
     }
   }, [open])
 
+  // Move focus into the panel on open. On close (Escape, close button, link
+  // click, or unmount) the cleanup below runs and returns focus to the
+  // trigger, so keyboard position is never lost.
+  useEffect(() => {
+    if (!open) return
+    closeButtonRef.current?.focus()
+    return () => {
+      triggerRef.current?.focus()
+    }
+  }, [open])
+
+  // Escape closes the panel; Tab/Shift+Tab cycles within it (a minimal focus
+  // trap) so keyboard focus can't leak into the obscured page behind it.
   useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false)
+      if (e.key === 'Escape') {
+        setOpen(false)
+        return
+      }
+      if (e.key !== 'Tab') return
+      const panel = panelRef.current
+      if (!panel) return
+      const focusable = panel.querySelectorAll<HTMLElement>('button, a[href]')
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (!first || !last) return
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
@@ -37,6 +70,7 @@ export function MobileNav({
   return (
     <div className="lg:hidden">
       <button
+        ref={triggerRef}
         type="button"
         onClick={() => setOpen(true)}
         aria-label={openLabel}
@@ -55,9 +89,15 @@ export function MobileNav({
           // descendants. Left in place, this panel would be pinned to the
           // header's own box instead of the viewport. Rendering it outside
           // the header avoids that.
-          <div className="fixed inset-0 z-50 flex flex-col bg-surface lg:hidden">
+          <div
+            ref={panelRef}
+            role="dialog"
+            aria-modal="true"
+            className="fixed inset-0 z-50 flex flex-col bg-surface lg:hidden"
+          >
             <div className="flex items-center justify-end px-5 py-4">
               <button
+                ref={closeButtonRef}
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label={closeLabel}

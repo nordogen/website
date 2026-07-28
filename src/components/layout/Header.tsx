@@ -23,7 +23,11 @@ export async function Header({ locale }: { locale: Locale }) {
           <Logo tagline={chrome.logoTagline} orientation="horizontal" />
         </Link>
 
-        <nav aria-label={chrome.navHome} className="hidden lg:flex lg:items-center lg:gap-7">
+        {/* No aria-label: only one nav is in the a11y tree per breakpoint (the
+            other is display:none), so there is nothing to disambiguate and an
+            unlabelled <nav> announces correctly as "navigation". Labelling it
+            with a link's text would misname the landmark. */}
+        <nav className="hidden lg:flex lg:items-center lg:gap-7">
           {items.map((item) => (
             <Link
               key={item.href}
