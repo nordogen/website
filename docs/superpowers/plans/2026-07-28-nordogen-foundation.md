@@ -1512,12 +1512,26 @@ There is no photography. The visual system is built from the mark's own geometry
 
 - [ ] **Step 1: Write the primitives**
 
-`src/components/ui/Eyebrow.tsx`:
+`src/components/ui/Eyebrow.tsx`. The `tone` prop exists because the teal section needs a
+lighter eyebrow for contrast — without it that one instance has to hand-duplicate this
+markup, and any later change to tracking, size or weight silently misses it. Mirrors
+`Section`'s `tone` API for consistency.
 
 ```tsx
-export function Eyebrow({ children }: { children: React.ReactNode }) {
+const TONE = {
+  blue: 'text-brand-blue',
+  tint: 'text-brand-blue-tint',
+} as const
+
+export function Eyebrow({
+  children,
+  tone = 'blue',
+}: {
+  children: React.ReactNode
+  tone?: keyof typeof TONE
+}) {
   return (
-    <p className="text-xs font-medium uppercase tracking-[0.16em] text-brand-blue">{children}</p>
+    <p className={`text-xs font-medium uppercase tracking-[0.16em] ${TONE[tone]}`}>{children}</p>
   )
 }
 ```
@@ -1700,9 +1714,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <Section tone="teal">
         <ArcMotif className="pointer-events-none absolute -left-28 bottom-[-6rem] w-72 text-white/10 sm:w-96" />
         <div className="relative max-w-2xl">
-          <p className="text-xs font-medium uppercase tracking-[0.16em] text-brand-blue-tint">
-            {home.scienceEyebrow}
-          </p>
+          <Eyebrow tone="tint">{home.scienceEyebrow}</Eyebrow>
           <h2 className="mt-4 text-[clamp(1.5rem,4vw,2.25rem)] font-medium leading-tight">
             {home.scienceHeading}
           </h2>
