@@ -391,9 +391,14 @@ No pretend-TDD on a marketing site. Tests target the parts with actual logic.
 
 - **vitest**: content loader, locale resolution, sitemap generation, JSON-LD builders,
   `check:content` rules.
-- **playwright**: for every route × {375, 414, 768, 1024, 1440} assert
-  `document.documentElement.scrollWidth <= clientWidth` (no horizontal overflow) and
-  capture a screenshot. This makes §7 enforceable rather than aspirational.
+- **playwright**, in two stages, because the two halves have different lifetimes:
+  - *Overflow assertions* — for every route × {375, 414, 768, 1024, 1440} assert
+    `document.documentElement.scrollWidth <= clientWidth`. Design-agnostic, so it is
+    written as soon as the layout shell is approved and guards every page built after.
+    This makes §7 enforceable rather than aspirational.
+  - *Screenshot baselines* — captured only once the visual design is signed off.
+    Baselines taken against a churning design are noise that trains people to ignore
+    failures.
 - `next build` clean, `check:content` passing.
 - Lighthouse CI budgets.
 
@@ -401,9 +406,12 @@ No pretend-TDD on a marketing site. Tests target the parts with actual logic.
 
 1. `git init` + GitHub repo. Keystatic GitHub mode requires one; none exists yet.
 2. Scaffold, tokens, Jost, logo SVG rebuild, Header/Footer shell, **Home in both
-   locales** → review gate.
-3. Keystatic config + seed all content from `data/`.
-4. Products index + six product pages.
-5. About, Contact, legal pages.
-6. SEO layer: metadata, hreflang, sitemap, robots, JSON-LD, OG images.
-7. CI, Playwright responsive suite, Lighthouse, Vercel domain.
+   locales** → **design review gate**.
+3. Playwright overflow assertions + `check:content` + CI skeleton. Placed here, not last,
+   so the responsive guard exists *before* the pages it is meant to guard are written.
+4. Keystatic config + seed all content from `data/`.
+5. Products index + six product pages.
+6. About, Contact, legal pages.
+7. SEO layer: metadata, hreflang, sitemap, robots, JSON-LD, OG images.
+8. Screenshot baselines, Lighthouse budgets, Vercel domain, pre-launch
+   `check:content --strict`.
