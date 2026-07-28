@@ -68,7 +68,8 @@ export async function Footer({ locale }: { locale: Locale }) {
 
       <div className="border-t border-white/15">
         <Container className="flex flex-col gap-3 py-6 text-xs sm:flex-row sm:items-center sm:justify-between">
-          {/* Legally mandated statement — present on all six approved declarations. */}
+          {/* Legally mandated statement — on the five supplement declarations.
+              URINORD is FSMP and carries a medical-supervision notice instead. */}
           <p className="max-w-2xl">{chrome.supplementDisclaimer}</p>
           <p className="shrink-0">{chrome.copyright}</p>
         </Container>

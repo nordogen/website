@@ -8,3 +8,13 @@ test-results/
 playwright-report/
 .lighthouseci/
 .superpowers/
+
+# Client source material — local only, not part of the web app.
+# Obtain from the client; see AGENTS.md § Assets.
+# The approved declaration texts are extracted to docs/product-declarations.md,
+# which IS tracked, so the binding regulatory wording survives here.
+/data/
+/logos/
+
+# Superseded by docs/superpowers/specs/ — kept locally for reference only
+/bolt-prompt.md

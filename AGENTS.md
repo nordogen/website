@@ -148,10 +148,12 @@ way unless there is a real reason.
 ## Copy rules — these have legal weight
 
 **Medical, regulatory and dosage wording is copied verbatim from
-`data/tekstovi deklaracija/*.docx` and never paraphrased, "improved" or softened.**
+`docs/product-declarations.md` and never paraphrased, "improved" or softened.** That file is the
+tracked extract of the client's approved `.docx` declarations.
 
-This sentence is required by Serbian food-supplement regulation, appears on all six approved
-declarations, renders in the footer in both locales, and must stay byte-identical:
+This sentence is required by Serbian food-supplement regulation, appears on the **five
+supplement** declarations (not URINORD — see below), renders in the footer in both locales, and
+must stay byte-identical:
 
 ```
 Dodaci ishrani nisu zamena za raznovrsnu i uravnoteženu ishranu i zdrav način života.
@@ -204,9 +206,25 @@ assertions.
 
 ## Assets
 
-- `data/` — client source material: approved declaration `.docx`, the logobook and logo PDFs,
-  six 3D box renders, and the old draft HTML/CSS (a **wrong** colour reference)
+**`data/` and `logos/` are gitignored — local only, not in the repo.** They are ~25MB of
+client source material and nothing in the web app reads them at build time. If they are absent
+from your checkout, that is expected; obtain them from the client. What they hold:
+
+- `data/` — the approved declaration `.docx` files, the logobook and logo PDFs, six 3D box
+  renders (needed when product pages are built), and the old draft HTML/CSS (a **wrong** colour
+  reference)
 - `logos/` — six PNGs: three brand colours × stacked/horizontal lockups
+
+Everything the repo actually needs from them is already extracted and tracked:
+
+- `docs/product-declarations.md` — all six approved texts verbatim. **This is the binding
+  regulatory source**, and it survives without `data/`.
+- `public/brand/logo-mark.svg`, `logo-wordmark.svg` — the generated logo assets
+- `public/brand/favicon-source.png` and `src/app/icon.png` — from `logos/nordogen1.png`
+
+The one consequence: `scripts/extract-logo.mjs` reads `data/nordogen logo 1 v1.pdf`, so it
+cannot run on a checkout without `data/`. That only matters if the logo artwork changes; the
+generated SVGs are committed.
 - `public/brand/logo-mark.svg`, `logo-wordmark.svg` — generated, `currentColor`, tight viewBox
 - `scripts/extract-logo.mjs` — regenerates them from the vector PDF. A bare run reproduces the
   committed files byte-for-byte. The source PDF has **five** path clusters (mark, wordmark,

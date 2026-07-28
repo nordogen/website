@@ -23,7 +23,7 @@ These apply to every task. Do not restate them per-task; they are always in forc
 - **Running prose never below 16px.** Paragraphs and any body copy stay at `text-base` (16px) or larger — smaller harms readability and triggers iOS input zoom. This floor does **not** apply to interface furniture: nav links and footer meta may use `text-sm` (14px), and eyebrow labels, column headings, the copyright line and the mandatory legal statement may use `text-xs` (12px). The letterspaced 12px uppercase label is a deliberate brand cue taken from the logobook, not an oversight — do not "fix" it.
 - **Use `svh`, never `vh`,** for viewport-height sizing.
 - **Copy rules.** Medical, ingredient, dosage, population and warning wording is copied **verbatim** from `data/tekstovi deklaracija/*.docx` — never paraphrased, never "improved", never softened. Any copy authored fresh is suffixed ` [REVIEW]`. Borderline claims inherited from `data/products.html` are carried as-is and marked ` [REVIEW]`, not rewritten.
-- **Mandatory footer statement, both locales:** `Dodaci ishrani nisu zamena za raznovrsnu i uravnoteženu ishranu i zdrav način života.` Present on all six declarations; it is not optional and is not marked `[REVIEW]`.
+- **Mandatory footer statement, both locales:** `Dodaci ishrani nisu zamena za raznovrsnu i uravnoteženu ishranu i zdrav način života.` Present on the five supplement declarations — URINORD is FSMP and carries a medical-supervision notice instead. Not optional, and not marked `[REVIEW]`.
 - **Locales:** `sr` (default) and `en`. Latin script only. Routes are always prefixed.
 - **Canonical host:** `https://nordogen.com`.
 - Commit after every task. Conventional Commits.
@@ -1466,7 +1466,7 @@ export async function Footer({ locale }: { locale: Locale }) {
 
       <div className="border-t border-white/15">
         <Container className="flex flex-col gap-3 py-6 text-xs sm:flex-row sm:items-center sm:justify-between">
-          {/* Legally mandated statement — present on all six approved declarations. */}
+          {/* Legally mandated statement — on the five supplement declarations. */}
           <p className="max-w-2xl">{chrome.supplementDisclaimer}</p>
           <p className="shrink-0">{chrome.copyright}</p>
         </Container>
