@@ -1,5 +1,6 @@
 import '../../globals.css'
 import { notFound } from 'next/navigation'
+import { Footer } from '@/components/layout/Footer'
 import { Header } from '@/components/layout/Header'
 import { jost } from '@/lib/fonts'
 import { getSiteChrome } from '@/content/queries'
@@ -33,6 +34,7 @@ export default async function LocaleLayout({
         <main id="main" className="flex-1">
           {children}
         </main>
+        <Footer locale={locale} />
       </body>
     </html>
   )
