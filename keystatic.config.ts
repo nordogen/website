@@ -4,16 +4,23 @@ import { fields } from '@keystatic/core'
 
 // Local storage is dev-only: under `next start` Keystatic renders blank by
 // design, because local mode writes to the filesystem. Production uses github.
-const storage =
-  process.env.NODE_ENV === 'development'
-    ? ({ kind: 'local' } as const)
-    : ({
-        kind: 'github',
-        repo: {
-          owner: process.env.KEYSTATIC_GITHUB_OWNER ?? 'nordogen',
-          name: process.env.KEYSTATIC_GITHUB_REPO ?? 'nordogen',
-        },
-      } as const)
+//
+// Switch on the presence of GitHub credentials, NOT on NODE_ENV. Keying off
+// NODE_ENV makes `next build` select github storage, and Keystatic's route
+// handler then hard-fails the build with "Missing required config in Keystatic
+// API setup" unless KEYSTATIC_GITHUB_CLIENT_ID, KEYSTATIC_GITHUB_CLIENT_SECRET
+// and KEYSTATIC_SECRET are all set — so the project could not build at all
+// before the GitHub app exists. Presence-based detection builds fine without
+// credentials and upgrades itself once Vercel supplies them.
+const storage = process.env.KEYSTATIC_GITHUB_CLIENT_ID
+  ? ({
+      kind: 'github',
+      repo: {
+        owner: process.env.KEYSTATIC_GITHUB_OWNER ?? 'nordogen',
+        name: process.env.KEYSTATIC_GITHUB_REPO ?? 'nordogen',
+      },
+    } as const)
+  : ({ kind: 'local' } as const)
 
 export default config({
   storage,

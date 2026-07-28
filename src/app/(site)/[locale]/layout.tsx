@@ -1,4 +1,4 @@
-import '../globals.css'
+import '../../globals.css'
 import { notFound } from 'next/navigation'
 import { jost } from '@/lib/fonts'
 import { LOCALES, isLocale } from '@/i18n/locales'
