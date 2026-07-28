@@ -17,7 +17,7 @@ These apply to every task. Do not restate them per-task; they are always in forc
 - **Pin `typescript@6.0.3`.** TypeScript 7 is the `latest` tag but Next 16.2.12 rejects it: `TypeScript 7.0.2 does not provide the compiler API required by Next.js`. Verified by spike.
 - **Never use `output: 'export'`.** Keystatic's admin UI and route handler require a server runtime.
 - **Brand palette — these exact seven values, no other brand colours.** `#65A2BF` blue / `#B2D0DF` blue tint / `#0E4750` teal / `#86A3A7` teal tint / `#B7404B` crimson / `#DB9FA5` crimson tint / `#231F20` ink. Source: `NORDOGEN LOGOBOOK.pdf` p.9. One additional neutral, `--color-surface: #F7FAFC`, is the page background; it is not a brand colour and no other neutral may be added.
-- **No inline hex in components, ever.** Only Tailwind tokens from `@theme`.
+- **No colour in components except brand tokens.** Permitted: the `@theme` brand tokens (`brand-blue`, `brand-blue-tint`, `brand-teal`, `brand-teal-tint`, `brand-crimson`, `brand-crimson-tint`, `ink`, `surface`), plus `white`, `transparent`, `currentColor` and `inherit`. Forbidden: inline hex values, and **every Tailwind default-palette utility** — `text-red-500`, `bg-slate-100`, `border-gray-200` and the like. This applies to throwaway and placeholder markup too, so no default-palette colour can survive into a later task unnoticed.
 - **`data/style.css` is a wrong reference.** It records the third brand colour as `#B7D0DB` (a blue — it is a crimson) and invents six per-product accents that exist nowhere in the brand. Do not copy values from it.
 - **Mobile-first is structural.** Every unprefixed Tailwind utility is the mobile style; `sm:` / `md:` / `lg:` may only add. A component written desktop-first with `max-*` overrides is a defect. Design targets 375 / 768 / 1440.
 - **Running prose never below 16px.** Paragraphs and any body copy stay at `text-base` (16px) or larger — smaller harms readability and triggers iOS input zoom. This floor does **not** apply to interface furniture: nav links and footer meta may use `text-sm` (14px), and eyebrow labels, column headings, the copyright line and the mandatory legal statement may use `text-xs` (12px). The letterspaced 12px uppercase label is a deliberate brand cue taken from the logobook, not an oversight — do not "fix" it.
@@ -178,9 +178,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 ```tsx
 export default function Placeholder() {
-  return <p className="text-red-500">scaffold ok</p>
+  return <p className="underline">scaffold ok</p>
 }
 ```
+
+`underline` is deliberately a non-colour utility: it proves Tailwind is processing classes
+without introducing a default-palette colour, which the Global Constraints forbid even in
+throwaway markup.
 
 Note: this root `page.tsx` is deleted in Task 4 once `[locale]` exists. It is here only so Step 8 has something to render.
 
