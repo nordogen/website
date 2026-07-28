@@ -598,6 +598,13 @@ describe('absoluteUrl', () => {
   it('never emits a trailing slash', () => {
     expect(absoluteUrl('en', '/')).toBe('https://nordogen.com/en')
   })
+
+  // The root-path case above passes even if trailing-slash stripping is broken,
+  // because the `suffix === '/'` guard already reduces it to ''. This case is
+  // what actually pins the stripping behaviour.
+  it('strips a trailing slash from a multi-segment path', () => {
+    expect(absoluteUrl('sr', '/products/')).toBe('https://nordogen.com/sr/products')
+  })
 })
 
 describe('localeAlternates', () => {
