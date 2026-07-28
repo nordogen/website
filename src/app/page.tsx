@@ -1,3 +1,3 @@
 export default function Placeholder() {
-  return <p className="text-red-500">scaffold ok</p>
+  return <p className="underline">scaffold ok</p>
 }
