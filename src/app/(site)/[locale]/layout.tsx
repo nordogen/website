@@ -1,10 +1,19 @@
 import '../../globals.css'
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { Footer } from '@/components/layout/Footer'
 import { Header } from '@/components/layout/Header'
 import { jost } from '@/lib/fonts'
 import { getSiteChrome } from '@/content/queries'
 import { LOCALES, isLocale } from '@/i18n/locales'
+import { SITE_ORIGIN } from '@/i18n/urls'
+
+// Inherited by every route, so any relative URL in metadata (OG images, when
+// they exist) resolves against the deployment's own origin instead of
+// silently against localhost.
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_ORIGIN),
+}
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }))

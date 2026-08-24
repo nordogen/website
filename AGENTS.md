@@ -16,7 +16,7 @@ No e-commerce, no accounts, no forms, no blog.
 npm run dev        # localhost:3000/sr — CMS at /keystatic
 npm run build      # must show ● /[locale] with /sr and /en
 npm start          # production server
-npx vitest run     # 11 tests
+npx vitest run     # 24 tests
 npx tsc --noEmit   # typecheck
 ```
 
@@ -241,7 +241,7 @@ not add stock imagery, emoji or icon fonts; on a medical brand it reads as fille
 ## Not built yet
 
 Product pages and the `products` collection, `/about`, `/contact`, legal pages, sitemap,
-robots, JSON-LD (`DietarySupplement`, not `Product` — no offers exist), OG images, Playwright
+JSON-LD (`DietarySupplement`, not `Product` — no offers exist), OG images, Playwright
 responsive suite, eslint, Lighthouse CI, and `check:content --strict`.
 
 Home CTAs link to `/products`, `/about` and `/contact`, which **404 today**. Expected.
@@ -253,13 +253,37 @@ Two ordering notes for whoever picks this up:
 - The Playwright suite should assert computed contrast on key text/background pairs. Axe-core
   would have caught the WCAG failure mechanically.
 
-## Before the first Vercel deploy
+## Deployment
+
+### `NEXT_PUBLIC_SITE_ORIGIN` drives both canonical URLs and indexing
+
+Set it per Vercel environment. `src/i18n/urls.ts` resolves the origin once at build time:
+the explicit variable wins, then `VERCEL_PROJECT_PRODUCTION_URL` (the project's *stable*
+production host — never `VERCEL_URL`, which changes on every push), then
+`http://localhost:3000`.
+
+The last fallback is deliberately **not** the canonical host: a misconfigured deployment must
+not publish canonical and hreflang tags claiming to be the live site.
+
+`src/app/robots.ts` gates indexing on `isProductionOrigin(SITE_ORIGIN)` — host, **not**
+`NODE_ENV`, because staging and preview deployments are production builds. Only
+`nordogen.com` / `www.nordogen.com` get `Allow: /`; every other host gets `Disallow: /`,
+which is what keeps `[REVIEW]` copy out of search results. Verify by reading
+`.next/server/app/robots.txt.body` after a build — the emitted file, not the source.
+
+No `sitemap` line in `robots.txt` yet, because `sitemap.ts` does not exist. Add both together.
+
+### Keystatic CMS
 
 Create a Keystatic GitHub app and set five environment variables, or the CMS renders blank in
 production:
 
 `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`, `KEYSTATIC_SECRET`,
 `KEYSTATIC_GITHUB_OWNER`, `KEYSTATIC_GITHUB_REPO`
+
+The git remote is `nordogen/website`, so `KEYSTATIC_GITHUB_REPO` is **`website`**. The app's
+OAuth callback is host-specific, so point it at a stable domain — preview URLs change on
+every push and the CMS will not authenticate on them.
 
 `next.config.ts` sets `outputFileTracingIncludes` for `./content/**` — needed because
 `createReader` touches the filesystem, and without it any route that reads content at request
@@ -268,8 +292,9 @@ time (ISR, draft mode, a missed `generateStaticParams`) would 500 with ENOENT.
 ## Conventions
 
 - Conventional Commits. Explain *why* in the body when it is not obvious.
-- Canonical host `https://nordogen.com`; locales always prefixed; `hreflang` covers `sr`, `en`
-  and `x-default` → `sr`.
+- Canonical host `https://nordogen.com`, but never hardcode it — read `SITE_ORIGIN` from
+  `src/i18n/urls.ts`. Locales always prefixed; `hreflang` covers `sr`, `en` and
+  `x-default` → `sr`.
 - Keep the dependency list minimal. Prefer native Next.js features over packages: `sitemap.ts`
   and `robots.ts` over `next-sitemap`, `generateMetadata` over `next-seo`, CSS transitions over
   a motion library, hand-inlined SVG over an icon library.

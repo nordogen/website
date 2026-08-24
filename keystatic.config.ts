@@ -17,7 +17,7 @@ const storage = process.env.KEYSTATIC_GITHUB_CLIENT_ID
       kind: 'github',
       repo: {
         owner: process.env.KEYSTATIC_GITHUB_OWNER ?? 'nordogen',
-        name: process.env.KEYSTATIC_GITHUB_REPO ?? 'nordogen',
+        name: process.env.KEYSTATIC_GITHUB_REPO ?? 'website',
       },
     } as const)
   : ({ kind: 'local' } as const)
