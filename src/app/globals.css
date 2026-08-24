@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-blue: #65A2BF;
+  --color-brand-blue-tint: #B2D0DF;
+  --color-brand-teal: #0E4750;
+  --color-brand-teal-tint: #86A3A7;
+  --color-brand-crimson: #B7404B;
+  --color-brand-crimson-tint: #DB9FA5;
+  --color-ink: #231F20;
+  --color-surface: #F7FAFC;
+
+  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    /* Guarantees the no-horizontal-overflow invariant globally. */
+    overflow-x: clip;
+    background-color: var(--color-surface);
+    color: var(--color-ink);
+    /* 16px floor: smaller triggers iOS input zoom. */
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand-teal);
+    outline-offset: 2px;
+  }
+
+  .bg-brand-teal :focus-visible {
+    outline-color: #fff;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

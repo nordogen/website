@@ -44,6 +44,35 @@ Two prior artefacts contradict this and are **wrong**:
   export carries a colour-profile error. Resolution: token `#B7404B`, retint the crimson
   lockup to match.
 
+### 2.1.1 Palette usage rule — brand-blue is not a text colour
+
+Discovered during implementation by measuring contrast, not from the brand book.
+
+`brand-blue` `#65A2BF` fails WCAG AA wherever it carries text or a focus indicator on a
+light ground:
+
+| Pairing | Ratio | Needs |
+| --- | --- | --- |
+| white on `brand-blue` | 2.81:1 | 4.5:1 |
+| `brand-blue` on `brand-blue-tint` at 25% | 2.43:1 | 4.5:1 |
+| `brand-blue` on `surface` | 2.68:1 | 4.5:1 |
+
+So the palette carries a usage rule, not just values:
+
+- **`brand-blue` is a decorative and background colour only** — motifs, borders, tints,
+  and backgrounds behind sufficiently dark text.
+- **Text and focus rings on light grounds use `brand-teal`** (9.84:1 on `surface`,
+  8.91:1 on the 25% tint) or `ink` (15.55:1). `brand-crimson` passes at 5.21:1 on
+  `surface` and is available for accents such as hover states.
+- **On the dark teal band**, text uses `white` (10.32:1) or `brand-blue-tint` (6.38:1),
+  and focus rings use `white`.
+- **The logotype is exempt** under WCAG 1.4.3 / 1.4.11 — but only the mark and wordmark
+  artwork. Any live text in the lockup, including the tagline, is text and must meet
+  contrast.
+
+Verify with the WCAG relative-luminance formula rather than by eye; every failure above
+looked acceptable in a screenshot.
+
 ### 2.2 Product accents, derived from actual packaging renders
 
 Sampled dominant colour from `data/Nordogen kutije 3D/*.png`:

@@ -17,13 +17,13 @@ These apply to every task. Do not restate them per-task; they are always in forc
 - **Pin `typescript@6.0.3`.** TypeScript 7 is the `latest` tag but Next 16.2.12 rejects it: `TypeScript 7.0.2 does not provide the compiler API required by Next.js`. Verified by spike.
 - **Never use `output: 'export'`.** Keystatic's admin UI and route handler require a server runtime.
 - **Brand palette — these exact seven values, no other brand colours.** `#65A2BF` blue / `#B2D0DF` blue tint / `#0E4750` teal / `#86A3A7` teal tint / `#B7404B` crimson / `#DB9FA5` crimson tint / `#231F20` ink. Source: `NORDOGEN LOGOBOOK.pdf` p.9. One additional neutral, `--color-surface: #F7FAFC`, is the page background; it is not a brand colour and no other neutral may be added.
-- **No inline hex in components, ever.** Only Tailwind tokens from `@theme`.
+- **No colour in components except brand tokens.** Permitted: the `@theme` brand tokens (`brand-blue`, `brand-blue-tint`, `brand-teal`, `brand-teal-tint`, `brand-crimson`, `brand-crimson-tint`, `ink`, `surface`), plus `white`, `transparent`, `currentColor` and `inherit`. Forbidden: inline hex values, and **every Tailwind default-palette utility** — `text-red-500`, `bg-slate-100`, `border-gray-200` and the like. This applies to throwaway and placeholder markup too, so no default-palette colour can survive into a later task unnoticed.
 - **`data/style.css` is a wrong reference.** It records the third brand colour as `#B7D0DB` (a blue — it is a crimson) and invents six per-product accents that exist nowhere in the brand. Do not copy values from it.
 - **Mobile-first is structural.** Every unprefixed Tailwind utility is the mobile style; `sm:` / `md:` / `lg:` may only add. A component written desktop-first with `max-*` overrides is a defect. Design targets 375 / 768 / 1440.
-- **Body text never below 16px.** Smaller triggers iOS input zoom.
+- **Running prose never below 16px.** Paragraphs and any body copy stay at `text-base` (16px) or larger — smaller harms readability and triggers iOS input zoom. This floor does **not** apply to interface furniture: nav links and footer meta may use `text-sm` (14px), and eyebrow labels, column headings, the copyright line and the mandatory legal statement may use `text-xs` (12px). The letterspaced 12px uppercase label is a deliberate brand cue taken from the logobook, not an oversight — do not "fix" it.
 - **Use `svh`, never `vh`,** for viewport-height sizing.
 - **Copy rules.** Medical, ingredient, dosage, population and warning wording is copied **verbatim** from `data/tekstovi deklaracija/*.docx` — never paraphrased, never "improved", never softened. Any copy authored fresh is suffixed ` [REVIEW]`. Borderline claims inherited from `data/products.html` are carried as-is and marked ` [REVIEW]`, not rewritten.
-- **Mandatory footer statement, both locales:** `Dodaci ishrani nisu zamena za raznovrsnu i uravnoteženu ishranu i zdrav način života.` Present on all six declarations; it is not optional and is not marked `[REVIEW]`.
+- **Mandatory footer statement, both locales:** `Dodaci ishrani nisu zamena za raznovrsnu i uravnoteženu ishranu i zdrav način života.` Present on the five supplement declarations — URINORD is FSMP and carries a medical-supervision notice instead. Not optional, and not marked `[REVIEW]`.
 - **Locales:** `sr` (default) and `en`. Latin script only. Routes are always prefixed.
 - **Canonical host:** `https://nordogen.com`.
 - Commit after every task. Conventional Commits.
@@ -56,9 +56,18 @@ These apply to every task. Do not restate them per-task; they are always in forc
 | `src/components/layout/Footer.tsx` | Footer incl. mandatory statement |
 | `src/components/ui/Section.tsx` | Section wrapper: padding, container, tone |
 | `src/components/ui/Eyebrow.tsx` | Letterspaced uppercase label |
-| `src/app/[locale]/layout.tsx` | **Root layout** — renders `<html lang>`, font, Header, Footer |
-| `src/app/[locale]/page.tsx` | Home |
+| `src/app/(site)/[locale]/layout.tsx` | **Root layout 1** — `<html lang={locale}>`, font, Header, Footer |
+| `src/app/(site)/[locale]/page.tsx` | Home |
+| `src/app/(admin)/keystatic/layout.tsx` | **Root layout 2** — `<html lang="en">`, admin only |
 | `src/app/globals.css` | `@import "tailwindcss"` + `@theme` tokens |
+
+**Why two route groups.** `(site)` and `(admin)` do not appear in URLs — `/sr`, `/en` and
+`/keystatic` are unchanged, and the `●` SSG markers are identical either way (verified).
+They exist because `[locale]/layout.tsx` is a root layout, so any route outside it has **no**
+root layout at all: `/keystatic` would serve no doctype, no `<html>`, no `<head>` and no
+`<body>` — just bare tags that browsers quirks-mode-repair, which is precisely why a
+screenshot of the admin looks fine while the markup is invalid. Two route groups give each
+branch its own root layout, Next's supported pattern for this case.
 | `scripts/extract-logo.mjs` | PDF → two cleaned SVG files |
 | `content/{sr,en}/…` | Keystatic-managed content |
 
@@ -178,9 +187,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 ```tsx
 export default function Placeholder() {
-  return <p className="text-red-500">scaffold ok</p>
+  return <p className="underline">scaffold ok</p>
 }
 ```
+
+`underline` is deliberately a non-colour utility: it proves Tailwind is processing classes
+without introducing a default-palette colour, which the Global Constraints forbid even in
+throwaway markup.
 
 Note: this root `page.tsx` is deleted in Task 4 once `[locale]` exists. It is here only so Step 8 has something to render.
 
@@ -416,14 +429,27 @@ Expected: `wrote logo-mark.svg and logo-wordmark.svg`
 
 - [ ] **Step 4: Verify the split visually — do not skip this**
 
+`rsvg-convert`, ImageMagick and Inkscape are all absent in this environment. Use headless
+Chrome, which is present and — verified — both rasterises SVG and resolves `currentColor`:
+
 ```bash
-cd public/brand && for f in logo-mark logo-wordmark; do
-  rsvg-convert -w 400 -o "$f.png" "$f.svg" 2>/dev/null \
-    || echo "rsvg-convert unavailable — open $f.svg in a browser instead"
+for f in logo-mark logo-wordmark; do
+  timeout 60 google-chrome --headless --disable-gpu --no-sandbox --hide-scrollbars \
+    --screenshot="/tmp/$f.png" --window-size=600,600 \
+    "file://$PWD/public/brand/$f.svg"
 done
 ```
 
-Expected: `logo-mark.png` shows the circle-with-mountain-and-leaf and nothing else; `logo-wordmark.png` shows `nordogen` and nothing else. If either contains fragments of the other, or the tagline appears, adjust `--split` and repeat. If `rsvg-convert` is unavailable, open both SVGs in a browser instead.
+Then view `/tmp/logo-mark.png` and `/tmp/logo-wordmark.png` with the Read tool.
+
+Expected: `logo-mark.png` shows the circle-with-mountain-and-leaf glyph and nothing else;
+`logo-wordmark.png` shows the word `nordogen` and nothing else. If either contains
+fragments of the other, or the `UROLOGIJA • GINEKOLOGIJA • REGENERACIJA` tagline appears in
+the wordmark file, adjust `--split` and repeat.
+
+The tagline **must not** survive into either SVG — it is re-rendered as live text in Step 6
+so it can localise. If the wordmark file contains it, raise `--split` is not the fix; you
+need a second threshold that also drops the lowest band. Report this if you hit it.
 
 - [ ] **Step 5: Write the two glyph components**
 
@@ -509,7 +535,7 @@ text so it localises."
 **Files:**
 - Create: `src/i18n/locales.ts`, `src/i18n/urls.ts`
 - Create: `src/i18n/locales.test.ts`, `src/i18n/urls.test.ts`
-- Create: `src/app/[locale]/layout.tsx` (becomes the root layout), `src/app/[locale]/page.tsx`
+- Create: `src/app/(site)/[locale]/layout.tsx` (becomes a root layout), `src/app/(site)/[locale]/page.tsx`
 - Delete: `src/app/layout.tsx`, `src/app/page.tsx`
 - Modify: `package.json` (add vitest)
 
@@ -580,6 +606,13 @@ describe('absoluteUrl', () => {
 
   it('never emits a trailing slash', () => {
     expect(absoluteUrl('en', '/')).toBe('https://nordogen.com/en')
+  })
+
+  // The root-path case above passes even if trailing-slash stripping is broken,
+  // because the `suffix === '/'` guard already reduces it to ''. This case is
+  // what actually pins the stripping behaviour.
+  it('strips a trailing slash from a multi-segment path', () => {
+    expect(absoluteUrl('sr', '/products/')).toBe('https://nordogen.com/sr/products')
   })
 })
 
@@ -656,10 +689,10 @@ Delete the temporary root layout and page first — `app/layout.tsx` and `app/[l
 rm src/app/layout.tsx src/app/page.tsx
 ```
 
-Create `src/app/[locale]/layout.tsx`. It renders `<html>` itself, so `lang` comes straight from the route param with no request-time lookup and every page stays statically prerendered. In Next 16 `params` is a Promise and must be awaited.
+Create `src/app/(site)/[locale]/layout.tsx`. It renders `<html>` itself, so `lang` comes straight from the route param with no request-time lookup and every page stays statically prerendered. In Next 16 `params` is a Promise and must be awaited.
 
 ```tsx
-import '../globals.css'
+import '../../globals.css'
 import { notFound } from 'next/navigation'
 import { jost } from '@/lib/fonts'
 import { LOCALES, isLocale } from '@/i18n/locales'
@@ -688,7 +721,7 @@ export default async function LocaleLayout({
 
 - [ ] **Step 8: Create a temporary Home**
 
-`src/app/[locale]/page.tsx`:
+`src/app/(site)/[locale]/page.tsx`:
 
 ```tsx
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
@@ -740,7 +773,8 @@ emits x-default pointing at sr."
 
 **Files:**
 - Create: `keystatic.config.ts`, `src/keystatic/schema.ts`
-- Create: `src/app/keystatic/[[...params]]/page.tsx`, `src/app/api/keystatic/[...params]/route.ts`
+- Create: `src/app/(admin)/keystatic/layout.tsx`, `src/app/(admin)/keystatic/[[...params]]/page.tsx`, `src/app/api/keystatic/[...params]/route.ts`
+- Move: `src/app/[locale]/` → `src/app/(site)/[locale]/`
 - Create: `src/content/reader.ts`, `src/content/queries.ts`
 - Modify: `package.json`
 
@@ -831,16 +865,23 @@ import { fields } from '@keystatic/core'
 
 // Local storage is dev-only: under `next start` Keystatic renders blank by
 // design, because local mode writes to the filesystem. Production uses github.
-const storage =
-  process.env.NODE_ENV === 'development'
-    ? ({ kind: 'local' } as const)
-    : ({
-        kind: 'github',
-        repo: {
-          owner: process.env.KEYSTATIC_GITHUB_OWNER ?? 'nordogen',
-          name: process.env.KEYSTATIC_GITHUB_REPO ?? 'nordogen',
-        },
-      } as const)
+//
+// Switch on the presence of GitHub credentials, NOT on NODE_ENV. Keying off
+// NODE_ENV makes `next build` select github storage, and Keystatic's route
+// handler then hard-fails the build with "Missing required config in Keystatic
+// API setup" unless KEYSTATIC_GITHUB_CLIENT_ID, KEYSTATIC_GITHUB_CLIENT_SECRET
+// and KEYSTATIC_SECRET are all set — so the project could not build at all
+// before the GitHub app exists. Presence-based detection builds fine without
+// credentials and upgrades itself once Vercel supplies them.
+const storage = process.env.KEYSTATIC_GITHUB_CLIENT_ID
+  ? ({
+      kind: 'github',
+      repo: {
+        owner: process.env.KEYSTATIC_GITHUB_OWNER ?? 'nordogen',
+        name: process.env.KEYSTATIC_GITHUB_REPO ?? 'nordogen',
+      },
+    } as const)
+  : ({ kind: 'local' } as const)
 
 export default config({
   storage,
@@ -894,17 +935,38 @@ export default config({
 })
 ```
 
-Set `KEYSTATIC_GITHUB_OWNER` and `KEYSTATIC_GITHUB_REPO` in Vercel's environment
-variables once the GitHub repo exists. Local development needs neither.
+Before the first Vercel deploy, create a Keystatic GitHub app and set all five environment
+variables there: `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`,
+`KEYSTATIC_SECRET`, `KEYSTATIC_GITHUB_OWNER`, `KEYSTATIC_GITHUB_REPO`. Local development
+needs none of them — with `KEYSTATIC_GITHUB_CLIENT_ID` unset the config falls back to
+`local` storage and the build succeeds.
 
 - [ ] **Step 4: Create the admin page — `'use client'` is mandatory**
 
-`src/app/keystatic/[[...params]]/page.tsx`:
+First `src/app/(admin)/keystatic/layout.tsx` — the admin branch's own root layout, without
+which `/keystatic` serves no `<html>`/`<body>` at all:
+
+```tsx
+import '../../globals.css'
+
+export default function KeystaticLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+`lang="en"` is correct here: Keystatic's own interface is English regardless of which
+locale's content is being edited.
+
+Then `src/app/(admin)/keystatic/[[...params]]/page.tsx`:
 
 ```tsx
 'use client'
 import { makePage } from '@keystatic/next/ui/app'
-import config from '../../../../keystatic.config'
+import config from '../../../../../keystatic.config'
 
 export default makePage(config)
 ```
@@ -974,9 +1036,41 @@ Failing loudly beats rendering a page full of blank strings — a missing file b
 Run: `npm run dev`, open `http://localhost:3000/keystatic`.
 Expected: the Keystatic dashboard with a sidebar containing `Serbian / Srpski`, `English`, `Settings`. **A blank white page means `'use client'` is missing from Step 4.**
 
-- [ ] **Step 8: Create all five content files through the admin UI**
+- [ ] **Step 8: Create the five content files on disk**
 
-In the browser, open each entry, fill every field with placeholder text, and save. This creates `content/settings.json`, `content/sr/site-chrome.json`, `content/en/site-chrome.json`, `content/sr/home.json`, `content/en/home.json`. Real copy lands in Task 9.
+Keystatic reads and writes plain JSON, so write the files directly — every key from the
+schema must be present, or `getSiteChrome`/`getHome` will surface a missing field. Real
+copy lands in Task 9; these are structural stubs.
+
+```bash
+mkdir -p content/sr content/en
+node --input-type=module -e "
+import { writeFileSync } from 'node:fs'
+const chromeKeys = ['navHome','navProducts','navAbout','navContact','logoTagline',
+  'menuOpenLabel','menuCloseLabel','skipToContent','footerTagline','footerCompanyHeading',
+  'footerLegalHeading','footerProductsHeading','supplementDisclaimer','copyright']
+const homeKeys = ['heroEyebrow','heroHeading','heroBody','heroPrimaryCta','heroSecondaryCta',
+  'aboutEyebrow','aboutHeading','aboutBody','aboutCta','productsEyebrow','productsHeading',
+  'productsBody','scienceEyebrow','scienceHeading','scienceBody','scienceCta',
+  'metaTitle','metaDescription']
+const stub = (keys) => JSON.stringify(Object.fromEntries(keys.map(k => [k, k])), null, 2) + '\n'
+writeFileSync('content/settings.json', JSON.stringify({
+  legalName:'NORDOGEN d.o.o.', street:'Mileševska 24/9', city:'Beograd',
+  country:'Republika Srbija', email:'info@nordogen.com',
+  manufacturer:'ELEPHANT PHARMA d.o.o., Beograd, Republika Srbija',
+}, null, 2) + '\n')
+for (const l of ['sr','en']) {
+  writeFileSync(\`content/\${l}/site-chrome.json\`, stub(chromeKeys))
+  writeFileSync(\`content/\${l}/home.json\`, stub(homeKeys))
+}
+console.log('wrote 5 content files')
+"
+```
+
+Then confirm Keystatic round-trips them: with `npm run dev` running, open
+`http://localhost:3000/keystatic`, open `Home page (Serbian)`, and check the fields are
+populated. If a field shows as empty, its key is missing from the stub or misspelled
+relative to `homeSchema()`.
 
 - [ ] **Step 9: Verify the build reads content**
 
@@ -1001,7 +1095,7 @@ blank 200 with no errors."
 
 **Files:**
 - Create: `src/components/layout/Header.tsx`, `src/components/layout/MobileNav.tsx`, `src/components/layout/LanguageSwitcher.tsx`, `src/components/ui/Container.tsx`
-- Modify: `src/app/[locale]/layout.tsx`
+- Modify: `src/app/(site)/[locale]/layout.tsx`
 
 **Interfaces:**
 - Consumes: `getSiteChrome`, `Logo`, `Locale`, `LOCALES`.
@@ -1187,7 +1281,11 @@ export async function Header({ locale }: { locale: Locale }) {
           <Logo tagline={chrome.logoTagline} orientation="horizontal" />
         </Link>
 
-        <nav aria-label={chrome.navHome} className="hidden lg:flex lg:items-center lg:gap-7">
+        {/* No aria-label: only one nav is in the a11y tree per breakpoint (the
+            other is display:none), so there is nothing to disambiguate and an
+            unlabelled <nav> announces correctly as "navigation". Labelling it
+            with a link's text would misname the landmark. */}
+        <nav className="hidden lg:flex lg:items-center lg:gap-7">
           {items.map((item) => (
             <Link
               key={item.href}
@@ -1215,11 +1313,11 @@ export async function Header({ locale }: { locale: Locale }) {
 
 - [ ] **Step 5: Mount it with a skip link**
 
-Modify `src/app/[locale]/layout.tsx`. It remains the root layout, so it keeps rendering
+Modify `src/app/(site)/[locale]/layout.tsx`. It remains a root layout, so it keeps rendering
 `<html>` and `<body>`:
 
 ```tsx
-import '../globals.css'
+import '../../globals.css'
 import { notFound } from 'next/navigation'
 import { Header } from '@/components/layout/Header'
 import { jost } from '@/lib/fonts'
@@ -1287,7 +1385,7 @@ affordance. 44px minimum tap targets throughout."
 
 **Files:**
 - Create: `src/components/layout/Footer.tsx`
-- Modify: `src/app/[locale]/layout.tsx`
+- Modify: `src/app/(site)/[locale]/layout.tsx`
 
 **Interfaces:**
 - Consumes: `getSiteChrome`, `getSettings`, `Logo`, `Container`.
@@ -1368,7 +1466,7 @@ export async function Footer({ locale }: { locale: Locale }) {
 
       <div className="border-t border-white/15">
         <Container className="flex flex-col gap-3 py-6 text-xs sm:flex-row sm:items-center sm:justify-between">
-          {/* Legally mandated statement — present on all six approved declarations. */}
+          {/* Legally mandated statement — on the five supplement declarations. */}
           <p className="max-w-2xl">{chrome.supplementDisclaimer}</p>
           <p className="shrink-0">{chrome.copyright}</p>
         </Container>
@@ -1380,7 +1478,7 @@ export async function Footer({ locale }: { locale: Locale }) {
 
 - [ ] **Step 2: Mount it**
 
-In `src/app/[locale]/layout.tsx`, add `import { Footer } from '@/components/layout/Footer'`
+In `src/app/(site)/[locale]/layout.tsx`, add `import { Footer } from '@/components/layout/Footer'`
 and place `<Footer locale={locale} />` immediately after `</main>`, still inside `<body>`.
 
 - [ ] **Step 3: Verify**
@@ -1404,7 +1502,7 @@ git commit -m "feat: add footer with legally required supplement statement"
 
 **Files:**
 - Create: `src/components/ui/Eyebrow.tsx`, `src/components/ui/Section.tsx`, `src/components/ui/Button.tsx`, `src/components/brand/ArcMotif.tsx`
-- Modify: `src/app/[locale]/page.tsx`
+- Modify: `src/app/(site)/[locale]/page.tsx`
 
 **Interfaces:**
 - Consumes: `getHome`, `Container`, `Locale`, `localeAlternates`.
@@ -1414,12 +1512,26 @@ There is no photography. The visual system is built from the mark's own geometry
 
 - [ ] **Step 1: Write the primitives**
 
-`src/components/ui/Eyebrow.tsx`:
+`src/components/ui/Eyebrow.tsx`. The `tone` prop exists because the teal section needs a
+lighter eyebrow for contrast — without it that one instance has to hand-duplicate this
+markup, and any later change to tracking, size or weight silently misses it. Mirrors
+`Section`'s `tone` API for consistency.
 
 ```tsx
-export function Eyebrow({ children }: { children: React.ReactNode }) {
+const TONE = {
+  blue: 'text-brand-blue',
+  tint: 'text-brand-blue-tint',
+} as const
+
+export function Eyebrow({
+  children,
+  tone = 'blue',
+}: {
+  children: React.ReactNode
+  tone?: keyof typeof TONE
+}) {
   return (
-    <p className="text-xs font-medium uppercase tracking-[0.16em] text-brand-blue">{children}</p>
+    <p className={`text-xs font-medium uppercase tracking-[0.16em] ${TONE[tone]}`}>{children}</p>
   )
 }
 ```
@@ -1511,7 +1623,7 @@ export function ArcMotif({ className }: { className?: string }) {
 
 - [ ] **Step 3: Write the Home page**
 
-Replace `src/app/[locale]/page.tsx`. Mobile-first: the hero is content-driven with `min-h`, never a fixed `vh`.
+Replace `src/app/(site)/[locale]/page.tsx`. Mobile-first: the hero is content-driven with `min-h`, never a fixed `vh`.
 
 ```tsx
 import type { Metadata } from 'next'
@@ -1602,9 +1714,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <Section tone="teal">
         <ArcMotif className="pointer-events-none absolute -left-28 bottom-[-6rem] w-72 text-white/10 sm:w-96" />
         <div className="relative max-w-2xl">
-          <p className="text-xs font-medium uppercase tracking-[0.16em] text-brand-blue-tint">
-            {home.scienceEyebrow}
-          </p>
+          <Eyebrow tone="tint">{home.scienceEyebrow}</Eyebrow>
           <h2 className="mt-4 text-[clamp(1.5rem,4vw,2.25rem)] font-medium leading-tight">
             {home.scienceHeading}
           </h2>
