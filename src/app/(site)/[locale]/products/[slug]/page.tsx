@@ -111,7 +111,7 @@ export default async function ProductPage({
           breadcrumbNode({
             locale,
             homeLabel: ui.breadcrumbHome,
-            productsLabel: ui.nav[0]?.label ?? '',
+            productsLabel: ui.breadcrumbProducts,
             // The same anchor the visible breadcrumb points at, because there
             // is no products index yet.
             productsUrl: `${absoluteUrl(locale)}#${SECTION_ID.products}`,
@@ -144,7 +144,7 @@ export default async function ProductPage({
                 href={`/${locale}#${SECTION_ID.products}`}
                 className="inline-flex min-h-11 min-w-11 items-center hover:text-ink"
               >
-                {ui.nav[0]?.label}
+                {ui.breadcrumbProducts}
               </Link>
             </li>
             <li aria-hidden="true">/</li>

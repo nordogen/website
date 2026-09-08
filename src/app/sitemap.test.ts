@@ -1,6 +1,7 @@
 import { readdirSync } from 'node:fs'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { LOCALES } from '@/i18n/locales'
+import { repoPath } from '@/test/paths'
 
 const ORIGIN = 'https://nordogen.com'
 
@@ -11,7 +12,15 @@ async function loadSitemap() {
   return (await import('./sitemap')).default
 }
 
-const SLUGS = readdirSync('content/sr/products')
+/**
+ * This file's own reads are cwd-independent, but the module under test calls
+ * the Keystatic reader, and `createReader(process.cwd(), …)` in
+ * `src/content/reader.ts` is cwd-based by design — Next always runs from the
+ * project root, and deriving that root from a bundled module's location would
+ * break once output tracing moves the file. So this one test still needs the
+ * runner rooted at the repo, which `vitest.config.ts` guarantees.
+ */
+const SLUGS = readdirSync(repoPath('content/sr/products'))
   .filter((f) => f.endsWith('.json'))
   .map((f) => f.replace(/\.json$/, ''))
 

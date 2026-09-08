@@ -396,6 +396,14 @@ not publish canonical and hreflang tags claiming to be the live site.
 which is what keeps `[REVIEW]` copy out of search results. Verify by reading
 `.next/server/app/robots.txt.body` after a build — the emitted file, not the source.
 
+**Tests that read content files use `repoPath()` from `src/test/paths.ts`**, which derives the
+root from its own module URL. A bare relative path — or `path.resolve(process.cwd(), …)`, which
+is the same base spelled longer — resolves against wherever the runner started. The one
+remaining cwd dependency is deliberate: `createReader(process.cwd(), …)` in
+`src/content/reader.ts` is Keystatic's own contract, Next always runs from the project root, and
+deriving that root from a bundled module's location would break once output tracing moves the
+file.
+
 **Structured data is a public claim, like visible copy.** `src/lib/structured-data.ts` builds
 one `@graph` per page: `Organization` everywhere (from `content/settings.json`, never retyped),
 plus `BreadcrumbList` and the product node on a product page. Everything in it is a company fact

@@ -1,6 +1,7 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { LOCALES, type Locale } from '@/i18n/locales'
+import { repoPath } from '@/test/paths'
 
 type Doc = {
   name: string
@@ -17,14 +18,14 @@ type Doc = {
 }
 
 function slugsIn(locale: Locale): string[] {
-  return readdirSync(`content/${locale}/products`)
+  return readdirSync(repoPath(`content/${locale}/products`))
     .filter((f) => f.endsWith('.json'))
     .map((f) => f.replace(/\.json$/, ''))
     .sort()
 }
 
 function doc(locale: Locale, slug: string): Doc {
-  return JSON.parse(readFileSync(`content/${locale}/products/${slug}.json`, 'utf8')) as Doc
+  return JSON.parse(readFileSync(repoPath(`content/${locale}/products/${slug}.json`), 'utf8')) as Doc
 }
 
 const SLUGS = slugsIn('sr')
@@ -37,7 +38,7 @@ describe('product content', () => {
   it('ships a photo for every slug', () => {
     // The photo is derived from the slug rather than stored as a CMS field, so
     // a renamed product silently loses its image unless this holds.
-    for (const slug of SLUGS) expect(existsSync(`public/products/${slug}.webp`), slug).toBe(true)
+    for (const slug of SLUGS) expect(existsSync(repoPath(`public/products/${slug}.webp`)), slug).toBe(true)
   })
 
   it('keeps name, order, family and category identical across locales', () => {

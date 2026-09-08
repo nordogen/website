@@ -1,17 +1,18 @@
 import { readFileSync, readdirSync } from 'node:fs'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { repoPath } from '@/test/paths'
 
 const ORIGIN = 'https://www.nordogen.com'
 
-const SLUGS = readdirSync('content/sr/products')
+const SLUGS = readdirSync(repoPath('content/sr/products'))
   .filter((f) => f.endsWith('.json'))
   .map((f) => f.replace(/\.json$/, ''))
 
 const product = (slug: string) => ({
   slug,
-  ...JSON.parse(readFileSync(`content/sr/products/${slug}.json`, 'utf8')),
+  ...JSON.parse(readFileSync(repoPath(`content/sr/products/${slug}.json`), 'utf8')),
 })
-const settings = JSON.parse(readFileSync('content/settings.json', 'utf8'))
+const settings = JSON.parse(readFileSync(repoPath('content/settings.json'), 'utf8'))
 
 async function load() {
   vi.resetModules()
