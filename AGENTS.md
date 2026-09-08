@@ -242,6 +242,14 @@ port. Zeros from nothing look identical to zeros from success.
 **Assert the thing exists before trusting any measurement of it.** e.g. confirm
 `document.querySelector('footer')` is non-null before believing a layout number.
 
+**Replacing an image file does not change what a screenshot shows.** `next/image` caches
+optimised output in `.next/cache/images` keyed by URL, not by content, and the browser caches on
+top of that. Swap `public/products/myonord.webp` for a different picture at the same path and two
+consecutive verification passes will keep showing the old one — which reads exactly like "the new
+asset is wrong". Delete `.next/cache/images` **and** drive Chrome with
+`Network.setCacheDisabled`. The same staleness can outlive a deployment, so bump the path when an
+image changes meaningfully.
+
 **A screenshot proves pixels, not markup.** `/keystatic` rendered a perfect-looking admin UI
 while serving no `<html>` or `<body>` at all.
 
@@ -298,10 +306,13 @@ The logo tagline is **live text**, not paths, so it localises (`UROLOGIJA • GI
 REGENERACIJA` / `UROLOGY • GYNECOLOGY • REGENERATION`).
 
 **There is photography now** — this reverses the pre-redesign rule. Two art-directed stills
-(`public/images/hero.jpg`, `lab.jpg`) plus six product box renders on white
-(`public/products/*.webp`). The renders are composited with `mix-blend-mode: multiply` onto the
-`well` ground, which is what removes their white background; drop the blend mode and you get a
-white rectangle stamped over the well.
+(`public/images/hero.jpg`, `lab.jpg`) plus six product box renders (`public/products/*.webp`).
+
+The renders are **background-removed cutouts with a real alpha channel**, so they need no blend
+mode and sit correctly on any ground. The handoff's originals were shot on a light grey backdrop
+and the artboards masked that with `mix-blend-mode: multiply`, which does not remove grey — it
+leaves a visible rectangle and darkens the packaging colour. If a new product photo ever shows a
+box in a tinted rectangle, it is an opaque render and needs cutting out, not a blend mode.
 
 `ArcMotif` is no longer used anywhere. Still no emoji and no icon fonts.
 

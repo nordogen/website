@@ -35,9 +35,9 @@ export function ProductCard({ product }: { product: Product }) {
           alt=""
           fill
           sizes="(min-width: 1024px) 380px, 90vw"
-          /* The renders sit on white, so multiply drops that ground onto the
-             well instead of stamping a white rectangle over it. */
-          className="object-contain p-[7%] mix-blend-multiply"
+          /* The cutouts are cropped tight, so the padding is what sets how much
+             of the well the box fills — the artboards draw it at ~88%. */
+          className="object-contain p-3 lg:p-3.5"
         />
       </div>
 

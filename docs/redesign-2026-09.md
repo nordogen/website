@@ -10,7 +10,7 @@ from the artboards and why.
 |---|---|---|
 | Palette | `brand-blue` / `brand-teal` / `brand-crimson` on `surface` | `ink` / `paper` / `soft` / `accent`, plus three per-product accents |
 | Type | Jost, single family | Newsreader (display) + Work Sans (text) |
-| Imagery | none, by policy — `ArcMotif` geometry | two photographs and six product renders |
+| Imagery | none, by policy — `ArcMotif` geometry | two photographs and six cut-out product renders |
 | Home | hero, about, products, science | hero, products grid, "Zašto Nordogen" + four principles, contact band |
 | Nav | `/products`, `/about`, `/contact` (all 404) | on-page anchors |
 | Products | not modelled | `products` collection, per locale, six entries |
@@ -51,6 +51,11 @@ so the drawer copy would be a duplicate control.
 **The drawer is a disclosure, not a dialog.** It opens under the header with the page visible
 behind it, so it carries `aria-expanded` / `aria-controls` rather than `aria-modal`, and there
 is no focus trap. Escape closes it and returns focus to the trigger; body scroll locks.
+
+**Product renders are alpha cutouts, not the handoff's opaque files.** The originals sit on a
+light grey backdrop, and the artboards hid that with `mix-blend-mode: multiply` — which leaves
+the rectangle visible and darkens the packaging. The client supplied background-removed versions
+(kept in `design/handoff/assets/cutouts/`), so the blend mode is gone.
 
 **The logo is the brand lockup, not the artboards' circle-plus-Newsreader placeholder** — and
 its descriptive tagline (`UROLOGIJA • GINEKOLOGIJA • REGENERACIJA`) is gone. At lockup size it
