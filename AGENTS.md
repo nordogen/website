@@ -406,6 +406,14 @@ Descriptions are clamped to ~155 characters by `clampDescription`, on a sentence
 there is one and a word boundary otherwise. Product titles are `Name — Badge label | NORDOGEN`
 rather than name plus subtitle, which ran 76–105 characters and truncated in the result.
 
+**Hero images are the LCP element, and `priority` alone is not enough.** Next emits the
+`<link rel="preload" as="image">` from `priority`, but **not** `fetchpriority` — Lighthouse flags
+that as "fetchpriority=high should be applied to the image preload request". Both hero images
+pass `fetchPriority="high"` explicitly, which lands on the preload link *and* the `<img>`. Any
+new above-the-fold hero needs `priority` **and** `fetchPriority="high"`; everything below the
+fold stays lazy (7 lazy images on the home page, 3 on a product page — the heroes are not among
+them).
+
 **Two locks keep non-production hosts out of the index**, both on `isProductionOrigin`:
 `robots.txt` blocks crawling, and the root layout emits `noindex, nofollow` so a page that
 reaches an index some other way still says no.
@@ -439,7 +447,9 @@ time (ISR, draft mode, a missed `generateStaticParams`) would 500 with ENOENT.
 ## Conventions
 
 - Conventional Commits. Explain *why* in the body when it is not obvious.
-- Canonical host `https://nordogen.com`, but never hardcode it — read `SITE_ORIGIN` from
+- The live canonical host is **`https://www.nordogen.com`** — the apex 308s to it, and
+  production canonicals are emitted on `www`. `isProductionOrigin` accepts both, so an origin set
+  to either one still gets `Allow: /`. Never hardcode a host: read `SITE_ORIGIN` from
   `src/i18n/urls.ts`. Locales always prefixed; `hreflang` covers `sr`, `en` and
   `x-default` → `sr`.
 - Keep the dependency list minimal. Prefer native Next.js features over packages: `sitemap.ts`

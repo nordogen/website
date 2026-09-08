@@ -133,6 +133,7 @@ export default async function ProductPage({
               width={900}
               height={900}
               priority
+              fetchPriority="high"
               sizes="(min-width: 1024px) 560px, 82vw"
               className="max-h-[300px] w-auto max-w-[82%] object-contain lg:max-h-[440px] lg:max-w-full"
             />
