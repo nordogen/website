@@ -1,22 +1,32 @@
 import { Container } from './Container'
 
 const TONE = {
-  surface: 'bg-surface text-ink',
-  tint: 'bg-brand-blue-tint/25 text-ink',
-  teal: 'bg-brand-teal text-white',
+  paper: 'bg-paper text-ink',
+  soft: 'bg-soft text-ink border-t border-ink/10',
+  accent: 'on-dark bg-accent text-white',
+  ink: 'on-dark bg-ink text-white',
+} as const
+
+const PAD = {
+  default: 'py-12 lg:py-[5.125rem]',
+  band: 'py-11 lg:py-16',
 } as const
 
 export function Section({
   children,
-  tone = 'surface',
+  id,
+  tone = 'paper',
+  pad = 'default',
   className,
 }: {
   children: React.ReactNode
+  id?: string
   tone?: keyof typeof TONE
+  pad?: keyof typeof PAD
   className?: string
 }) {
   return (
-    <section className={[TONE[tone], 'relative overflow-hidden py-16 sm:py-20 lg:py-28', className].filter(Boolean).join(' ')}>
+    <section id={id} className={[TONE[tone], PAD[pad], className].filter(Boolean).join(' ')}>
       <Container>{children}</Container>
     </section>
   )

@@ -1,18 +1,15 @@
 import Link from 'next/link'
-import { LOCALES, type Locale } from '@/i18n/locales'
+import type { Locale } from '@/i18n/locales'
+import { UI } from '@/i18n/ui'
 
+/** EN first, SR second, as drawn. */
+const ORDER: Locale[] = ['en', 'sr']
 const LABEL: Record<Locale, string> = { sr: 'SR', en: 'EN' }
 
-export function LanguageSwitcher({
-  locale,
-  path,
-}: {
-  locale: Locale
-  path: string
-}) {
+export function LanguageSwitcher({ locale, path = '' }: { locale: Locale; path?: string }) {
   return (
-    <div className="flex items-center gap-1">
-      {LOCALES.map((target) => {
+    <div className="flex items-center gap-3.5" aria-label={UI[locale].languageLabel}>
+      {ORDER.map((target) => {
         const active = target === locale
         return (
           <Link
@@ -20,12 +17,18 @@ export function LanguageSwitcher({
             href={`/${target}${path}`}
             hrefLang={target}
             aria-current={active ? 'true' : undefined}
-            className={[
-              'inline-flex min-h-11 min-w-11 items-center justify-center rounded-full px-3 text-sm font-medium',
-              active ? 'bg-brand-teal text-white' : 'text-brand-teal hover:bg-brand-blue-tint/40',
-            ].join(' ')}
+            /* The 44px target is the link box; the underline hugs the text. */
+            className="inline-flex min-h-11 items-center text-[0.8125rem] font-semibold"
           >
-            {LABEL[target]}
+            <span
+              className={
+                active
+                  ? 'border-b-2 border-accent pb-0.5 text-ink'
+                  : 'border-b-2 border-transparent pb-0.5 text-inactive hover:text-ink'
+              }
+            >
+              {LABEL[target]}
+            </span>
           </Link>
         )
       })}

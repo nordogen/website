@@ -1,16 +1,49 @@
 @import "tailwindcss";
 
+/* Design tokens — Nordogen 2026 redesign (design/handoff/CLAUDE_CODE.md).
+   Every value below was measured against its actual background for the 4.5:1
+   floor (3:1 at headline scale). Introducing a new tint means measuring it. */
 @theme {
-  --color-brand-blue: #65A2BF;
-  --color-brand-blue-tint: #B2D0DF;
-  --color-brand-teal: #0E4750;
-  --color-brand-teal-tint: #86A3A7;
-  --color-brand-crimson: #B7404B;
-  --color-brand-crimson-tint: #DB9FA5;
-  --color-ink: #231F20;
-  --color-surface: #F7FAFC;
+  /* Surfaces */
+  --color-paper: #FCFCFA;
+  --color-soft: #F6F5F1;
+  --color-well: #F4F3EF;
 
-  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+  /* Text */
+  --color-ink: #14201F;
+  --color-ink-soft: #41504E;
+  --color-muted: #5F6C6A;
+  --color-nav: #3D4A49;
+  /* Body text on the ink footer. */
+  --color-on-ink: #A7B4B3;
+  /* The artboards' #6B7A78 measures 4.37:1 on paper — under the 4.5 floor for
+     the 13px inactive language label. Darkened until it clears on paper (4.83),
+     soft (4.55) and white (4.96). */
+  --color-inactive: #647371;
+
+  /* Button states — measured from the artboards' hover/active spec. */
+  --color-ink-hover: #22322F;
+  --color-ink-active: #0D1817;
+  --color-paper-hover: #F1F0EC;
+
+  /* Accent */
+  --color-accent: #2E7391;
+  --color-accent-light: #7FB4C9;
+
+  /* Per-product accents — rules, dots, and the card badge fill. Blue is the
+     only one whose badge fill differs from its accent, for contrast. */
+  --color-product-blue: #4C88A8;
+  --color-product-teal: #0F4249;
+  --color-product-crimson: #8E2A3E;
+  --color-badge-blue: #3A6E88;
+
+  --font-sans: var(--font-work-sans), system-ui, sans-serif;
+  --font-display: var(--font-newsreader), Georgia, serif;
+
+  /* Nothing softer than these. */
+  --radius-btn: 2px;
+  --radius-card: 3px;
+  --radius-pill: 100px;
 }
 
 @layer base {
@@ -21,20 +54,47 @@
   body {
     /* Guarantees the no-horizontal-overflow invariant globally. */
     overflow-x: clip;
-    background-color: var(--color-surface);
+    background-color: var(--color-paper);
     color: var(--color-ink);
-    /* 16px floor: smaller triggers iOS input zoom. */
-    font-size: 1rem;
+    /* 17px mobile / 19px desktop, per the artboards. */
+    font-size: 1.0625rem;
     line-height: 1.7;
   }
 
+  @media (width >= 64rem) {
+    body {
+      font-size: 1.1875rem;
+    }
+  }
+
   :focus-visible {
-    outline: 2px solid var(--color-brand-teal);
+    outline: 2px solid var(--color-accent);
     outline-offset: 2px;
   }
 
-  .bg-brand-teal :focus-visible {
-    outline-color: #fff;
+  /* Ink and accent grounds: the accent ring is too dark to see on them. */
+  .on-dark :focus-visible {
+    outline-color: var(--color-accent-light);
+  }
+}
+
+@layer components {
+  /* The hero scrim. Mobile stacks the copy at the bottom, so the gradient runs
+     top-to-bottom; desktop sets it beside the subject, so it runs left-to-right
+     and clears the right of the frame. */
+  .hero-scrim {
+    background: linear-gradient(
+      180deg,
+      rgba(20, 32, 31, 0.5) 0%,
+      rgba(20, 32, 31, 0.86) 38%,
+      rgba(20, 32, 31, 0.97) 100%
+    );
+  }
+
+  @media (width >= 64rem) {
+    .hero-scrim {
+      background: linear-gradient(90deg, rgba(20, 32, 31, 0.94) 42%, rgba(20, 32, 31, 0) 100%);
+    }
   }
 }
 

@@ -1,5 +1,5 @@
-import { config, singleton } from '@keystatic/core'
-import { homeSchema, siteChromeSchema } from './src/keystatic/schema'
+import { collection, config, singleton } from '@keystatic/core'
+import { homeSchema, productSchema, siteChromeSchema } from './src/keystatic/schema'
 import { fields } from '@keystatic/core'
 
 // Local storage is dev-only: under `next start` Keystatic renders blank by
@@ -27,10 +27,28 @@ export default config({
   ui: {
     brand: { name: 'NORDOGEN' },
     navigation: {
-      'Serbian / Srpski': ['homeSr', 'siteChromeSr'],
-      English: ['homeEn', 'siteChromeEn'],
+      'Serbian / Srpski': ['homeSr', 'productsSr', 'siteChromeSr'],
+      English: ['homeEn', 'productsEn', 'siteChromeEn'],
       Settings: ['settings'],
     },
+  },
+  collections: {
+    productsSr: collection({
+      label: 'Products (Serbian)',
+      path: 'content/sr/products/*',
+      slugField: 'name',
+      format: { data: 'json' },
+      entryLayout: 'form',
+      schema: productSchema(),
+    }),
+    productsEn: collection({
+      label: 'Products (English)',
+      path: 'content/en/products/*',
+      slugField: 'name',
+      format: { data: 'json' },
+      entryLayout: 'form',
+      schema: productSchema(),
+    }),
   },
   singletons: {
     settings: singleton({
