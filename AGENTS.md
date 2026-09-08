@@ -169,8 +169,9 @@ This replaces the pre-redesign `brand-*` palette wholesale. The old `brand-blue`
 
 **Colour follows the therapeutic area, not the other way round.** A product's `family`
 (`urology` / `gynaecology` / `regeneration`) picks its badge fill and its benefit-card rule, and
-also decides which products appear under "from the same range". There is no separate colour
-field to fall out of step with it.
+also decides which products appear under "from the same range" — own area first, **plus
+regeneration, which belongs to every group** (see `getRelatedProducts`). There is no separate
+colour field to fall out of step with it.
 
 **Every text/background pair on the page has been measured against real pixels**, compositing
 alpha onto the actual ancestor background. Two things follow: reading `getComputedStyle().color`

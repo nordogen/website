@@ -46,11 +46,24 @@ the approved declarations. The dose sentence is therefore split: the figure goes
 cell, the instruction in a 15px muted line under the row. Splitting it is the only place a
 client sentence was reworded, and it was reworded only at the seam.
 
-**"From the same range" is picked by `family`, then topped up.** The handoff says to query
-siblings by `group`. Every product's `group` is unique here (it is the badge label), so that
-query returns nothing and the section would never render. Same family first, then the remaining
-products in list order, capped at three — which reproduces the artboard's own three cards for
-Nordoprost exactly.
+**"From the same range" is picked by `family`, with regeneration in every group.** The handoff
+says to query siblings by `group`. Every product's `group` is unique here (it *is* the badge
+label), so that query returns nothing and the section would never render.
+
+The rule instead: a product's neighbours are its own therapeutic area **plus regeneration**,
+same area first, capped at three. Recovery support is a companion to a urology or a gynaecology
+product rather than a category of its own, so Renord belongs in both of their groups; on
+Renord's own page every product is a sibling. Urology and gynaecology never appear beside each
+other.
+
+| Page | Shows |
+|---|---|
+| Myonord, Nordilloma (gynaecology) | the other one, plus Renord — two cards |
+| Litonord, Nordoprost, Urinord (urology) | the other two, plus Renord |
+| Renord (regeneration) | the first three of the rest |
+
+Nordoprost's row is Litonord, Urinord, Renord — the artboard's own three cards, exactly. The
+two-card row switches to a two-column grid rather than leaving a hole in a three-column one.
 
 **No products index, so the breadcrumb's middle crumb points at the home page's product grid.**
 A crumb to a 404 is worse than a crumb to the grid it came from.

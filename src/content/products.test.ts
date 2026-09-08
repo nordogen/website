@@ -136,3 +136,44 @@ describe('product content', () => {
     expect(serbian).not.toMatch(/[Ѐ-ӿ]/)
   })
 })
+
+describe('related products', () => {
+  // Mirrors getRelatedProducts, over the content files rather than the reader.
+  const family = (slug: string) => doc('sr', slug).family
+  const ordered = [...SLUGS].sort((a, b) => doc('sr', a).order - doc('sr', b).order)
+
+  const related = (slug: string) => {
+    const others = ordered.filter((s) => s !== slug)
+    if (family(slug) === 'regeneration') return others.slice(0, 3)
+    return [
+      ...others.filter((s) => family(s) === family(slug)),
+      ...others.filter((s) => family(s) === 'regeneration'),
+    ].slice(0, 3)
+  }
+
+  it('never shows a product beside itself', () => {
+    for (const slug of SLUGS) expect(related(slug)).not.toContain(slug)
+  })
+
+  it('puts regeneration alongside every other area', () => {
+    // Renord is a companion to a urology or gynaecology product, so it belongs
+    // in both of their groups; on its own page every product is a sibling.
+    for (const slug of SLUGS) {
+      if (family(slug) === 'regeneration') continue
+      expect(related(slug), slug).toContain('renord')
+    }
+    expect(related('renord')).toHaveLength(3)
+  })
+
+  it('keeps urology and gynaecology apart', () => {
+    for (const slug of SLUGS) {
+      if (family(slug) === 'regeneration') continue
+      const opposite = family(slug) === 'urology' ? 'gynaecology' : 'urology'
+      expect(related(slug).map(family), slug).not.toContain(opposite)
+    }
+  })
+
+  it('never leaves a product without neighbours', () => {
+    for (const slug of SLUGS) expect(related(slug).length, slug).toBeGreaterThanOrEqual(2)
+  })
+})

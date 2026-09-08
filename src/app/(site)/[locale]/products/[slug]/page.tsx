@@ -313,7 +313,14 @@ export default async function ProductPage({
           <h2 className="font-display text-[clamp(1.875rem,2.6vw,2.25rem)] leading-[1.18] tracking-[-0.01em]">
             {ui.relatedHeading}
           </h2>
-          <ul className="mt-4 grid gap-3 lg:mt-[26px] lg:grid-cols-3 lg:gap-5">
+          {/* Gynaecology has one sibling plus Renord, so this row is
+              sometimes two cards. Let them share the width rather than leaving
+              a hole in a three-column grid. */}
+          <ul
+            className={`mt-4 grid gap-3 lg:mt-[26px] lg:gap-5 ${
+              related.length === 2 ? 'lg:grid-cols-2' : 'lg:grid-cols-3'
+            }`}
+          >
             {related.map((item) => (
               <li key={item.slug}>
                 <RelatedCard product={item} locale={locale} />
