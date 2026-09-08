@@ -1,12 +1,87 @@
 {
   "name": "Urinord",
   "order": 6,
-  "group": "Urinary tract",
-  "accent": "blue",
+  "family": "urology",
   "category": "fsmp",
+  "group": "Urinary tract",
   "summary": "Urinary tract health support",
-  "ingredients": "D-mannose · Juniper · Corn silk",
-  "pack": "10 sachets",
+  "hero": {
+    "subtitle": "Nutritional support for urinary tract infections caused by E. coli",
+    "intro": "Urinord is a food for special medical purposes providing 2 g of D-mannose with juniper and corn silk extracts, intended for the dietary management of people with E. coli urinary tract infection and to support normal urinary tract function.",
+    "dose": "1 sachet daily",
+    "doseNote": "Dissolve in 200 ml of water. The product must be used under medical supervision.",
+    "pack": "10 sachets",
+    "duration": "10 days"
+  },
+  "audience": {
+    "eyebrow": "Who it is for",
+    "heading": "A clearly defined role, without unnecessary complexity",
+    "body": "Designed for adults with urinary tract infection caused by E. coli as part of a medically supervised approach. In recurrent urinary infections it may be considered as additional non-antibiotic support, but it does not replace medical assessment or antibiotics when these are indicated."
+  },
+  "benefits": {
+    "eyebrow": "Key benefits",
+    "heading": "What the formula provides",
+    "items": [
+      {
+        "title": "2 g of D-mannose per sachet",
+        "body": "Each daily sachet provides 2 g of D-mannose, a dose used in a number of clinical studies."
+      },
+      {
+        "title": "Targeted anti-adhesion mechanism",
+        "body": "D-mannose can bind to structures on uropathogenic E. coli and reduce bacterial attachment to the urinary lining."
+      },
+      {
+        "title": "Botanical and hydration support",
+        "body": "Juniper and corn silk have a tradition of use in urinary formulations, while each sachet is dissolved in 200 ml of water."
+      }
+    ]
+  },
+  "formula": {
+    "eyebrow": "Formula",
+    "heading": "Different roles, one clear purpose",
+    "intro": "Uropathogenic E. coli is the most common cause of cystitis. D-mannose is excreted in urine and can bind to certain structures on the surface of E. coli, making attachment to the urinary lining more difficult. Juniper and corn silk add traditional botanical support, while dissolving the sachet in water contributes to fluid intake. This mechanism does not replace antimicrobial treatment when it is required.",
+    "calloutLabel": "Why this combination",
+    "calloutBody": "Urinord does not pair D-mannose with unrelated vitamins and minerals, but with two traditional urinary botanicals. This keeps the formula focused: D-mannose is the central ingredient, while the botanical extracts and 200 ml of water complement the daily routine."
+  },
+  "ingredients": {
+    "eyebrow": "Active ingredients",
+    "heading": "Composition and the role of each ingredient",
+    "items": [
+      {
+        "name": "D-manoza",
+        "amount": "2000 mg daily",
+        "role": "The central ingredient in the formula. It can make it harder for uropathogenic E. coli to attach to the urinary lining. Clinical results for prevention of recurrent infections have not been consistent across studies."
+      },
+      {
+        "name": "Kleka",
+        "amount": "300 mg daily",
+        "role": "Juniperus communis fruit extract 4:1. Traditionally used in herbal urinary formulations and included as a complementary botanical ingredient."
+      },
+      {
+        "name": "Kukuruzna svila",
+        "amount": "150 mg daily",
+        "role": "Zea mays L. extract 4:1. Traditionally used to support the urinary system and natural fluid elimination."
+      }
+    ]
+  },
+  "useCases": {
+    "eyebrow": "When it may be used",
+    "heading": "Practical situations for use",
+    "items": [
+      "For E. coli UTI under medical supervision",
+      "For localized cystitis symptoms after appropriate assessment",
+      "In recurrent urinary infections when additional non-antibiotic measures are being considered",
+      "When a practical once-daily 2 g D-mannose regimen is desired"
+    ]
+  },
+  "notes": {
+    "eyebrow": "Important information",
+    "heading": "Safe and responsible use",
+    "warnings": "Urinord must be used under medical supervision and does not replace antibiotics when antimicrobial treatment is required. Extra caution is needed in diabetes, pregnancy and breastfeeding, in children and older people, in severe kidney disease or when fluid intake is restricted. Fever, flank pain, vomiting, pregnancy or general deterioration require prompt medical assessment.",
+    "legalNote": "The product must be used under medical supervision. It is a nutritionally incomplete food and is not suitable for use as a sole source of nutrition. Keep out of the reach of children. / Proizvod mora da se koristi pod medicinskim nadzorom. Proizvod predstavlja nutritivno nepotpunu namirnicu i nije pogodan za upotrebu kao jedini izvor hrane za osobe kojima je namenjen. Čuvati van domašaja dece."
+  },
   "purpose": "URINORD je dijetetski proizvod - hrana za posebne medicinske namene za potrebe ishrane osoba sa infekcijom urinarnog trakta izazvanih bakterijom E. Coli kao i za očuvanje normalne funkcije urinarnog trakta.",
-  "regulatoryNote": "Proizvod mora da se koristi pod medicinskim nadzorom. Proizvod predstavlja nutritivno nepotpunu namirnicu i nije pogodan za upotrebu kao jedini izvor hrane za osobe kojima je namenjen."
+  "regulatoryNote": "Proizvod mora da se koristi pod medicinskim nadzorom. Proizvod predstavlja nutritivno nepotpunu namirnicu i nije pogodan za upotrebu kao jedini izvor hrane za osobe kojima je namenjen.",
+  "metaTitle": "",
+  "metaDescription": ""
 }

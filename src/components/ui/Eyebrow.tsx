@@ -1,11 +1,15 @@
 const TONE = {
   accent: 'text-accent',
   light: 'text-accent-light',
+  /* On the accent band every level of text is full-opacity white by design —
+     do not reintroduce alpha there. */
+  onAccent: 'text-white',
 } as const
 
 const RULE = {
   accent: 'bg-accent',
   light: 'bg-accent-light',
+  onAccent: 'bg-white',
 } as const
 
 /**

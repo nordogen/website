@@ -55,3 +55,31 @@ export async function getProducts(locale: Locale) {
 
   return entries.sort((a, b) => a.order - b.order)
 }
+
+export async function getProduct(locale: Locale, slug: string) {
+  const entry = required(
+    await PRODUCTS[locale].read(slug),
+    `content/${locale}/products/${slug}`,
+  )
+  return { slug, ...entry }
+}
+
+export async function getProductSlugs(locale: Locale) {
+  return PRODUCTS[locale].list()
+}
+
+/**
+ * The three products shown under a product page. Same therapeutic area first,
+ * then topped up in list order so the row is never short or ragged — with six
+ * products, two of the three areas have fewer than four members.
+ */
+export async function getRelatedProducts(locale: Locale, slug: string, limit = 3) {
+  const all = await getProducts(locale)
+  const current = all.find((product) => product.slug === slug)
+  const others = all.filter((product) => product.slug !== slug)
+
+  const sameFamily = others.filter((product) => product.family === current?.family)
+  const rest = others.filter((product) => product.family !== current?.family)
+
+  return [...sameFamily, ...rest].slice(0, limit)
+}

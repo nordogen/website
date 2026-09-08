@@ -10,6 +10,7 @@ const TONE = {
 const PAD = {
   default: 'py-12 lg:py-[5.125rem]',
   band: 'py-11 lg:py-16',
+  product: 'py-11 lg:py-[4.5rem]',
 } as const
 
 export function Section({

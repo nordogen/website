@@ -94,10 +94,13 @@ export function homeSchema() {
 }
 
 /**
- * One product, in one locale. The file name is the slug, and the slug is also
- * the product photo: `public/products/<slug>.webp`. The photo is deliberately
- * not a CMS field — it is identical in both locales, and a per-locale image
- * field is a per-locale way to get them out of sync.
+ * One product, in one locale — the card on the home page and the whole product
+ * page behind it.
+ *
+ * The file name is the slug, and the slug is also the product photo:
+ * `public/products/<slug>.webp`. The photo is deliberately not a CMS field — it
+ * is identical in both locales, and a per-locale image field is a per-locale
+ * way to get them out of sync.
  */
 export function productSchema() {
   return {
@@ -114,19 +117,16 @@ export function productSchema() {
       description: 'Lower numbers come first.',
       validation: { isRequired: true },
     }),
-    group: fields.text({
-      label: 'Badge label',
-      description: 'The small coloured tag on the card. For example: Žensko zdravlje.',
-      validation: required,
-    }),
-    accent: fields.select({
-      label: 'Badge colour',
+    family: fields.select({
+      label: 'Therapeutic area',
+      description:
+        'Sets the badge colour, and decides which products appear under “from the same range”.',
       options: [
-        { label: 'Blue — urology and kidneys', value: 'blue' },
-        { label: 'Deep teal — recovery', value: 'teal' },
-        { label: 'Crimson — women’s health', value: 'crimson' },
+        { label: 'Urology / Urologija', value: 'urology' },
+        { label: 'Gynaecology / Ginekologija', value: 'gynaecology' },
+        { label: 'Regeneration / Regeneracija', value: 'regeneration' },
       ],
-      defaultValue: 'blue',
+      defaultValue: 'urology',
     }),
     category: fields.select({
       label: 'Regulatory category',
@@ -138,25 +138,152 @@ export function productSchema() {
       ],
       defaultValue: 'supplement',
     }),
+    group: fields.text({
+      label: 'Badge label',
+      description: 'The small coloured tag on the card and at the top of the product page.',
+      validation: required,
+    }),
     summary: fields.text({
       label: 'What it is for',
-      description: 'One line, shown on the card.',
+      description: 'One line, shown on the home page card.',
       multiline: true,
       validation: required,
     }),
-    ingredients: fields.text({
-      label: 'Key ingredients',
-      description: 'Optional. Separated by · — shown as the last line of the card.',
-      multiline: true,
-    }),
-    pack: fields.text({
-      label: 'Pack size',
-      description: 'For example: 30 kapsula. Not shown on the home page.',
-    }),
+
+    hero: fields.object(
+      {
+        subtitle: fields.text({
+          label: 'Subtitle under the product name',
+          description: 'Optional. Shown in the accent colour.',
+          multiline: true,
+        }),
+        intro: fields.text({ label: 'Intro paragraph', multiline: true, validation: required }),
+        dose: fields.text({
+          label: 'Dosage',
+          description: 'The short figure for the spec row. For example: 2 kapsule dnevno.',
+          validation: required,
+        }),
+        doseNote: fields.text({
+          label: 'Dosage instructions',
+          description:
+            'Optional. Anything the dosage figure leaves out — how to take it, what it must be dissolved in.',
+          multiline: true,
+        }),
+        pack: fields.text({
+          label: 'Pack size',
+          description: 'For example: 30 kapsula.',
+          validation: required,
+        }),
+        duration: fields.text({
+          label: 'How long a pack lasts',
+          description: 'Optional. Leave empty when the dose varies. For example: 15 dana.',
+        }),
+      },
+      { label: 'Top of the page' },
+    ),
+
+    audience: fields.object(
+      {
+        eyebrow: fields.text({ label: 'Small label', validation: required }),
+        heading: fields.text({ label: 'Heading', multiline: true, validation: required }),
+        body: fields.text({ label: 'Paragraph', multiline: true, validation: required }),
+      },
+      { label: 'Who it is for' },
+    ),
+
+    benefits: fields.object(
+      {
+        eyebrow: fields.text({ label: 'Small label' }),
+        heading: fields.text({ label: 'Heading', multiline: true }),
+        items: fields.array(
+          fields.object({
+            title: fields.text({ label: 'Title', validation: required }),
+            body: fields.text({ label: 'Text', multiline: true, validation: required }),
+          }),
+          {
+            label: 'Benefit cards',
+            description: 'Two to four. The whole section disappears when this is empty.',
+            itemLabel: (props) => props.fields.title.value,
+          },
+        ),
+      },
+      { label: 'Key benefits' },
+    ),
+
+    formula: fields.object(
+      {
+        eyebrow: fields.text({ label: 'Small label', validation: required }),
+        heading: fields.text({ label: 'Heading', multiline: true, validation: required }),
+        intro: fields.text({ label: 'Paragraph', multiline: true, validation: required }),
+        calloutLabel: fields.text({
+          label: 'Highlighted box: small label',
+          description: 'Optional. Leave both box fields empty to hide the box.',
+        }),
+        calloutBody: fields.text({ label: 'Highlighted box: text', multiline: true }),
+      },
+      { label: 'Formula' },
+    ),
+
+    ingredients: fields.object(
+      {
+        eyebrow: fields.text({ label: 'Small label', validation: required }),
+        heading: fields.text({ label: 'Heading', multiline: true, validation: required }),
+        items: fields.array(
+          fields.object({
+            name: fields.text({ label: 'Ingredient', validation: required }),
+            amount: fields.text({
+              label: 'Amount',
+              description: 'Optional. For example: 250 mg dnevno.',
+            }),
+            role: fields.text({ label: 'What it does', multiline: true, validation: required }),
+          }),
+          {
+            label: 'Active ingredients',
+            description: 'Also shown as the pills on the home page card.',
+            itemLabel: (props) => props.fields.name.value,
+          },
+        ),
+      },
+      { label: 'Active ingredients' },
+    ),
+
+    useCases: fields.object(
+      {
+        eyebrow: fields.text({ label: 'Small label' }),
+        heading: fields.text({ label: 'Heading', multiline: true }),
+        items: fields.array(fields.text({ label: 'Situation' }), {
+          label: 'Situations',
+          description: 'One sentence each. The whole section disappears when this is empty.',
+          itemLabel: (props) => props.value,
+        }),
+      },
+      { label: 'When it may be used' },
+    ),
+
+    notes: fields.object(
+      {
+        eyebrow: fields.text({ label: 'Small label', validation: required }),
+        heading: fields.text({ label: 'Heading', multiline: true, validation: required }),
+        warnings: fields.text({
+          label: 'Warnings',
+          description: 'Copied word for word from the approved declaration. Never softened.',
+          multiline: true,
+          validation: required,
+        }),
+        legalNote: fields.text({
+          label: 'Legally required statement',
+          description: 'REQUIRED BY LAW. Do not delete or reword.',
+          multiline: true,
+          validation: required,
+        }),
+      },
+      { label: 'Important information' },
+    ),
+
     purpose: fields.text({
       label: 'Purpose (from the approved declaration)',
       description:
-        'Copied word for word from the approved packaging text. Never paraphrased or softened.',
+        'Copied word for word from the approved packaging text. Serbian in both languages — there is no approved English translation.',
       multiline: true,
       validation: required,
     }),
@@ -164,6 +291,16 @@ export function productSchema() {
       label: 'Mandatory notice',
       description:
         'Only for food for special medical purposes. Copied word for word from the declaration.',
+      multiline: true,
+    }),
+
+    metaTitle: fields.text({
+      label: 'Search engines: page title',
+      description: 'Optional. Falls back to the product name and its subtitle.',
+    }),
+    metaDescription: fields.text({
+      label: 'Search engines: page description',
+      description: 'Optional. Falls back to the intro paragraph.',
       multiline: true,
     }),
   }

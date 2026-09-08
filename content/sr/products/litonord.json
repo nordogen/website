@@ -1,12 +1,87 @@
 {
   "name": "Litonord",
   "order": 4,
-  "group": "Bubrezi i urinarni sistem",
-  "accent": "blue",
+  "family": "urology",
   "category": "supplement",
+  "group": "Bubrezi i urinarni sistem",
   "summary": "Podrška zdravlju bubrega i normalnom funkcionisanju urinarnog sistema",
-  "ingredients": "Magnezijum citrat · Phyllanthus niruri · Breza",
-  "pack": "15 kesica",
+  "hero": {
+    "subtitle": "Ciljana nutritivna podrška osobama sa istorijom bubrežnih kamenaca",
+    "intro": "Litonord povezuje magnezijum-citrat, Phyllanthus niruri i ekstrakt lista breze sa jednostavnom hidratacionom rutinom — dve kesice dnevno, svaka rastvorena u vodi.",
+    "dose": "2 kesice dnevno",
+    "doseNote": "Sadržaj svake kesice rastvoriti u 200 ml vode. Tokom primene neophodan je adekvatan unos tečnosti.",
+    "pack": "15 kesica",
+    "duration": ""
+  },
+  "audience": {
+    "eyebrow": "Kome je namenjen",
+    "heading": "Jasno definisana namena, bez komplikovanja",
+    "body": "Namenjen je odraslima sa istorijom bubrežnih kamenaca koji, uz dovoljno tečnosti i stručno praćenje, žele dodatnu nutritivnu podršku između epizoda ili nakon spontanog prolaska kamena i sprovedenog urološkog tretmana."
+  },
+  "benefits": {
+    "eyebrow": "Glavne prednosti",
+    "heading": "Šta formula pruža",
+    "items": [
+      {
+        "title": "Podstiče redovan unos tečnosti",
+        "body": "Svaka kesica rastvara se u 200 ml vode, pa dnevna primena prirodno podstiče strukturisanu hidratacionu rutinu."
+      },
+      {
+        "title": "Magnezijum i elektroliti",
+        "body": "Magnezijum doprinosi ravnoteži elektrolita i normalnoj funkciji mišića."
+      },
+      {
+        "title": "Biljna podrška urinarnom sistemu",
+        "body": "Phyllanthus niruri je jedna od najispitivanijih biljaka u oblasti urolitijaze, dok se breza tradicionalno koristi u preparatima za urinarni trakt."
+      }
+    ]
+  },
+  "formula": {
+    "eyebrow": "Formula",
+    "heading": "Različite uloge, jedan jasan cilj",
+    "intro": "Kod osoba koje su već imale kamen, adekvatan unos tečnosti ostaje jedna od najvažnijih navika. Litonord je osmišljen da tu rutinu dopuni magnezijum-citratom i biljnim ekstraktima. Ne treba ga poistovećivati sa terapijom kalijum-citratom niti sa lekovima koji se propisuju na osnovu metaboličke procene.",
+    "calloutLabel": "Zašto ova kombinacija",
+    "calloutBody": "Litonord kombinuje praktičnu hidratacionu rutinu sa magnezijumom i dve biljne komponente, pa pruža širi pristup od preparata koji se zasnivaju samo na jednom sastojku. Glavna ideja nije „rastvaranje kamena“, već dodatna podrška između epizoda i u dugoročnom programu navika i praćenja."
+  },
+  "ingredients": {
+    "eyebrow": "Aktivni sastojci",
+    "heading": "Sastav i uloga svake komponente",
+    "items": [
+      {
+        "name": "Magnezijum",
+        "amount": "400 mg dnevno",
+        "role": "Obezbeđen u obliku trimagnezijum-dicitrata. Doprinosi ravnoteži elektrolita, normalnoj funkciji mišića i smanjenju umora i iscrpljenosti."
+      },
+      {
+        "name": "Phyllanthus niruri",
+        "amount": "500 mg dnevno",
+        "role": "Suvi ekstrakt 10:1. Biljka je istraživana zbog mogućeg uticaja na kristalizaciju kalcijum-oksalata i pojedine parametre povezane sa stvaranjem kamenaca."
+      },
+      {
+        "name": "Breza",
+        "amount": "140 mg dnevno",
+        "role": "Ekstrakt lista Betula pendula 6:1. Tradicionalno se koristi u preparatima za urinarni trakt i dopunjuje hidratacionu rutinu formule."
+      }
+    ]
+  },
+  "useCases": {
+    "eyebrow": "Kada se može koristiti",
+    "heading": "Praktične situacije za primenu",
+    "items": [
+      "Kod osoba koje su ranije imale bubrežne kamence",
+      "Nakon spontane eliminacije kamena, ESWL ili druge urološke procedure",
+      "Kada je potreban strukturisaniji dnevni unos tečnosti",
+      "Kao dodatna nutritivna podrška uz individualni plan prevencije koji vodi lekar"
+    ]
+  },
+  "notes": {
+    "eyebrow": "Važne napomene",
+    "heading": "Bezbedna i odgovorna primena",
+    "warnings": "Proizvod se ne preporučuje deci, trudnicama i dojiljama, osobama sa bubrežnom insuficijencijom, izraženim AV blokom, mijastenijom gravis ili preosetljivošću na sastojke. Litonord ne zamenjuje metaboličku obradu, analizu sastava kamena, propisanu terapiju ili urološku intervenciju kada su potrebne. Temperatura, jak ili progresivan bol, nemogućnost mokrenja ili pogoršanje opšteg stanja zahtevaju lekarsku procenu.",
+    "legalNote": "Dodaci ishrani nisu zamena za raznovrsnu i uravnoteženu ishranu i zdrav način života. Čuvati van domašaja male dece."
+  },
   "purpose": "LITONORD je dodatak ishrani sa magnezijum-citratom i biljnim ekstraktima.",
-  "regulatoryNote": ""
+  "regulatoryNote": "",
+  "metaTitle": "",
+  "metaDescription": ""
 }

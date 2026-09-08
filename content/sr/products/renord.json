@@ -1,12 +1,87 @@
 {
   "name": "Renord",
   "order": 3,
-  "group": "Oporavak i regeneracija",
-  "accent": "teal",
+  "family": "regeneration",
   "category": "supplement",
+  "group": "Oporavak i regeneracija",
   "summary": "Podrška oporavku organizma i regeneraciji tkiva",
-  "ingredients": "Bromelin · Rutin · L-arginin",
-  "pack": "20 + 20 kapsula",
+  "hero": {
+    "subtitle": "Podrška cirkulaciji, smanjenju otoka i oporavku tkiva nakon procedura i povreda",
+    "intro": "Renord kombinuje bromelain, rutin i L-arginin kako bi kroz tri međusobno dopunjujuća mehanizma podržao procese važne za oporavak tkiva.",
+    "dose": "2 kapsule dnevno",
+    "doseNote": "Jedna žuta i jedna plava kapsula, između obroka.",
+    "pack": "20 + 20 kapsula",
+    "duration": "20 dana"
+  },
+  "audience": {
+    "eyebrow": "Kome je namenjen",
+    "heading": "Jasno definisana namena, bez komplikovanja",
+    "body": "Namenjen je odraslima u periodu oporavka nakon manjih medicinskih procedura, operacija ili povreda, naročito kada su prisutni otok, modrice i potreba za dodatnom podrškom obnovi tkiva."
+  },
+  "benefits": {
+    "eyebrow": "Glavne prednosti",
+    "heading": "Šta formula pruža",
+    "items": [
+      {
+        "title": "Otok i inflamacija",
+        "body": "Bromelain je proteolitički enzim koji se koristi kao podrška kod otoka i zapaljenskih procesa."
+      },
+      {
+        "title": "Krvni sudovi i antioksidativna zaštita",
+        "body": "Rutin pruža antioksidativnu i vaskularnu podršku, važnu za mikrocirkulaciju i kapilare."
+      },
+      {
+        "title": "Cirkulacija i obnova tkiva",
+        "body": "L-arginin je prekursor azot-monoksida i aminokiselina uključena u sintezu proteina, pa podržava cirkulaciju i procese obnove tkiva."
+      }
+    ]
+  },
+  "formula": {
+    "eyebrow": "Formula",
+    "heading": "Različite uloge, jedan jasan cilj",
+    "intro": "Oporavak tkiva ne zavisi od samo jednog procesa. Posle povrede ili intervencije istovremeno su važni kontrola otoka, mikrocirkulacija, oksidativni stres i obnova tkiva. Zato Renord kombinuje enzimsku, vaskularno-antioksidativnu i nutritivnu komponentu.",
+    "calloutLabel": "Zašto ova kombinacija",
+    "calloutBody": "Pažljivo osmišljena formula povezuje tri različita pristupa: bromelain za otok i inflamatorne procese, rutin za antioksidativnu i vaskularnu podršku i L-arginin za cirkulaciju i nutritivnu podršku obnovi tkiva."
+  },
+  "ingredients": {
+    "eyebrow": "Aktivni sastojci",
+    "heading": "Sastav i uloga svake komponente",
+    "items": [
+      {
+        "name": "Bromelain",
+        "amount": "150 mg dnevno • 2500 GDU",
+        "role": "Proteolitički enzim iz ananasa. Ispitivan je u postproceduralnom otoku, bolu i oporavku, a u formuli je glavna komponenta usmerena na edem i inflamatorne procese."
+      },
+      {
+        "name": "Rutin",
+        "amount": "200 mg dnevno",
+        "role": "Bioflavonoid sa antioksidativnim svojstvima i ulogom u podršci kapilarama, vaskularnoj barijeri i mikrocirkulaciji."
+      },
+      {
+        "name": "L-arginin",
+        "amount": "500 mg dnevno",
+        "role": "Aminokiselina i prekursor azot-monoksida. Podržava stvaranje NO, cirkulaciju i procese sinteze proteina važne za obnovu tkiva."
+      }
+    ]
+  },
+  "useCases": {
+    "eyebrow": "Kada se može koristiti",
+    "heading": "Praktične situacije za primenu",
+    "items": [
+      "Tokom oporavka nakon manjih procedura i operacija",
+      "Kod otoka i modrica nakon povrede ili intervencije",
+      "U periodu zarastanja površinskih rana koje se uredno oporavljaju",
+      "Kao dodatna podrška uz druge mere oporavka prema proceni lekara"
+    ]
+  },
+  "notes": {
+    "eyebrow": "Važne napomene",
+    "heading": "Bezbedna i odgovorna primena",
+    "warnings": "Poseban oprez je potreban kod osoba koje koriste antikoagulantne ili antitrombocitne lekove, lekove koji utiču na širenje krvnih sudova, kao i kod dijabetesa i učestalih epizoda herpesa. Trudnice i dojilje, kao i osobe koje uzimaju tetraciklin ili amoksicilin, treba da se konsultuju sa lekarom pre upotrebe. Renord ne zamenjuje obradu rane, kontrolu krvarenja, antibiotik, analgetik ili hirurški tretman kada su oni potrebni.",
+    "legalNote": "Dodaci ishrani nisu zamena za raznovrsnu i uravnoteženu ishranu i zdrav način života. Čuvati van domašaja male dece."
+  },
   "purpose": "RENORD je dodatak ishrani koji sadrži kombinaciju rutina, bromelina i L-arginina. Bromelin je prirodni enzim iz ananasa. L-arginin je aminokiselina koja ulazi u sastav mišića.",
-  "regulatoryNote": ""
+  "regulatoryNote": "",
+  "metaTitle": "",
+  "metaDescription": ""
 }

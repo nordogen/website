@@ -1,12 +1,92 @@
 {
   "name": "Nordilloma",
   "order": 2,
-  "group": "HPV and epithelial health",
-  "accent": "crimson",
+  "family": "gynaecology",
   "category": "supplement",
+  "group": "HPV & epithelial health",
   "summary": "Support for normal cell and immune function",
-  "ingredients": "EGCG · Hyaluronic acid · Vitamin B12 · Folic acid",
-  "pack": "30 capsules",
+  "hero": {
+    "subtitle": "Targeted nutritional support for people with HPV infection and during follow-up",
+    "intro": "Nordilloma combines EGCG, hyaluronic acid, folic acid and vitamin B12 in a formula designed to support normal immune function, cellular processes and epithelial health.",
+    "dose": "1–2 capsules daily",
+    "doseNote": "Do not take on an empty stomach.",
+    "pack": "30 capsules",
+    "duration": ""
+  },
+  "audience": {
+    "eyebrow": "Who it is for",
+    "heading": "A clearly defined role, without unnecessary complexity",
+    "body": "Designed for adults with a positive HPV result, including people with persistent infection or mild epithelial changes that are being monitored. Regular medical follow-up remains an essential part of HPV care."
+  },
+  "benefits": {
+    "eyebrow": "Key benefits",
+    "heading": "What the formula provides",
+    "items": [
+      {
+        "title": "Immune support",
+        "body": "Vitamin B12 and folate contribute to normal immune function."
+      },
+      {
+        "title": "Normal cellular processes",
+        "body": "Vitamin B12 and folate support normal cell division, while EGCG is being studied for effects on cellular processes relevant to HPV."
+      },
+      {
+        "title": "Epithelial support",
+        "body": "Hyaluronic acid is a natural component of connective and epithelial tissue and is included to support tissue hydration and integrity."
+      }
+    ]
+  },
+  "formula": {
+    "eyebrow": "Formula",
+    "heading": "Different roles, one clear purpose",
+    "intro": "HPV infection is very common and clears spontaneously in most people. When it persists, regular follow-up becomes especially important. Nordilloma is designed as complementary nutritional support through four ingredients with distinct roles: antioxidant, immune, nutritional and epithelial support.",
+    "calloutLabel": "Why this combination",
+    "calloutBody": "The formula combines four ingredients with distinct roles rather than relying on a single component. EGCG provides a polyphenol and antioxidant base, folate and vitamin B12 support immune function and cell division, while hyaluronic acid adds a component focused on epithelial tissue."
+  },
+  "ingredients": {
+    "eyebrow": "Active ingredients",
+    "heading": "Composition and the role of each ingredient",
+    "items": [
+      {
+        "name": "EGCG",
+        "amount": "150 mg per capsule",
+        "role": "A 95% standardized green tea extract. EGCG is being studied in HPV-positive cells, cellular proliferation and antiviral response."
+      },
+      {
+        "name": "Hijaluronska kiselina",
+        "amount": "50 mg per capsule",
+        "role": "A natural component of the extracellular matrix, included to support hydration and maintenance of normal epithelial structure."
+      },
+      {
+        "name": "Vitamin B12",
+        "amount": "250 µg per capsule",
+        "role": "Contributes to normal immune function and plays a role in cell division."
+      },
+      {
+        "name": "Folna kiselina",
+        "amount": "200 µg per capsule",
+        "role": "Contributes to normal immune function, cell division, amino acid synthesis and normal blood formation."
+      }
+    ]
+  },
+  "useCases": {
+    "eyebrow": "When it may be used",
+    "heading": "Practical situations for use",
+    "items": [
+      "With a positive HPV result alongside regular follow-up",
+      "With persistent HPV as complementary nutritional support",
+      "With mild cervical changes (LSIL/CIN1) when monitoring has been chosen by the clinician",
+      "After local treatment of HPV-related changes, with continued follow-up"
+    ]
+  },
+  "notes": {
+    "eyebrow": "Important information",
+    "heading": "Safe and responsible use",
+    "warnings": "Do not exceed the recommended daily dose or 300 mg of EGCG per day, and do not use other green tea products on the same day. Not intended for pregnant or breastfeeding women or anyone under 18. Nordilloma does not replace HPV vaccination, cervical screening, HPV testing, colposcopy or any examination or treatment recommended by a clinician.",
+    "legalNote": "Food supplements are not a substitute for a varied and balanced diet and a healthy lifestyle. Keep out of the reach of small children. / Dodaci ishrani nisu zamena za raznovrsnu i uravnoteženu ishranu i zdrav način života. Čuvati van domašaja male dece."
+  },
   "purpose": "NORDILLOMA je dodatak ishrani na bazi ekstrakta lista zelenog čaja, hijaluronske kiseline, vitamina B12 i folne kiseline.",
-  "regulatoryNote": ""
+  "regulatoryNote": "",
+  "metaTitle": "",
+  "metaDescription": ""
 }

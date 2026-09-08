@@ -8,6 +8,8 @@
   --color-paper: #FCFCFA;
   --color-soft: #F6F5F1;
   --color-well: #F4F3EF;
+  /* The product page's hero panel, behind the box render. */
+  --color-panel: #EEF2F4;
 
   /* Text */
   --color-ink: #14201F;
@@ -47,8 +49,26 @@
 }
 
 @layer base {
+  :root {
+    /* The sticky header's own height, and the product page's on-page nav that
+       sticks directly under it. Anchor targets and the nav's own `top` both
+       read these, so the three cannot drift apart. Mobile's nav is a plain
+       stacked list, not sticky, hence 0. */
+    --header-height: 73px;
+    --toc-height: 0px;
+  }
+
+  @media (width >= 64rem) {
+    :root {
+      --header-height: 85px;
+      --toc-height: 63px;
+    }
+  }
+
   html {
     -webkit-text-size-adjust: 100%;
+    /* The reduced-motion block below forces this back to `auto`. */
+    scroll-behavior: smooth;
   }
 
   body {
@@ -79,6 +99,12 @@
 }
 
 @layer components {
+  /* Anchor targets clear the sticky header, and the sticky on-page nav where
+     there is one. */
+  .section-anchor {
+    scroll-margin-top: calc(var(--header-height) + var(--toc-height) + 0.5rem);
+  }
+
   /* The hero scrim. Mobile stacks the copy at the bottom, so the gradient runs
      top-to-bottom; desktop sets it beside the subject, so it runs left-to-right
      and clears the right of the frame. */

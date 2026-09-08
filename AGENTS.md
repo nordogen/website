@@ -9,6 +9,8 @@ No e-commerce, no accounts, no forms, no blog.
 **Read before non-trivial work:**
 - `docs/redesign-2026-09.md` — the current visual system, where it came from, and what was
   deliberately changed from the handoff
+- `docs/product-pages.md` — the product page template: its content model, what the copy came
+  from, and where it departs from that handoff
 - `docs/superpowers/specs/2026-07-28-nordogen-site-design.md` — the *first* build's decisions.
   Superseded on colour, type and imagery by the redesign; still correct on routing, i18n and
   the content-layer posture
@@ -86,6 +88,7 @@ Two root layouts, via route groups. Route groups do not appear in URLs.
 src/app/
   (site)/[locale]/layout.tsx     ROOT LAYOUT 1 — <html lang={locale}>, font, Header, Footer
   (site)/[locale]/page.tsx       Home
+  (site)/[locale]/products/[slug]/page.tsx   Product page — 6 slugs x 2 locales, prerendered
   (admin)/keystatic/layout.tsx   ROOT LAYOUT 2 — <html lang="en">, admin only
   (admin)/keystatic/[[...params]]/page.tsx
   api/keystatic/[...params]/route.ts   route handler — needs no layout
@@ -115,13 +118,21 @@ src/keystatic/schema.ts        siteChromeSchema(), homeSchema(), productSchema()
 keystatic.config.ts            singletons + the two product collections, instantiating
                                each factory once per locale
 content/{sr,en}/*.json         editor-managed page content
-content/{sr,en}/products/*.json  one file per product, per locale
+content/{sr,en}/products/*.json  one file per product, per locale — the home card
+                               AND the whole product page behind it
 src/i18n/ui.ts                 nav, footer headings, a11y strings — NOT editor-managed
 ```
 
 The two locales share one schema factory, instantiated twice. This makes structural drift
 between `sr` and `en` impossible by construction — **do not inline field definitions per
 locale.** Note `settings` is an exception (inlined, no per-locale counterpart).
+
+The product file is grouped into `fields.object` blocks that mirror the page — `hero`,
+`audience`, `benefits`, `formula`, `ingredients`, `useCases`, `notes` — so the editor works
+down the page in order. `benefits` and `useCases` are whole sections that **disappear when their
+array is empty**, taking their band and their on-page-nav entry with them. `ingredients.items`
+feeds three things at once: the pills on the home card, the pills in the product hero, and the
+ingredient cards.
 
 **A product's photo is derived from its slug** (`public/products/<slug>.webp`), not stored as a
 CMS image field. The photo is identical in both locales, and a per-locale image field is a
@@ -137,7 +148,8 @@ Write them for that reader.
 ## Hard constraints
 
 **Colour.** The full palette is the `@theme` block in `src/app/globals.css` and nothing else.
-Surfaces `paper` `#FCFCFA`, `soft` `#F6F5F1`, `well` `#F4F3EF`, `white`. Text `ink` `#14201F`,
+Surfaces `paper` `#FCFCFA`, `soft` `#F6F5F1`, `well` `#F4F3EF`, `panel` `#EEF2F4` (the product
+page's hero panel), `white`. Text `ink` `#14201F`,
 `ink-soft` `#41504E`, `muted` `#5F6C6A`, `nav` `#3D4A49`, `inactive` `#647371`, `on-ink`
 `#A7B4B3`. Accent `accent` `#2E7391`, `accent-light` `#7FB4C9`. Per-product `product-blue`
 `#4C88A8`, `product-teal` `#0F4249`, `product-crimson` `#8E2A3E`, plus `badge-blue` `#3A6E88`.
@@ -152,8 +164,13 @@ This replaces the pre-redesign `brand-*` palette wholesale. The old `brand-blue`
 `data/style.css` was already a wrong reference and is now doubly so.
 
 **Blue is the only accent whose badge fill differs from the accent itself.** White text on
-`product-blue` does not clear 4.5:1, so badges use `badge-blue`. `ProductCard` encodes this —
-do not "tidy" the two into one token.
+`product-blue` does not clear 4.5:1, so badges use `badge-blue`. `FAMILY_BADGE` in
+`ProductCard.tsx` encodes this — do not "tidy" the two into one token.
+
+**Colour follows the therapeutic area, not the other way round.** A product's `family`
+(`urology` / `gynaecology` / `regeneration`) picks its badge fill and its benefit-card rule, and
+also decides which products appear under "from the same range". There is no separate colour
+field to fall out of step with it.
 
 **Every text/background pair on the page has been measured against real pixels**, compositing
 alpha onto the actual ancestor background. Two things follow: reading `getComputedStyle().color`
@@ -177,10 +194,15 @@ overrides is a defect even if it renders correctly. Targets: 375 / 768 / 1440.
   the language switch 13px, and the product badge **11px on mobile / 12px desktop**. The badge
   is the smallest type on the site and it is deliberate — uppercase, letterspaced, and short.
   Do not "fix" it, and do not copy 11px anywhere else.
+- The product page's desktop on-page nav is the one place a target is under 44px: 29px tall,
+  set 32px apart, which is what the artboards draw and what WCAG 2.5.8's spacing exception
+  covers. Its mobile rows are the full 44px. Everything else on the site meets 44.
 - `prefers-reduced-motion` is handled globally in `globals.css`. Do not re-implement it.
 
-**Server components by default.** `MobileNav.tsx` is the only client component. Keep it that
-way unless there is a real reason.
+**Server components by default.** There are exactly two client components, and each has a
+reason that cannot be met on the server: `MobileNav.tsx` (open/close state) and
+`ProductToc.tsx` (which section is in view). Everything else is a server component. Keep it
+that way.
 
 ## Copy rules — these have legal weight
 
@@ -241,6 +263,13 @@ port. Zeros from nothing look identical to zeros from success.
 
 **Assert the thing exists before trusting any measurement of it.** e.g. confirm
 `document.querySelector('footer')` is non-null before believing a layout number.
+
+**`--header-height` and `--toc-height` are load-bearing, and nothing checks them.** The sticky
+header, the sticky on-page nav under it, and every anchor's `scroll-margin-top` all read those
+two variables in `globals.css`. Change a header padding or the on-page nav's line-height and the
+numbers silently stop matching: anchors then land *behind* the sticky bars, which looks like a
+scrolling bug and is really an arithmetic one. Measure both after any change to either bar —
+`getBoundingClientRect().height` against `getComputedStyle(documentElement).getPropertyValue`.
 
 **Replacing an image file does not change what a screenshot shows.** `next/image` caches
 optimised output in `.next/cache/images` keyed by URL, not by content, and the browser caches on
@@ -318,17 +347,16 @@ box in a tinted rectangle, it is an opaque render and needs cutting out, not a b
 
 ## Not built yet
 
-Product **pages** (the `products` *collection* now exists and is populated), `/about`,
-`/contact`, legal pages, sitemap, JSON-LD (`DietarySupplement`, not `Product` — no offers
-exist), OG images, Playwright responsive suite, eslint, Lighthouse CI, and
-`check:content --strict`.
+A products **index** at `/[locale]/products`, `/about`, `/contact`, legal pages, sitemap,
+JSON-LD (`DietarySupplement`, not `Product` — no offers exist), OG images, Playwright responsive
+suite, eslint, Lighthouse CI, and `check:content --strict`.
 
-**Nothing on the page links to a 404.** Because those routes do not exist, the nav, the footer
-company column and the hero CTAs all point at on-page anchors (`#proizvodi`, `#zasto`,
-`#kontakt`, ids in `src/i18n/ui.ts`); the contact button is a `mailto:`; product cards are
-`<article>`, not links; and the footer product and legal columns are plain text, exactly as the
-artboards draw them. When a real route lands, swap its `hash` for a `path` in `ui.ts` and wrap
-`ProductCard` in an anchor — do not add dead links before then.
+**Nothing on the site links to a 404.** Product pages exist and the home cards, the footer
+product column and the "from the same range" cards all link to them. Everything else points at
+an on-page anchor (`#proizvodi`, `#zasto`, `#kontakt`, ids in `src/i18n/ui.ts`) or a `mailto:` —
+including the product page's own breadcrumb, whose middle crumb goes to the home page's product
+grid because there is no index yet. The footer's legal column is still plain text. When a real
+route lands, swap its `hash` for a `path` in `ui.ts` — do not add dead links before then.
 
 Two ordering notes for whoever picks this up:
 
