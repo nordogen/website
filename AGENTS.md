@@ -397,6 +397,19 @@ not publish canonical and hreflang tags claiming to be the live site.
 which is what keeps `[REVIEW]` copy out of search results. Verify by reading
 `.next/server/app/robots.txt.body` after a build — the emitted file, not the source.
 
+**All page metadata goes through `pageMetadata()` in `src/lib/seo.ts`** — canonical, hreflang,
+Open Graph and Twitter, from one place. Add `og:image` there when OG images exist and every page
+gets it at once; right now there are none, and an `og:image` pointing at nothing is worse than
+no card at all.
+
+Descriptions are clamped to ~155 characters by `clampDescription`, on a sentence boundary where
+there is one and a word boundary otherwise. Product titles are `Name — Badge label | NORDOGEN`
+rather than name plus subtitle, which ran 76–105 characters and truncated in the result.
+
+**Two locks keep non-production hosts out of the index**, both on `isProductionOrigin`:
+`robots.txt` blocks crawling, and the root layout emits `noindex, nofollow` so a page that
+reaches an index some other way still says no.
+
 `src/app/sitemap.ts` lists both locales of the home page and every product — 14 URLs, each with
 the full `hreflang` set, origin read from `SITE_ORIGIN`. `robots.ts` advertises it **only on the
 production origin**, behind the same `isProductionOrigin` gate: a host that has just told

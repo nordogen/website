@@ -11,7 +11,7 @@ import { Section } from '@/components/ui/Section'
 import { getProduct, getProductSlugs, getRelatedProducts, type Product } from '@/content/queries'
 import { LOCALES, isLocale, type Locale } from '@/i18n/locales'
 import { PRODUCT_SECTION_ID, SECTION_ID, UI } from '@/i18n/ui'
-import { localeAlternates } from '@/i18n/urls'
+import { SITE_NAME, pageMetadata } from '@/lib/seo'
 
 /** The 3px rule on a benefit card, in the product's own accent. */
 const FAMILY_RULE = {
@@ -45,17 +45,16 @@ export async function generateMetadata({
   const product = await load(locale, slug)
   if (!product || !isLocale(locale)) return {}
 
-  const alternates = localeAlternates(`/products/${slug}`)
-  return {
-    // The editor can override both; without an override the subtitle and the
-    // intro are already written to do this job.
-    title: product.metaTitle || [product.name, product.hero.subtitle].filter(Boolean).join(' — '),
+  return pageMetadata({
+    locale,
+    path: `/products/${slug}`,
+    // The subtitle made titles 76-105 characters, well past where a search
+    // result truncates. The badge label is short and carries the same words
+    // someone would search for.
+    title: product.metaTitle || `${product.name} — ${product.group} | ${SITE_NAME}`,
+    // Clamped to a sentence by `pageMetadata`; the editor can override it.
     description: product.metaDescription || product.hero.intro,
-    alternates: {
-      canonical: alternates.canonicalFor(locale),
-      languages: alternates.languages,
-    },
-  }
+  })
 }
 
 export default async function ProductPage({
@@ -127,7 +126,10 @@ export default async function ProductPage({
           <div className="-mx-5 flex items-center justify-center bg-panel px-5 py-8 lg:mx-0 lg:min-h-[480px] lg:rounded-card lg:p-12">
             <Image
               src={`/products/${product.slug}.webp`}
-              alt=""
+              /* The one product image that is the subject of its page rather
+                 than decoration beside a heading, so it carries real alt text
+                 for image search. Card and related-product thumbs stay empty. */
+              alt={`${product.name}, ${product.hero.pack}`}
               width={900}
               height={900}
               priority

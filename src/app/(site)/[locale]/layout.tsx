@@ -6,13 +6,19 @@ import { Header } from '@/components/layout/Header'
 import { newsreader, workSans } from '@/lib/fonts'
 import { LOCALES, isLocale } from '@/i18n/locales'
 import { UI } from '@/i18n/ui'
-import { SITE_ORIGIN } from '@/i18n/urls'
+import { SITE_ORIGIN, isProductionOrigin } from '@/i18n/urls'
 
 // Inherited by every route, so any relative URL in metadata (OG images, when
 // they exist) resolves against the deployment's own origin instead of
 // silently against localhost.
+//
+// robots.txt already keeps crawlers off every host but the canonical one. This
+// is the second lock: a page that reaches an index some other way — a link from
+// elsewhere, a crawler ignoring robots.txt — still says noindex on staging,
+// preview and localhost. Same host check, so the two cannot disagree.
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_ORIGIN),
+  ...(isProductionOrigin(SITE_ORIGIN) ? {} : { robots: { index: false, follow: false } }),
 }
 
 export function generateStaticParams() {
