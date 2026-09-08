@@ -361,9 +361,9 @@ box in a tinted rectangle, it is an opaque render and needs cutting out, not a b
 
 ## Not built yet
 
-A products **index** at `/[locale]/products`, `/about`, `/contact`, legal pages, sitemap,
-JSON-LD (`DietarySupplement`, not `Product` — no offers exist), OG images, Playwright responsive
-suite, eslint, Lighthouse CI, and `check:content --strict`.
+A products **index** at `/[locale]/products`, `/about`, `/contact`, legal pages, JSON-LD
+(`DietarySupplement`, not `Product` — no offers exist), OG images, Playwright responsive suite,
+eslint, Lighthouse CI, and `check:content --strict`.
 
 **Nothing on the site links to a 404.** Product pages exist and the home cards, the footer
 product column and the "from the same range" cards all link to them. Everything else points at
@@ -397,7 +397,15 @@ not publish canonical and hreflang tags claiming to be the live site.
 which is what keeps `[REVIEW]` copy out of search results. Verify by reading
 `.next/server/app/robots.txt.body` after a build — the emitted file, not the source.
 
-No `sitemap` line in `robots.txt` yet, because `sitemap.ts` does not exist. Add both together.
+`src/app/sitemap.ts` lists both locales of the home page and every product — 14 URLs, each with
+the full `hreflang` set, origin read from `SITE_ORIGIN`. `robots.ts` advertises it **only on the
+production origin**, behind the same `isProductionOrigin` gate: a host that has just told
+crawlers to stay off has no business handing them a URL list.
+
+It carries no `lastModified`, `changeFrequency` or `priority`. Build time would claim every page
+changed on every deploy and content mtimes do not survive a checkout, so a date here would be a
+lie; the other two are guesses Google ignores. Add `lastModified` only when something actually
+tracks content change dates.
 
 ### Keystatic CMS
 
