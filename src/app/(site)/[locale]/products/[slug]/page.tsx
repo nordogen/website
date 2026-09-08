@@ -5,13 +5,22 @@ import { notFound } from 'next/navigation'
 import { FAMILY_BADGE } from '@/components/products/ProductCard'
 import { IngredientPills } from '@/components/products/IngredientPills'
 import { ProductToc, type TocItem } from '@/components/products/ProductToc'
+import { JsonLd } from '@/components/seo/JsonLd'
 import { Container } from '@/components/ui/Container'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { Section } from '@/components/ui/Section'
-import { getProduct, getProductSlugs, getRelatedProducts, type Product } from '@/content/queries'
+import {
+  getProduct,
+  getProductSlugs,
+  getRelatedProducts,
+  getSettings,
+  type Product,
+} from '@/content/queries'
 import { LOCALES, isLocale, type Locale } from '@/i18n/locales'
 import { PRODUCT_SECTION_ID, SECTION_ID, UI } from '@/i18n/ui'
+import { absoluteUrl } from '@/i18n/urls'
 import { SITE_NAME, pageMetadata } from '@/lib/seo'
+import { breadcrumbNode, graph, organizationNode, productNode } from '@/lib/structured-data'
 
 /** The 3px rule on a benefit card, in the product's own accent. */
 const FAMILY_RULE = {
@@ -66,7 +75,10 @@ export default async function ProductPage({
   const product = await load(locale, slug)
   if (!product || !isLocale(locale)) notFound()
 
-  const related = await getRelatedProducts(locale, slug)
+  const [related, settings] = await Promise.all([
+    getRelatedProducts(locale, slug),
+    getSettings(),
+  ])
   const ui = UI[locale]
 
   const hasBenefits = product.benefits.items.length > 0
@@ -93,6 +105,29 @@ export default async function ProductPage({
     /* `has-sticky-toc` adds the on-page nav's height to every anchor offset
        inside it — see globals.css. Only this page has that bar. */
     <div className="has-sticky-toc">
+      <JsonLd
+        data={graph([
+          organizationNode(settings),
+          breadcrumbNode({
+            locale,
+            homeLabel: ui.breadcrumbHome,
+            productsLabel: ui.nav[0]?.label ?? '',
+            // The same anchor the visible breadcrumb points at, because there
+            // is no products index yet.
+            productsUrl: `${absoluteUrl(locale)}#${SECTION_ID.products}`,
+            product,
+          }),
+          productNode({
+            product,
+            settings,
+            locale,
+            categoryLabel: ui.productCategory[product.category],
+            doseLabel: ui.spec.dose,
+            noticeLabel: ui.mandatoryNotice,
+          }),
+        ])}
+      />
+
       <nav aria-label={ui.breadcrumbLabel} className="border-b border-ink/8">
         <Container className="text-[0.875rem] text-muted lg:text-[0.9375rem]">
           <ol className="flex flex-wrap items-center gap-x-2">

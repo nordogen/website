@@ -2,6 +2,7 @@ import Image from 'next/image'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { ProductCard } from '@/components/products/ProductCard'
+import { JsonLd } from '@/components/seo/JsonLd'
 import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
 import { Eyebrow } from '@/components/ui/Eyebrow'
@@ -10,6 +11,7 @@ import { getHome, getProducts, getSettings } from '@/content/queries'
 import { isLocale } from '@/i18n/locales'
 import { SECTION_ID } from '@/i18n/ui'
 import { pageMetadata } from '@/lib/seo'
+import { graph, organizationNode } from '@/lib/structured-data'
 
 export async function generateMetadata({
   params,
@@ -47,6 +49,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
   return (
     <>
+      <JsonLd data={graph([organizationNode(settings)])} />
+
       {/* Hero. The section is only as tall as its content — the min-heights are
           the drawn heights, not a cap, so longer copy or a longer language
           grows the band instead of overflowing the image. */}
