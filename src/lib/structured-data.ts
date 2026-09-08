@@ -1,5 +1,6 @@
 import type { Locale } from '@/i18n/locales'
 import { SITE_ORIGIN, absoluteUrl } from '@/i18n/urls'
+import { SITE_NAME } from './seo'
 import type { Product } from '@/content/queries'
 import type { getSettings } from '@/content/queries'
 
@@ -10,7 +11,12 @@ type Node = Record<string, unknown>
 const ORGANIZATION_ID = `${SITE_ORIGIN}/#organization`
 
 /**
- * The company, from `content/settings.json` — never retyped here.
+ * The company. Every fact an editor can change — legal name, address, email —
+ * comes from `content/settings.json`. The display name is the one exception:
+ * it is the brand, shared with `og:site_name` through `SITE_NAME`, and not
+ * something an editor should be able to rename from the CMS. `settings` holds
+ * the *legal* name (`NORDOGEN d.o.o.`), which is a different string and goes in
+ * `legalName`.
  *
  * `manufacturer` in settings is one editor-written line naming the contract
  * manufacturer. It is passed through as a name rather than parsed: the
@@ -22,7 +28,7 @@ export function organizationNode(settings: Settings): Node {
   return {
     '@type': 'Organization',
     '@id': ORGANIZATION_ID,
-    name: 'NORDOGEN',
+    name: SITE_NAME,
     legalName: settings.legalName,
     url: SITE_ORIGIN,
     logo: `${SITE_ORIGIN}/icon.png`,

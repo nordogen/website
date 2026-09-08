@@ -24,6 +24,7 @@ type Chrome = {
   companyLinks: { hash: string; label: string }[]
   legalLinks: string[]
   breadcrumbHome: string
+  breadcrumbProducts: string
   relatedHeading: string
   /** Short labels for the on-page nav. Kept apart from the section headings,
       which are authored per product and far too long for a single row. */
@@ -57,6 +58,7 @@ export const UI: Record<Locale, Chrome> = {
     ],
     legalLinks: ['Politika privatnosti', 'Uslovi korišćenja'],
     breadcrumbHome: 'Početna',
+    breadcrumbProducts: 'Proizvodi',
     relatedHeading: 'Iz iste grupe',
     toc: {
       audience: 'Kome je namenjen',
@@ -93,6 +95,7 @@ export const UI: Record<Locale, Chrome> = {
     ],
     legalLinks: ['Privacy policy', 'Terms of use'],
     breadcrumbHome: 'Home',
+    breadcrumbProducts: 'Products',
     relatedHeading: 'More in this range',
     toc: {
       audience: 'Who it is for',
