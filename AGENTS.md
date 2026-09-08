@@ -361,9 +361,9 @@ box in a tinted rectangle, it is an opaque render and needs cutting out, not a b
 
 ## Not built yet
 
-A products **index** at `/[locale]/products`, `/about`, `/contact`, legal pages, sitemap,
-JSON-LD (`DietarySupplement`, not `Product` — no offers exist), OG images, Playwright responsive
-suite, eslint, Lighthouse CI, and `check:content --strict`.
+A products **index** at `/[locale]/products`, `/about`, `/contact`, legal pages, JSON-LD
+(`DietarySupplement`, not `Product` — no offers exist), OG images, Playwright responsive suite,
+eslint, Lighthouse CI, and `check:content --strict`.
 
 **Nothing on the site links to a 404.** Product pages exist and the home cards, the footer
 product column and the "from the same range" cards all link to them. Everything else points at
@@ -397,7 +397,36 @@ not publish canonical and hreflang tags claiming to be the live site.
 which is what keeps `[REVIEW]` copy out of search results. Verify by reading
 `.next/server/app/robots.txt.body` after a build — the emitted file, not the source.
 
-No `sitemap` line in `robots.txt` yet, because `sitemap.ts` does not exist. Add both together.
+**All page metadata goes through `pageMetadata()` in `src/lib/seo.ts`** — canonical, hreflang,
+Open Graph and Twitter, from one place. Add `og:image` there when OG images exist and every page
+gets it at once; right now there are none, and an `og:image` pointing at nothing is worse than
+no card at all.
+
+Descriptions are clamped to ~155 characters by `clampDescription`, on a sentence boundary where
+there is one and a word boundary otherwise. Product titles are `Name — Badge label | NORDOGEN`
+rather than name plus subtitle, which ran 76–105 characters and truncated in the result.
+
+**Hero images are the LCP element, and `priority` alone is not enough.** Next emits the
+`<link rel="preload" as="image">` from `priority`, but **not** `fetchpriority` — Lighthouse flags
+that as "fetchpriority=high should be applied to the image preload request". Both hero images
+pass `fetchPriority="high"` explicitly, which lands on the preload link *and* the `<img>`. Any
+new above-the-fold hero needs `priority` **and** `fetchPriority="high"`; everything below the
+fold stays lazy (7 lazy images on the home page, 3 on a product page — the heroes are not among
+them).
+
+**Two locks keep non-production hosts out of the index**, both on `isProductionOrigin`:
+`robots.txt` blocks crawling, and the root layout emits `noindex, nofollow` so a page that
+reaches an index some other way still says no.
+
+`src/app/sitemap.ts` lists both locales of the home page and every product — 14 URLs, each with
+the full `hreflang` set, origin read from `SITE_ORIGIN`. `robots.ts` advertises it **only on the
+production origin**, behind the same `isProductionOrigin` gate: a host that has just told
+crawlers to stay off has no business handing them a URL list.
+
+It carries no `lastModified`, `changeFrequency` or `priority`. Build time would claim every page
+changed on every deploy and content mtimes do not survive a checkout, so a date here would be a
+lie; the other two are guesses Google ignores. Add `lastModified` only when something actually
+tracks content change dates.
 
 ### Keystatic CMS
 
@@ -418,7 +447,9 @@ time (ISR, draft mode, a missed `generateStaticParams`) would 500 with ENOENT.
 ## Conventions
 
 - Conventional Commits. Explain *why* in the body when it is not obvious.
-- Canonical host `https://nordogen.com`, but never hardcode it — read `SITE_ORIGIN` from
+- The live canonical host is **`https://www.nordogen.com`** — the apex 308s to it, and
+  production canonicals are emitted on `www`. `isProductionOrigin` accepts both, so an origin set
+  to either one still gets `Allow: /`. Never hardcode a host: read `SITE_ORIGIN` from
   `src/i18n/urls.ts`. Locales always prefixed; `hreflang` covers `sr`, `en` and
   `x-default` → `sr`.
 - Keep the dependency list minimal. Prefer native Next.js features over packages: `sitemap.ts`

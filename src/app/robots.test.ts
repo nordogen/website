@@ -12,9 +12,19 @@ beforeEach(() => {
 })
 
 describe('robots', () => {
-  it('allows crawling on the production host', async () => {
+  it('allows crawling on the production host, and advertises the sitemap', async () => {
     const robots = await loadRobots('https://nordogen.com')
-    expect(robots()).toEqual({ rules: { userAgent: '*', allow: '/' } })
+    expect(robots()).toEqual({
+      rules: { userAgent: '*', allow: '/' },
+      sitemap: 'https://nordogen.com/sitemap.xml',
+    })
+  })
+
+  it('advertises no sitemap on a host it has just told crawlers to stay off', async () => {
+    for (const origin of ['https://website-nordogen.vercel.app', undefined]) {
+      const robots = await loadRobots(origin)
+      expect(robots().sitemap).toBeUndefined()
+    }
   })
 
   it('blocks crawling on a Vercel deployment host', async () => {

@@ -9,7 +9,7 @@ import { Section } from '@/components/ui/Section'
 import { getHome, getProducts, getSettings } from '@/content/queries'
 import { isLocale } from '@/i18n/locales'
 import { SECTION_ID } from '@/i18n/ui'
-import { localeAlternates } from '@/i18n/urls'
+import { pageMetadata } from '@/lib/seo'
 
 export async function generateMetadata({
   params,
@@ -19,16 +19,13 @@ export async function generateMetadata({
   const { locale } = await params
   if (!isLocale(locale)) return {}
   const home = await getHome(locale)
-  const alternates = localeAlternates('')
 
-  return {
+  return pageMetadata({
+    locale,
+    path: '',
     title: home.metaTitle,
     description: home.metaDescription,
-    alternates: {
-      canonical: alternates.canonicalFor(locale),
-      languages: alternates.languages,
-    },
-  }
+  })
 }
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
@@ -59,6 +56,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           alt=""
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           className="-z-10 object-cover object-[62%_50%] lg:object-[70%_50%]"
         />
