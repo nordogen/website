@@ -55,12 +55,19 @@
        read these, so the three cannot drift apart. Mobile's nav is a plain
        stacked list, not sticky, hence 0. */
     --header-height: 73px;
+    /* Zero unless a page opts in below — most pages have no on-page nav, and
+       an offset for a bar that is not there drops every anchor too low. */
     --toc-height: 0px;
   }
 
   @media (width >= 64rem) {
     :root {
       --header-height: 85px;
+    }
+
+    /* Set on the product page wrapper, so its sections inherit it and every
+       other page keeps the header-only offset. */
+    .has-sticky-toc {
       --toc-height: 63px;
     }
   }

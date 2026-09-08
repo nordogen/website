@@ -91,7 +91,9 @@ export default async function ProductPage({
   ].filter((cell) => cell.value)
 
   return (
-    <>
+    /* `has-sticky-toc` adds the on-page nav's height to every anchor offset
+       inside it — see globals.css. Only this page has that bar. */
+    <div className="has-sticky-toc">
       <nav aria-label={ui.breadcrumbLabel} className="border-b border-ink/8">
         <Container className="text-[0.875rem] text-muted lg:text-[0.9375rem]">
           <ol className="flex flex-wrap items-center gap-x-2">
@@ -189,7 +191,7 @@ export default async function ProductPage({
 
       <ProductToc items={toc} label={ui.tocLabel} />
 
-      <Section id={PRODUCT_SECTION_ID.audience} pad="product" className="section-anchor">
+      <Section id={PRODUCT_SECTION_ID.audience} pad="product">
         <div className="max-w-[900px]">
           <Eyebrow>{product.audience.eyebrow}</Eyebrow>
           <h2 className="mt-3 font-display text-[clamp(2rem,3.2vw,2.75rem)] leading-[1.16] tracking-[-0.015em] lg:mt-4">
@@ -206,7 +208,7 @@ export default async function ProductPage({
           id={PRODUCT_SECTION_ID.benefits}
           tone="soft"
           pad="product"
-          className="section-anchor"
+         
         >
           <Eyebrow>{product.benefits.eyebrow}</Eyebrow>
           <h2 className="mt-3 font-display text-[clamp(2rem,3.2vw,2.75rem)] leading-[1.16] tracking-[-0.015em] lg:mt-4">
@@ -232,7 +234,7 @@ export default async function ProductPage({
         </Section>
       ) : null}
 
-      <Section id={PRODUCT_SECTION_ID.formula} pad="product" className="section-anchor">
+      <Section id={PRODUCT_SECTION_ID.formula} pad="product">
         <div className="max-w-[920px]">
           <Eyebrow>{product.formula.eyebrow}</Eyebrow>
           <h2 className="mt-3 font-display text-[clamp(2rem,3.2vw,2.75rem)] leading-[1.16] tracking-[-0.015em] lg:mt-4">
@@ -261,7 +263,7 @@ export default async function ProductPage({
         id={PRODUCT_SECTION_ID.ingredients}
         tone="soft"
         pad="product"
-        className="section-anchor"
+       
       >
         <Eyebrow>{product.ingredients.eyebrow}</Eyebrow>
         <h2 className="mt-3 font-display text-[clamp(2rem,3.2vw,2.75rem)] leading-[1.16] tracking-[-0.015em] lg:mt-4">
@@ -294,7 +296,7 @@ export default async function ProductPage({
       </Section>
 
       {hasUseCases ? (
-        <Section id={PRODUCT_SECTION_ID.useCases} pad="product" className="section-anchor">
+        <Section id={PRODUCT_SECTION_ID.useCases} pad="product">
           <div className="lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-14">
             <div>
               <Eyebrow>{product.useCases.eyebrow}</Eyebrow>
@@ -355,7 +357,7 @@ export default async function ProductPage({
           </div>
         </div>
       </Section>
-    </>
+    </div>
   )
 }
 

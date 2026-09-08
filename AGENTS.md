@@ -271,6 +271,13 @@ port. Zeros from nothing look identical to zeros from success.
 **Assert the thing exists before trusting any measurement of it.** e.g. confirm
 `document.querySelector('footer')` is non-null before believing a layout number.
 
+**A `<Section>` with an `id` gets its scroll offset automatically** — `Section.tsx` adds
+`.section-anchor` whenever `id` is set. It was a per-call-site class first, and the home page's
+three anchors were simply missed: clicking a nav link scrolled the section flush under the
+sticky header, which reads as a broken link rather than a missing class. `--toc-height` is `0`
+by default and only the product page's wrapper opts in via `.has-sticky-toc`, so an offset for a
+bar that is not on the page can't drop every anchor too low either.
+
 **`--header-height` and `--toc-height` are load-bearing, and nothing checks them.** The sticky
 header, the sticky on-page nav under it, and every anchor's `scroll-margin-top` all read those
 two variables in `globals.css`. Change a header padding or the on-page nav's line-height and the
