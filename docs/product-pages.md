@@ -64,6 +64,10 @@ says where you are.
 plus `scroll-behavior: smooth`, which the global reduced-motion block turns back into a jump.
 The client component exists only to highlight the section in view.
 
+**It sticks on desktop only.** Five stacked 44px rows pinned under the header would eat a third
+of a 375px viewport, so on mobile the bar scrolls away with the page — which is also why
+`--toc-height` is `0` there and mobile anchors offset for the header alone.
+
 ## The two CSS variables
 
 `--header-height` (73px / 85px) and `--toc-height` (0 / 63px) in `globals.css` position the

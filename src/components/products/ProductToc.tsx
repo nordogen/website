@@ -47,7 +47,10 @@ export function ProductToc({ items, label }: { items: TocItem[]; label: string }
   return (
     <div
       ref={barRef}
-      className="sticky top-0 z-30 border-y border-ink/10 bg-soft lg:top-[var(--header-height)]"
+      /* Sticky on desktop only. On mobile it is a stacked list of five rows —
+         pinning that would eat a third of the viewport, which is why
+         `--toc-height` is 0 there and anchors offset for the header alone. */
+      className="border-y border-ink/10 bg-soft lg:sticky lg:top-[var(--header-height)] lg:z-30"
     >
       <Container>
         <nav

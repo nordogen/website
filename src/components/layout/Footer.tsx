@@ -20,10 +20,16 @@ export async function Footer({ locale }: { locale: Locale }) {
 
           <div>
             <h2 className="font-semibold text-white">{ui.footerProductsHeading}</h2>
-            {/* Names, not links: the product pages do not exist yet. */}
-            <ul className="mt-3.5 flex flex-col gap-2">
+            <ul className="mt-1 flex flex-col">
               {products.map((product) => (
-                <li key={product.slug}>{product.name}</li>
+                <li key={product.slug}>
+                  <Link
+                    href={`/${locale}/products/${product.slug}`}
+                    className="inline-flex min-h-11 items-center transition-colors duration-[140ms] ease-out hover:text-white"
+                  >
+                    {product.name}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
