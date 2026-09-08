@@ -361,9 +361,8 @@ box in a tinted rectangle, it is an opaque render and needs cutting out, not a b
 
 ## Not built yet
 
-A products **index** at `/[locale]/products`, `/about`, `/contact`, legal pages, JSON-LD
-(`DietarySupplement`, not `Product` — no offers exist), OG images, Playwright responsive suite,
-eslint, Lighthouse CI, and `check:content --strict`.
+A products **index** at `/[locale]/products`, `/about`, `/contact`, legal pages, OG images,
+Playwright responsive suite, eslint, Lighthouse CI, and `check:content --strict`.
 
 **Nothing on the site links to a 404.** Product pages exist and the home cards, the footer
 product column and the "from the same range" cards all link to them. Everything else points at
@@ -396,6 +395,23 @@ not publish canonical and hreflang tags claiming to be the live site.
 `nordogen.com` / `www.nordogen.com` get `Allow: /`; every other host gets `Disallow: /`,
 which is what keeps `[REVIEW]` copy out of search results. Verify by reading
 `.next/server/app/robots.txt.body` after a build — the emitted file, not the source.
+
+**Structured data is a public claim, like visible copy.** `src/lib/structured-data.ts` builds
+one `@graph` per page: `Organization` everywhere (from `content/settings.json`, never retyped),
+plus `BreadcrumbList` and the product node on a product page. Everything in it is a company fact
+or comes verbatim from the approved declarations — `safetyConsideration` **is**
+`notes.warnings`, `activeIngredient` **is** the ingredient names. No efficacy wording goes in,
+and a test asserts the copy is not paraphrased.
+
+The five supplements are `DietarySupplement`. **Urinord is `Product`**, because schema.org has
+no type for food for special medical purposes — `MedicalProduct` does not exist, and `Drug`
+would be worse. Its category, dose and mandatory notice ride along as `category` and
+`additionalProperty`. Calling it `DietarySupplement` would be the same false claim in
+machine-readable form that the copy rules forbid in prose.
+
+**No `offers`, `price`, `availability` or `aggregateRating`, ever** — there is no shop, and a
+test fails the build if one appears. A missing-field warning in Search Console is a smaller
+problem than markup claiming a price that does not exist.
 
 **All page metadata goes through `pageMetadata()` in `src/lib/seo.ts`** — canonical, hreflang,
 Open Graph and Twitter, from one place. Add `og:image` there when OG images exist and every page

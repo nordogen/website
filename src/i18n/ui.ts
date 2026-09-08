@@ -31,6 +31,10 @@ type Chrome = {
   tocLabel: string
   breadcrumbLabel: string
   spec: { dose: string; pack: string; duration: string }
+  /** Used in the structured data, where the regulatory category has to be said
+      in words rather than implied by a schema.org type. */
+  productCategory: { supplement: string; fsmp: string }
+  mandatoryNotice: string
 }
 
 export const UI: Record<Locale, Chrome> = {
@@ -64,6 +68,11 @@ export const UI: Record<Locale, Chrome> = {
     tocLabel: 'Na ovoj strani',
     breadcrumbLabel: 'Putanja',
     spec: { dose: 'Doziranje', pack: 'Pakovanje', duration: 'Trajanje' },
+    productCategory: {
+      supplement: 'Dodatak ishrani',
+      fsmp: 'Hrana za posebne medicinske namene',
+    },
+    mandatoryNotice: 'Važno obaveštenje',
   },
   en: {
     skipToContent: 'Skip to content',
@@ -95,6 +104,11 @@ export const UI: Record<Locale, Chrome> = {
     tocLabel: 'On this page',
     breadcrumbLabel: 'Breadcrumb',
     spec: { dose: 'Dosage', pack: 'Pack size', duration: 'Duration' },
+    productCategory: {
+      supplement: 'Food supplement',
+      fsmp: 'Food for special medical purposes',
+    },
+    mandatoryNotice: 'Important notice',
   },
 }
 
