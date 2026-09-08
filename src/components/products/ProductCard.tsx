@@ -30,7 +30,9 @@ export function ProductCard({ product }: { product: Product }) {
       <div className="relative h-[180px] bg-well lg:h-[210px]">
         <Image
           src={`/products/${product.slug}.webp`}
-          alt={product.name}
+          /* Decorative: the product name is the adjacent heading, so alt text
+             here would just make a screen reader say it twice. */
+          alt=""
           fill
           sizes="(min-width: 1024px) 380px, 90vw"
           /* The renders sit on white, so multiply drops that ground onto the

@@ -8,7 +8,7 @@ const LABEL: Record<Locale, string> = { sr: 'SR', en: 'EN' }
 
 export function LanguageSwitcher({ locale, path = '' }: { locale: Locale; path?: string }) {
   return (
-    <div className="flex items-center gap-3.5" aria-label={UI[locale].languageLabel}>
+    <div className="flex items-center" aria-label={UI[locale].languageLabel}>
       {ORDER.map((target) => {
         const active = target === locale
         return (
@@ -17,8 +17,11 @@ export function LanguageSwitcher({ locale, path = '' }: { locale: Locale; path?:
             href={`/${target}${path}`}
             hrefLang={target}
             aria-current={active ? 'true' : undefined}
-            /* The 44px target is the link box; the underline hugs the text. */
-            className="inline-flex min-h-11 items-center text-[0.8125rem] font-semibold"
+            /* A full 44x44 target — "EN" alone is barely 20px wide. The box
+               carries the size, the inner span carries the underline, so the
+               rule still hugs the text. The parent has no gap because these
+               boxes already hold the spacing the artboards draw. */
+            className="inline-flex min-h-11 min-w-11 items-center justify-center text-[0.8125rem] font-semibold"
           >
             <span
               className={
