@@ -1,12 +1,92 @@
 {
   "name": "Nordoprost",
   "order": 5,
-  "group": "Prostata i muško zdravlje",
-  "accent": "blue",
+  "family": "urology",
   "category": "supplement",
+  "group": "Prostata i muško zdravlje",
   "summary": "Podrška zdravlju prostate i normalnoj funkciji urinarnog trakta",
-  "ingredients": "Polen raži · Testerasta palma · Crna maka · Vrbovica",
-  "pack": "30 kapsula",
+  "hero": {
+    "subtitle": "Podrška zdravlju prostate, mokrenju i normalnoj seksualnoj funkciji",
+    "intro": "Nordoprost kombinuje Graminex® G63® polen raži, testerastu palmu i vrbovicu za podršku prostati i urinarnom traktu, uz crnu maku koja dodatno doprinosi vitalnosti i normalnoj seksualnoj funkciji.",
+    "dose": "2 kapsule dnevno",
+    "doseNote": "",
+    "pack": "30 kapsula",
+    "duration": "15 dana"
+  },
+  "audience": {
+    "eyebrow": "Kome je namenjen",
+    "heading": "Jasno definisana namena, bez komplikovanja",
+    "body": "Namenjen je odraslim muškarcima sa blagim do umerenim tegobama mokrenja koje se javljaju uz promene na prostati, kao što su oslabljen mlaz, učestalo ili noćno mokrenje i osećaj nepotpunog pražnjenja."
+  },
+  "benefits": {
+    "eyebrow": "Glavne prednosti",
+    "heading": "Šta formula pruža",
+    "items": [
+      {
+        "title": "Prostata i urinarni trakt",
+        "body": "Kombinacija polena raži, testeraste palme i vrbovice usmerena je na podršku normalnoj funkciji prostate i urinarnog trakta."
+      },
+      {
+        "title": "Mokrenje i komfor",
+        "body": "Formula je osmišljena za muškarce koji žele dodatnu podršku kod blažih tegoba poput slabijeg mlaza i učestalog mokrenja."
+      },
+      {
+        "title": "Seksualna funkcija i vitalnost",
+        "body": "Crna maka proširuje formulu podrškom normalnoj seksualnoj funkciji, vitalnosti i opštem muškom blagostanju."
+      }
+    ]
+  },
+  "formula": {
+    "eyebrow": "Formula",
+    "heading": "Različite uloge, jedan jasan cilj",
+    "intro": "Tegobe pri mokrenju nisu uvek posledica samo uvećane prostate, zbog čega je važna stručna procena. Kod nekomplikovanih, blagih do umerenih tegoba Nordoprost pruža kombinovanu nutritivnu i biljnu podršku: tri komponente usmerene su na prostatu i urinarni trakt, dok crna maka dodaje podršku seksualnoj funkciji i vitalnosti.",
+    "calloutLabel": "Zašto ova kombinacija",
+    "calloutBody": "Za razliku od formula zasnovanih samo na testerastoj palmi, Nordoprost kombinuje četiri aktivne komponente. Polen raži, testerasta palma i vrbovica pružaju širu podršku prostati i urinarnom traktu, dok crna maka dodaje element seksualne funkcije i vitalnosti."
+  },
+  "ingredients": {
+    "eyebrow": "Aktivni sastojci",
+    "heading": "Sastav i uloga svake komponente",
+    "items": [
+      {
+        "name": "Graminex® G63® polen raži",
+        "amount": "250 mg dnevno",
+        "role": "Standardizovani ekstrakt polena raži i centralna komponenta formule. Ekstrakti polena raži ispitivani su kod muškaraca sa blagim do umerenim tegobama mokrenja kod benignog uvećanja prostate."
+      },
+      {
+        "name": "Testerasta palma",
+        "amount": "200 mg dnevno",
+        "role": "Ekstrakt ploda Serenoa repens, standardizovan na 25% masnih kiselina. Doprinosi normalnoj funkciji prostate i urinarnog trakta."
+      },
+      {
+        "name": "Vrbovica",
+        "amount": "120 mg dnevno",
+        "role": "Epilobium parviflorum se koristi u tradicionalnim preparatima namenjenim podršci normalnoj funkciji prostate i urinarnog trakta."
+      },
+      {
+        "name": "Crna maka",
+        "amount": "200 mg dnevno",
+        "role": "Ekstrakt korena 20:1. Podržava vitalnost, energiju i normalnu seksualnu funkciju, doprinoseći opštem zdravlju i blagostanju muškaraca."
+      }
+    ]
+  },
+  "useCases": {
+    "eyebrow": "Kada se može koristiti",
+    "heading": "Praktične situacije za primenu",
+    "items": [
+      "Kod blagih do umerenih, nekomplikovanih tegoba pri mokrenju",
+      "Kod oslabljenog ili isprekidanog mlaza i učestalog mokrenja",
+      "Kod noćnog mokrenja i osećaja nepotpunog pražnjenja",
+      "Kada se uz urinarnu funkciju želi podržati i normalna seksualna funkcija i vitalnost"
+    ]
+  },
+  "notes": {
+    "eyebrow": "Važne napomene",
+    "heading": "Bezbedna i odgovorna primena",
+    "warnings": "Preporučena dnevna doza se ne sme prekoračiti. Proizvod se ne preporučuje deci ni osobama preosetljivim na neki od sastojaka. Nordoprost ne zamenjuje pregled i utvrđivanje uzroka tegoba pri mokrenju. Nemogućnost mokrenja, krv u mokraći, ponavljane infekcije, izražen bol ili sumnja na drugo oboljenje zahtevaju pregled lekara.",
+    "legalNote": "Dodaci ishrani nisu zamena za raznovrsnu i uravnoteženu ishranu i zdrav način života. Čuvati van domašaja male dece."
+  },
   "purpose": "NORDOPROST, 30 kapsula je dodatak ishrani na bazi ekstrakata polena raži (Secale cereale), ploda testeraste palme (Serenoa repens), korena make (Lepidium meyenii) i herbe vrbovice (Epilobium parviflorum).",
-  "regulatoryNote": ""
+  "regulatoryNote": "",
+  "metaTitle": "",
+  "metaDescription": ""
 }

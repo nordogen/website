@@ -1,12 +1,86 @@
 {
   "name": "Myonord",
   "order": 1,
-  "group": "Women’s health",
-  "accent": "crimson",
+  "family": "gynaecology",
   "category": "supplement",
+  "group": "Women's health",
   "summary": "Women’s reproductive health",
-  "ingredients": "EGCG · Quercetin · Folic acid",
-  "pack": "30 capsules",
+  "hero": {
+    "subtitle": "Targeted nutritional support for women with uterine fibroids and during gynecological follow-up",
+    "intro": "Myonord combines highly standardized EGCG, quercetin and folic acid in a focused formula for women seeking nutritional support for reproductive health, particularly while uterine fibroids are being monitored.",
+    "dose": "1–2 capsules daily",
+    "doseNote": "Do not take on an empty stomach.",
+    "pack": "30 capsules",
+    "duration": ""
+  },
+  "audience": {
+    "eyebrow": "Who it is for",
+    "heading": "A clearly defined role, without unnecessary complexity",
+    "body": "Designed for adult women who want focused nutritional support while uterine fibroids are being monitored. Decisions about observation or treatment should remain with the gynecologist and depend on fibroid size, growth, symptoms and individual circumstances."
+  },
+  "benefits": {
+    "eyebrow": "Key benefits",
+    "heading": "What the formula provides",
+    "items": [
+      {
+        "title": "Focused support",
+        "body": "A streamlined formula developed around the needs of women with fibroids, without unnecessary added ingredients."
+      },
+      {
+        "title": "Antioxidant support",
+        "body": "EGCG and quercetin are polyphenols that contribute to antioxidant protection and support normal cellular processes."
+      },
+      {
+        "title": "Folate and cell division",
+        "body": "Folic acid contributes to normal cell division and homocysteine metabolism, and helps reduce tiredness and fatigue."
+      }
+    ]
+  },
+  "formula": {
+    "eyebrow": "Formula",
+    "heading": "Different roles, one clear purpose",
+    "intro": "EGCG and quercetin are polyphenols being studied for their role in cell growth and connective-tissue formation processes relevant to uterine fibroids. Folic acid complements them with well-established physiological roles in cell division and homocysteine metabolism. Together, they create a focused formula rather than a generic multivitamin approach.",
+    "calloutLabel": "Why this combination",
+    "calloutBody": "Myonord is more than an EGCG-only product. Highly purified EGCG and quercetin provide complementary polyphenol support, while folic acid adds nutritional support for normal cellular processes. The result is a streamlined yet well-rounded formula."
+  },
+  "ingredients": {
+    "eyebrow": "Active ingredients",
+    "heading": "Composition and the role of each ingredient",
+    "items": [
+      {
+        "name": "EGCG",
+        "amount": "150 mg per capsule",
+        "role": "A 95% standardized green tea extract. EGCG is the most extensively studied ingredient in the formula in relation to uterine fibroids and has strong antioxidant properties."
+      },
+      {
+        "name": "Kvercetin",
+        "amount": "125 mg extract per capsule",
+        "role": "Japanese pagoda tree extract standardized to 95% quercetin. It complements EGCG with antioxidant activity and is being studied in relation to cellular signaling and connective-tissue formation."
+      },
+      {
+        "name": "Folna kiselina",
+        "amount": "200 µg per capsule",
+        "role": "Contributes to normal cell division and homocysteine metabolism, and helps reduce tiredness and fatigue."
+      }
+    ]
+  },
+  "useCases": {
+    "eyebrow": "When it may be used",
+    "heading": "Practical situations for use",
+    "items": [
+      "When diagnosed fibroids are being monitored according to a gynecologist’s plan",
+      "During follow-up of stable or slowly growing fibroids",
+      "After local, interventional or surgical treatment when additional nutritional support is considered appropriate"
+    ]
+  },
+  "notes": {
+    "eyebrow": "Important information",
+    "heading": "Safe and responsible use",
+    "warnings": "Do not exceed the recommended daily dose or 300 mg of EGCG per day, and do not use other green tea products on the same day. Not intended for pregnant or breastfeeding women or anyone under 18. A food supplement does not replace gynecological examinations, ultrasound monitoring or treatment when indicated.",
+    "legalNote": "Food supplements are not a substitute for a varied and balanced diet and a healthy lifestyle. Keep out of the reach of small children."
+  },
   "purpose": "MYONORD je dodatak ishrani sa folnom kiselinom i prirodnim ekstraktima zelenog čaja i japanskog bagrema, namenjen ženama.",
-  "regulatoryNote": ""
+  "regulatoryNote": "",
+  "metaTitle": "",
+  "metaDescription": ""
 }

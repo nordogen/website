@@ -5,9 +5,14 @@ import { LOCALES, type Locale } from '@/i18n/locales'
 type Doc = {
   name: string
   order: number
-  accent: string
+  family: string
   category: string
   regulatoryNote: string
+  hero: { dose: string; pack: string; intro: string }
+  ingredients: { items: { name: string; amount: string; role: string }[] }
+  benefits: { items: { title: string; body: string }[] }
+  useCases: { items: string[] }
+  notes: { warnings: string; legalNote: string }
   [key: string]: unknown
 }
 
@@ -35,16 +40,68 @@ describe('product content', () => {
     for (const slug of SLUGS) expect(existsSync(`public/products/${slug}.webp`), slug).toBe(true)
   })
 
-  it('keeps name, order, accent and category identical across locales', () => {
+  it('keeps name, order, family and category identical across locales', () => {
     for (const slug of SLUGS) {
       const sr = doc('sr', slug)
       const en = doc('en', slug)
-      expect({ name: en.name, order: en.order, accent: en.accent, category: en.category }).toEqual({
+      expect({ name: en.name, order: en.order, family: en.family, category: en.category }).toEqual({
         name: sr.name,
         order: sr.order,
-        accent: sr.accent,
+        family: sr.family,
         category: sr.category,
       })
+    }
+  })
+
+  it('keeps every repeating list the same length in both locales', () => {
+    // The two locales share one schema factory, so the shapes cannot drift —
+    // but the number of entries an editor types into an array still can, and a
+    // benefit that exists only in Serbian is a half-translated page.
+    for (const slug of SLUGS) {
+      const sr = doc('sr', slug)
+      const en = doc('en', slug)
+      expect(en.ingredients.items.length, `${slug} ingredients`).toBe(sr.ingredients.items.length)
+      expect(en.benefits.items.length, `${slug} benefits`).toBe(sr.benefits.items.length)
+      expect(en.useCases.items.length, `${slug} use cases`).toBe(sr.useCases.items.length)
+    }
+  })
+
+  it('names the same ingredients in both locales', () => {
+    // Ingredient names are botanical or chemical and do not translate; they are
+    // also the pills on the home card, so a mismatch shows up there first.
+    for (const slug of SLUGS) {
+      expect(doc('en', slug).ingredients.items.map((i) => i.name)).toEqual(
+        doc('sr', slug).ingredients.items.map((i) => i.name),
+      )
+    }
+  })
+
+  it('fills every field the product page cannot render without', () => {
+    for (const locale of LOCALES) {
+      for (const slug of SLUGS) {
+        const product = doc(locale, slug)
+        for (const [what, value] of [
+          ['intro', product.hero.intro],
+          ['dose', product.hero.dose],
+          ['pack', product.hero.pack],
+          ['warnings', product.notes.warnings],
+          ['legal note', product.notes.legalNote],
+        ] as const) {
+          expect(value, `${locale}/${slug} ${what}`).toBeTruthy()
+        }
+        expect(product.ingredients.items.length, `${locale}/${slug}`).toBeGreaterThan(0)
+      }
+    }
+  })
+
+  it('carries the mandated statement on every product', () => {
+    // Five supplements take the supplement wording; Urinord is food for special
+    // medical purposes and takes the medical-supervision wording instead.
+    for (const slug of SLUGS) {
+      const note = doc('sr', slug).notes.legalNote
+      expect(note, slug).toMatch(
+        slug === 'urinord' ? /pod medicinskim nadzorom/ : /^Dodaci ishrani nisu zamena/,
+      )
     }
   })
 
@@ -77,5 +134,46 @@ describe('product content', () => {
     const serbian = SLUGS.map((slug) => JSON.stringify(doc('sr', slug))).join('')
     expect(serbian).toMatch(/[šđčćžŠĐČĆŽ]/)
     expect(serbian).not.toMatch(/[Ѐ-ӿ]/)
+  })
+})
+
+describe('related products', () => {
+  // Mirrors getRelatedProducts, over the content files rather than the reader.
+  const family = (slug: string) => doc('sr', slug).family
+  const ordered = [...SLUGS].sort((a, b) => doc('sr', a).order - doc('sr', b).order)
+
+  const related = (slug: string) => {
+    const others = ordered.filter((s) => s !== slug)
+    if (family(slug) === 'regeneration') return others.slice(0, 3)
+    return [
+      ...others.filter((s) => family(s) === family(slug)),
+      ...others.filter((s) => family(s) === 'regeneration'),
+    ].slice(0, 3)
+  }
+
+  it('never shows a product beside itself', () => {
+    for (const slug of SLUGS) expect(related(slug)).not.toContain(slug)
+  })
+
+  it('puts regeneration alongside every other area', () => {
+    // Renord is a companion to a urology or gynaecology product, so it belongs
+    // in both of their groups; on its own page every product is a sibling.
+    for (const slug of SLUGS) {
+      if (family(slug) === 'regeneration') continue
+      expect(related(slug), slug).toContain('renord')
+    }
+    expect(related('renord')).toHaveLength(3)
+  })
+
+  it('keeps urology and gynaecology apart', () => {
+    for (const slug of SLUGS) {
+      if (family(slug) === 'regeneration') continue
+      const opposite = family(slug) === 'urology' ? 'gynaecology' : 'urology'
+      expect(related(slug).map(family), slug).not.toContain(opposite)
+    }
+  })
+
+  it('never leaves a product without neighbours', () => {
+    for (const slug of SLUGS) expect(related(slug).length, slug).toBeGreaterThanOrEqual(2)
   })
 })

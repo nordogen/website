@@ -55,3 +55,39 @@ export async function getProducts(locale: Locale) {
 
   return entries.sort((a, b) => a.order - b.order)
 }
+
+export async function getProduct(locale: Locale, slug: string) {
+  const entry = required(
+    await PRODUCTS[locale].read(slug),
+    `content/${locale}/products/${slug}`,
+  )
+  return { slug, ...entry }
+}
+
+export async function getProductSlugs(locale: Locale) {
+  return PRODUCTS[locale].list()
+}
+
+/**
+ * The products shown under a product page, at most three.
+ *
+ * Regeneration sits alongside every area rather than beside itself: recovery
+ * support is a companion to a urology or a gynaecology product, so Renord
+ * belongs in both of their groups — and on Renord's own page every product is
+ * a sibling. Urology and gynaecology stay apart from each other.
+ *
+ * Same area first, then regeneration, so a page's closest neighbours lead.
+ */
+export async function getRelatedProducts(locale: Locale, slug: string, limit = 3) {
+  const all = await getProducts(locale)
+  const current = all.find((product) => product.slug === slug)
+  if (!current) return []
+
+  const others = all.filter((product) => product.slug !== slug)
+  if (current.family === 'regeneration') return others.slice(0, limit)
+
+  const sameFamily = others.filter((product) => product.family === current.family)
+  const regeneration = others.filter((product) => product.family === 'regeneration')
+
+  return [...sameFamily, ...regeneration].slice(0, limit)
+}

@@ -1,12 +1,87 @@
 {
   "name": "Litonord",
   "order": 4,
-  "group": "Kidneys and urinary system",
-  "accent": "blue",
+  "family": "urology",
   "category": "supplement",
+  "group": "Kidneys & urinary system",
   "summary": "Kidney and urinary system support",
-  "ingredients": "Magnesium citrate · Phyllanthus niruri · Birch",
-  "pack": "15 sachets",
+  "hero": {
+    "subtitle": "Targeted nutritional support for people with a history of kidney stones",
+    "intro": "Litonord combines magnesium citrate, Phyllanthus niruri and birch leaf extract with a simple hydration routine — two daily sachets, each dissolved in water.",
+    "dose": "2 sachets daily",
+    "doseNote": "Dissolve each sachet in 200 ml of water. Adequate fluid intake is essential during use.",
+    "pack": "15 sachets",
+    "duration": ""
+  },
+  "audience": {
+    "eyebrow": "Who it is for",
+    "heading": "A clearly defined role, without unnecessary complexity",
+    "body": "Designed for adults with a history of kidney stones who want additional nutritional support between episodes or after spontaneous stone passage or urological treatment, alongside adequate fluid intake and medical follow-up."
+  },
+  "benefits": {
+    "eyebrow": "Key benefits",
+    "heading": "What the formula provides",
+    "items": [
+      {
+        "title": "Supports a regular hydration routine",
+        "body": "Each sachet is dissolved in 200 ml of water, making daily use a practical way to structure fluid intake."
+      },
+      {
+        "title": "Magnesium and electrolytes",
+        "body": "Magnesium contributes to normal electrolyte balance and muscle function."
+      },
+      {
+        "title": "Botanical urinary support",
+        "body": "Phyllanthus niruri is one of the most studied botanicals in urolithiasis, while birch has a long tradition of use in urinary formulations."
+      }
+    ]
+  },
+  "formula": {
+    "eyebrow": "Formula",
+    "heading": "Different roles, one clear purpose",
+    "intro": "For people who have already had a kidney stone, adequate fluid intake remains one of the most important habits. Litonord is designed to complement that routine with magnesium citrate and botanical extracts. It should not be confused with potassium citrate therapy or medicines prescribed after metabolic evaluation.",
+    "calloutLabel": "Why this combination",
+    "calloutBody": "Litonord combines a practical hydration routine with magnesium and two botanical ingredients, offering a broader approach than single-ingredient products. The concept is not to “dissolve stones”, but to provide additional support between episodes and as part of long-term habits and follow-up."
+  },
+  "ingredients": {
+    "eyebrow": "Active ingredients",
+    "heading": "Composition and the role of each ingredient",
+    "items": [
+      {
+        "name": "Magnezijum",
+        "amount": "400 mg daily",
+        "role": "Provided as trimagnesium dicitrate. Contributes to electrolyte balance, normal muscle function and reduction of tiredness and fatigue."
+      },
+      {
+        "name": "Phyllanthus niruri",
+        "amount": "500 mg daily",
+        "role": "A 10:1 dry extract. The plant has been studied for possible effects on calcium oxalate crystallization and selected parameters related to stone formation."
+      },
+      {
+        "name": "Breza",
+        "amount": "140 mg daily",
+        "role": "Betula pendula leaf extract 6:1. Traditionally used in urinary formulations and included to complement the formula’s hydration routine."
+      }
+    ]
+  },
+  "useCases": {
+    "eyebrow": "When it may be used",
+    "heading": "Practical situations for use",
+    "items": [
+      "For people with a previous history of kidney stones",
+      "After spontaneous stone passage, ESWL or another urological procedure",
+      "When a more structured daily fluid routine is helpful",
+      "As additional nutritional support alongside an individualized prevention plan"
+    ]
+  },
+  "notes": {
+    "eyebrow": "Important information",
+    "heading": "Safe and responsible use",
+    "warnings": "Not recommended for children, pregnant or breastfeeding women, or people with renal insufficiency, marked AV block, myasthenia gravis or hypersensitivity to any ingredient. Litonord does not replace metabolic evaluation, stone analysis, prescribed therapy or urological intervention when needed. Fever, severe or worsening pain, inability to urinate or general deterioration require medical assessment.",
+    "legalNote": "Food supplements are not a substitute for a varied and balanced diet and a healthy lifestyle. Keep out of the reach of small children."
+  },
   "purpose": "LITONORD je dodatak ishrani sa magnezijum-citratom i biljnim ekstraktima.",
-  "regulatoryNote": ""
+  "regulatoryNote": "",
+  "metaTitle": "",
+  "metaDescription": ""
 }

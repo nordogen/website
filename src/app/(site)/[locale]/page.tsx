@@ -102,7 +102,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
         <div className="mt-6 grid gap-3.5 lg:mt-0 lg:grid-cols-3 lg:gap-5">
           {products.map((product) => (
-            <ProductCard key={product.slug} product={product} />
+            <ProductCard key={product.slug} product={product} locale={locale} />
           ))}
         </div>
       </Section>

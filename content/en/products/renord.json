@@ -1,12 +1,87 @@
 {
   "name": "Renord",
   "order": 3,
-  "group": "Recovery and regeneration",
-  "accent": "teal",
+  "family": "regeneration",
   "category": "supplement",
+  "group": "Recovery & tissue support",
   "summary": "Recovery and tissue regeneration support",
-  "ingredients": "Bromelain · Rutin · L-arginine",
-  "pack": "20 + 20 capsules",
+  "hero": {
+    "subtitle": "Support for circulation, swelling reduction and tissue recovery after procedures and injuries",
+    "intro": "Renord combines bromelain, rutin and L-arginine to support key processes involved in tissue recovery through three complementary mechanisms.",
+    "dose": "2 capsules daily",
+    "doseNote": "One yellow and one blue capsule, between meals.",
+    "pack": "20 + 20 capsules",
+    "duration": "20 days"
+  },
+  "audience": {
+    "eyebrow": "Who it is for",
+    "heading": "A clearly defined role, without unnecessary complexity",
+    "body": "Designed for adults recovering from minor medical procedures, surgery or injuries, particularly when swelling, bruising and the need for additional tissue support are present."
+  },
+  "benefits": {
+    "eyebrow": "Key benefits",
+    "heading": "What the formula provides",
+    "items": [
+      {
+        "title": "Swelling and inflammation",
+        "body": "Bromelain is a proteolytic enzyme used to support the body during swelling and inflammatory processes."
+      },
+      {
+        "title": "Vascular and antioxidant support",
+        "body": "Rutin provides antioxidant and vascular support relevant to microcirculation and capillary function."
+      },
+      {
+        "title": "Circulation and tissue renewal",
+        "body": "L-arginine is a nitric oxide precursor and an amino acid involved in protein synthesis, supporting circulation and tissue renewal."
+      }
+    ]
+  },
+  "formula": {
+    "eyebrow": "Formula",
+    "heading": "Different roles, one clear purpose",
+    "intro": "Tissue recovery does not depend on a single pathway. After an injury or procedure, swelling control, microcirculation, oxidative stress and tissue renewal all matter. Renord therefore combines enzymatic, vascular-antioxidant and nutritional support.",
+    "calloutLabel": "Why this combination",
+    "calloutBody": "The formula brings together three complementary approaches: bromelain for swelling and inflammatory processes, rutin for antioxidant and vascular support, and L-arginine for circulation and nutritional support of tissue renewal."
+  },
+  "ingredients": {
+    "eyebrow": "Active ingredients",
+    "heading": "Composition and the role of each ingredient",
+    "items": [
+      {
+        "name": "Bromelain",
+        "amount": "150 mg daily • 2500 GDU",
+        "role": "A proteolytic enzyme from pineapple. It has been studied in post-procedural swelling, pain and recovery and is the formula’s main ingredient directed at edema and inflammatory processes."
+      },
+      {
+        "name": "Rutin",
+        "amount": "200 mg daily",
+        "role": "A bioflavonoid with antioxidant properties and a role in supporting capillaries, the vascular barrier and microcirculation."
+      },
+      {
+        "name": "L-arginin",
+        "amount": "500 mg daily",
+        "role": "An amino acid and nitric oxide precursor. Supports NO production, circulation and protein synthesis involved in tissue renewal."
+      }
+    ]
+  },
+  "useCases": {
+    "eyebrow": "When it may be used",
+    "heading": "Practical situations for use",
+    "items": [
+      "During recovery after minor procedures and surgery",
+      "For swelling and bruising after injury or intervention",
+      "During recovery of superficial wounds that are healing normally",
+      "As complementary support alongside other recovery measures when considered appropriate by a clinician"
+    ]
+  },
+  "notes": {
+    "eyebrow": "Important information",
+    "heading": "Safe and responsible use",
+    "warnings": "Extra caution is needed in people using anticoagulant or antiplatelet medicines, vasodilators, or in those with diabetes or recurrent herpes. Pregnant or breastfeeding women and people taking tetracycline or amoxicillin should consult a clinician before use. Renord does not replace wound care, bleeding control, antibiotics, analgesics or surgery when these are required.",
+    "legalNote": "Food supplements are not a substitute for a varied and balanced diet and a healthy lifestyle. Keep out of the reach of small children."
+  },
   "purpose": "RENORD je dodatak ishrani koji sadrži kombinaciju rutina, bromelina i L-arginina. Bromelin je prirodni enzim iz ananasa. L-arginin je aminokiselina koja ulazi u sastav mišića.",
-  "regulatoryNote": ""
+  "regulatoryNote": "",
+  "metaTitle": "",
+  "metaDescription": ""
 }

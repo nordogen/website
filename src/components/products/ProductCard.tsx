@@ -1,27 +1,28 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import type { Product } from '@/content/queries'
+import type { Locale } from '@/i18n/locales'
+import { IngredientPills } from './IngredientPills'
 
 /**
- * Blue is the only accent whose badge fill differs from the accent itself:
- * white text on #4C88A8 does not clear 4.5:1, so the badge uses a darker blue.
+ * Urology's badge fill is darker than its accent: white text on the accent
+ * itself does not clear 4.5:1.
  */
-const BADGE = {
-  blue: 'bg-badge-blue',
-  teal: 'bg-product-teal',
-  crimson: 'bg-product-crimson',
+export const FAMILY_BADGE = {
+  urology: 'bg-badge-blue',
+  regeneration: 'bg-product-teal',
+  gynaecology: 'bg-product-crimson',
 } as const
 
-/**
- * Rendered as an article, not a link: product pages do not exist yet, and a
- * card-sized link to nowhere is worse than no link. Wrap it in an anchor when
- * `/[locale]/products/[slug]` lands.
- */
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({ product, locale }: { product: Product; locale: Locale }) {
   return (
-    <article className="flex flex-col gap-3 rounded-card border border-ink/12 bg-white p-[18px] lg:gap-3.5 lg:p-6">
+    <Link
+      href={`/${locale}/products/${product.slug}`}
+      className="group flex flex-col gap-3 rounded-card border border-ink/12 bg-white p-[18px] transition-colors duration-[140ms] ease-out hover:border-accent lg:gap-3.5 lg:p-6"
+    >
       <span
         className={`self-start rounded-btn px-[11px] py-1.5 text-[0.6875rem] font-semibold uppercase leading-none tracking-[0.1em] text-white lg:px-[13px] lg:py-[7px] lg:text-xs ${
-          BADGE[product.accent]
+          FAMILY_BADGE[product.family]
         }`}
       >
         {product.group}
@@ -47,18 +48,15 @@ export function ProductCard({ product }: { product: Product }) {
 
       {/* Three lines' worth of reserved height on desktop. Summaries run one to
           three lines, and without this the hairline below lands at a different
-          height in every card of the row. Cards still stretch to a common
-          height; the slack goes below the ingredient line instead of above it. */}
+          height in every card of the row. */}
       <p className="text-[1.0625rem] leading-[1.55] text-ink-soft lg:min-h-[4.65em]">
         {product.summary}
       </p>
 
-      {/* Optional: with no ingredient line, the row and its hairline both go. */}
-      {product.ingredients ? (
-        <p className="border-t border-ink/10 pt-3 text-[0.9375rem] leading-[1.55] text-muted lg:pt-3.5">
-          {product.ingredients}
-        </p>
-      ) : null}
-    </article>
+      <IngredientPills
+        names={product.ingredients.items.map((item) => item.name)}
+        className="border-t border-ink/10 pt-3 lg:pt-3.5"
+      />
+    </Link>
   )
 }

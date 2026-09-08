@@ -1,12 +1,87 @@
 {
   "name": "Urinord",
   "order": 6,
-  "group": "Urinarni trakt",
-  "accent": "blue",
+  "family": "urology",
   "category": "fsmp",
+  "group": "Urinarni trakt",
   "summary": "Podrška zdravlju urinarnog trakta",
-  "ingredients": "D-manoza · Kleka · Kukuruzna svila",
-  "pack": "10 kesica",
+  "hero": {
+    "subtitle": "Nutritivna podrška kod infekcija urinarnog trakta izazvanih E. coli",
+    "intro": "Urinord je hrana za posebne medicinske namene sa 2 g D-manoze, ekstraktom kleke i kukuruzne svile, namenjena za potrebe ishrane osoba sa UTI izazvanom E. coli i za očuvanje normalne funkcije urinarnog trakta.",
+    "dose": "1 kesica dnevno",
+    "doseNote": "Rastvoriti u 200 ml vode. Proizvod mora da se koristi pod medicinskim nadzorom.",
+    "pack": "10 kesica",
+    "duration": "10 dana"
+  },
+  "audience": {
+    "eyebrow": "Kome je namenjen",
+    "heading": "Jasno definisana namena, bez komplikovanja",
+    "body": "Namenjen je odraslim osobama sa infekcijom urinarnog trakta izazvanom bakterijom E. coli, kao deo medicinski nadziranog pristupa. Kod učestalih urinarnih infekcija može se razmatrati kao dodatna neantibiotska podrška, ali ne zamenjuje procenu lekara i antibiotik kada je potreban."
+  },
+  "benefits": {
+    "eyebrow": "Glavne prednosti",
+    "heading": "Šta formula pruža",
+    "items": [
+      {
+        "title": "2 g D-manoze u jednoj kesici",
+        "body": "Dnevna kesica obezbeđuje 2 g D-manoze — dozu korišćenu u većem broju kliničkih ispitivanja."
+      },
+      {
+        "title": "Ciljani antiadhezivni mehanizam",
+        "body": "D-manoza može da se veže za strukture na uropatogenoj E. coli i tako smanji njeno vezivanje za sluzokožu urinarnog trakta."
+      },
+      {
+        "title": "Biljna i hidrataciona podrška",
+        "body": "Kleka i kukuruzna svila tradicionalno se koriste u preparatima za urinarni trakt, a kesica se rastvara u 200 ml vode."
+      }
+    ]
+  },
+  "formula": {
+    "eyebrow": "Formula",
+    "heading": "Različite uloge, jedan jasan cilj",
+    "intro": "Uropatogena E. coli je najčešći uzročnik cistitisa. D-manoza se izlučuje urinom i može da se veže za određene strukture na površini E. coli, čime otežava njeno vezivanje za sluzokožu urinarnog trakta. Kleka i kukuruzna svila dopunjuju formulu tradicionalnom biljnom podrškom, a primena u vodi doprinosi dnevnom unosu tečnosti. Ovaj mehanizam nije zamena za antimikrobno lečenje kada je ono potrebno.",
+    "calloutLabel": "Zašto ova kombinacija",
+    "calloutBody": "Urinord ne kombinuje D-manozu sa nasumično dodanim vitaminima i mineralima, već sa dve tradicionalne biljne komponente za urinarni trakt. Tako formula ostaje jasna: D-manoza je centralna komponenta, dok biljni ekstrakti i 200 ml vode dopunjuju dnevnu rutinu."
+  },
+  "ingredients": {
+    "eyebrow": "Aktivni sastojci",
+    "heading": "Sastav i uloga svake komponente",
+    "items": [
+      {
+        "name": "D-manoza",
+        "amount": "2000 mg dnevno",
+        "role": "Centralna komponenta formule. Može da oteža vezivanje uropatogene E. coli za sluzokožu urinarnog trakta. Klinički rezultati u prevenciji ponavljanih infekcija nisu u svim studijama jednaki."
+      },
+      {
+        "name": "Kleka",
+        "amount": "300 mg dnevno",
+        "role": "Ekstrakt ploda Juniperus communis 4:1. Tradicionalno se koristi u biljnim preparatima za urinarni trakt i ima dopunsku ulogu u formuli."
+      },
+      {
+        "name": "Kukuruzna svila",
+        "amount": "150 mg dnevno",
+        "role": "Ekstrakt Zea mays L. 4:1. Tradicionalno se koristi kao podrška urinarnom sistemu i prirodnom izlučivanju tečnosti."
+      }
+    ]
+  },
+  "useCases": {
+    "eyebrow": "Kada se može koristiti",
+    "heading": "Praktične situacije za primenu",
+    "items": [
+      "Kod UTI izazvane E. coli, uz medicinski nadzor",
+      "Kod lokalizovanih simptoma cistitisa nakon odgovarajuće procene",
+      "Kod rekurentnih urinarnih infekcija kada lekar razmatra dodatne neantibiotske mere",
+      "Kada je potreban praktičan režim 2 g D-manoze jednom dnevno"
+    ]
+  },
+  "notes": {
+    "eyebrow": "Važne napomene",
+    "heading": "Bezbedna i odgovorna primena",
+    "warnings": "Urinord mora da se koristi pod medicinskim nadzorom i nije zamena za antibiotik kada je antimikrobna terapija potrebna. Poseban oprez je potreban kod dijabetesa, trudnoće i dojenja, kod dece i starijih osoba, kao i kod težih oboljenja bubrega ili kada je unos tečnosti ograničen. Temperatura, bol u slabini, povraćanje, trudnoća ili opšte pogoršanje zahtevaju brzu lekarsku procenu.",
+    "legalNote": "Proizvod mora da se koristi pod medicinskim nadzorom. Proizvod predstavlja nutritivno nepotpunu namirnicu i nije pogodan za upotrebu kao jedini izvor hrane za osobe kojima je namenjen. Čuvati van domašaja dece."
+  },
   "purpose": "URINORD je dijetetski proizvod - hrana za posebne medicinske namene za potrebe ishrane osoba sa infekcijom urinarnog trakta izazvanih bakterijom E. Coli kao i za očuvanje normalne funkcije urinarnog trakta.",
-  "regulatoryNote": "Proizvod mora da se koristi pod medicinskim nadzorom. Proizvod predstavlja nutritivno nepotpunu namirnicu i nije pogodan za upotrebu kao jedini izvor hrane za osobe kojima je namenjen."
+  "regulatoryNote": "Proizvod mora da se koristi pod medicinskim nadzorom. Proizvod predstavlja nutritivno nepotpunu namirnicu i nije pogodan za upotrebu kao jedini izvor hrane za osobe kojima je namenjen.",
+  "metaTitle": "",
+  "metaDescription": ""
 }

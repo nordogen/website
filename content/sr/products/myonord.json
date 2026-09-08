@@ -1,12 +1,86 @@
 {
   "name": "Myonord",
   "order": 1,
-  "group": "Žensko zdravlje",
-  "accent": "crimson",
+  "family": "gynaecology",
   "category": "supplement",
+  "group": "Žensko zdravlje",
   "summary": "Reproduktivno zdravlje žena",
-  "ingredients": "EGCG · Kvercetin · Folna kiselina",
-  "pack": "30 kapsula",
+  "hero": {
+    "subtitle": "Ciljana nutritivna podrška ženama sa miomima i tokom ginekološkog praćenja",
+    "intro": "Myonord kombinuje visoko standardizovani EGCG, kvercetin i folnu kiselinu u formuli namenjenoj ženama koje žele ciljanu nutritivnu podršku reproduktivnom zdravlju, posebno tokom praćenja mioma.",
+    "dose": "1 do 2 kapsule dnevno",
+    "doseNote": "Ne uzimati na prazan želudac.",
+    "pack": "30 kapsula",
+    "duration": ""
+  },
+  "audience": {
+    "eyebrow": "Kome je namenjen",
+    "heading": "Jasno definisana namena, bez komplikovanja",
+    "body": "Namenjen je odraslim ženama koje žele ciljanu dodatnu podršku tokom perioda praćenja mioma. Odluku o tome da li se miom prati ili leči donosi ginekolog na osnovu veličine, rasta, simptoma i individualnih okolnosti."
+  },
+  "benefits": {
+    "eyebrow": "Glavne prednosti",
+    "heading": "Šta formula pruža",
+    "items": [
+      {
+        "title": "Ciljana podrška",
+        "body": "Formula je usmerena na potrebe žena sa miomima, bez nepotrebnog proširivanja sastava."
+      },
+      {
+        "title": "Antioksidativna zaštita",
+        "body": "EGCG i kvercetin su polifenoli koji doprinose antioksidativnoj zaštiti i podršci normalnim ćelijskim procesima."
+      },
+      {
+        "title": "Folat i deoba ćelija",
+        "body": "Folna kiselina ima ulogu u procesu deobe ćelija, normalnom metabolizmu homocisteina i smanjenju umora i iscrpljenosti."
+      }
+    ]
+  },
+  "formula": {
+    "eyebrow": "Formula",
+    "heading": "Različite uloge, jedan jasan cilj",
+    "intro": "EGCG i kvercetin pripadaju grupi polifenola i istražuju se zbog njihove uloge u procesima rasta ćelija i stvaranja vezivnog tkiva koji su relevantni za miome. Folna kiselina dopunjuje formulu jasno utvrđenim fiziološkim ulogama u deobi ćelija i metabolizmu homocisteina. Zajedno čine usmerenu formulu, a ne generički multivitaminski proizvod.",
+    "calloutLabel": "Zašto ova kombinacija",
+    "calloutBody": "Myonord nije samo EGCG proizvod. Kombinacija visokopročišćenog EGCG-a i kvercetina pruža dva komplementarna polifenola, dok folna kiselina dodaje nutritivnu podršku normalnim ćelijskim procesima. Time formula ostaje jednostavna, ali funkcionalno zaokružena."
+  },
+  "ingredients": {
+    "eyebrow": "Aktivni sastojci",
+    "heading": "Sastav i uloga svake komponente",
+    "items": [
+      {
+        "name": "EGCG",
+        "amount": "150 mg po kapsuli",
+        "role": "95% standardizovani ekstrakt zelenog čaja. EGCG je najistraživanija komponenta formule u oblasti mioma i poseduje izražena antioksidativna svojstva."
+      },
+      {
+        "name": "Kvercetin",
+        "amount": "125 mg ekstrakta po kapsuli",
+        "role": "Ekstrakt japanskog bagrema standardizovan na 95% kvercetina. Dopunjuje EGCG antioksidativnim delovanjem i istražuje se u vezi sa ćelijskim signalnim putevima i procesima stvaranja vezivnog tkiva."
+      },
+      {
+        "name": "Folna kiselina",
+        "amount": "200 µg po kapsuli",
+        "role": "Ima ulogu u procesu deobe ćelija, doprinosi normalnom metabolizmu homocisteina i smanjenju umora i iscrpljenosti."
+      }
+    ]
+  },
+  "useCases": {
+    "eyebrow": "Kada se može koristiti",
+    "heading": "Praktične situacije za primenu",
+    "items": [
+      "Kod dijagnostikovanih mioma koji se prate prema planu ginekologa",
+      "Tokom perioda kontrolisanog praćenja stabilnih ili spororastućih mioma",
+      "Nakon lokalnog, interventnog ili hirurškog tretmana, kada ginekolog proceni da je dodatna nutritivna podrška primerena"
+    ]
+  },
+  "notes": {
+    "eyebrow": "Važne napomene",
+    "heading": "Bezbedna i odgovorna primena",
+    "warnings": "Preporučena dnevna doza se ne sme prekoračiti. Ne konzumirati više od 300 mg EGCG dnevno i ne koristiti istog dana druge proizvode koji sadrže zeleni čaj. Proizvod nije namenjen trudnicama, dojiljama i osobama mlađim od 18 godina. Dodatak ishrani nije zamena za ginekološki pregled, ultrazvučno praćenje ili terapiju kada je ona potrebna.",
+    "legalNote": "Dodaci ishrani nisu zamena za raznovrsnu i uravnoteženu ishranu i zdrav način života. Čuvati van domašaja male dece."
+  },
   "purpose": "MYONORD je dodatak ishrani sa folnom kiselinom i prirodnim ekstraktima zelenog čaja i japanskog bagrema, namenjen ženama.",
-  "regulatoryNote": ""
+  "regulatoryNote": "",
+  "metaTitle": "",
+  "metaDescription": ""
 }

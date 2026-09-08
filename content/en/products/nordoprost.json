@@ -1,12 +1,92 @@
 {
   "name": "Nordoprost",
   "order": 5,
-  "group": "Prostate and men’s health",
-  "accent": "blue",
+  "family": "urology",
   "category": "supplement",
+  "group": "Prostate & men's health",
   "summary": "Prostate health and urinary function support",
-  "ingredients": "Rye pollen · Saw palmetto · Black maca · Willowherb",
-  "pack": "30 capsules",
+  "hero": {
+    "subtitle": "Support for prostate health, urinary function and normal sexual function",
+    "intro": "Nordoprost combines Graminex® G63® rye pollen, saw palmetto and willowherb for prostate and urinary support, with black maca adding support for vitality and normal sexual function.",
+    "dose": "2 capsules daily",
+    "doseNote": "",
+    "pack": "30 capsules",
+    "duration": "15 days"
+  },
+  "audience": {
+    "eyebrow": "Who it is for",
+    "heading": "A clearly defined role, without unnecessary complexity",
+    "body": "Designed for adult men with mild to moderate urinary symptoms that may occur with prostate changes, such as a weaker stream, frequent or nighttime urination and a feeling of incomplete emptying."
+  },
+  "benefits": {
+    "eyebrow": "Key benefits",
+    "heading": "What the formula provides",
+    "items": [
+      {
+        "title": "Prostate and urinary support",
+        "body": "Rye pollen, saw palmetto and willowherb are combined to support normal prostate and urinary tract function."
+      },
+      {
+        "title": "Urinary comfort",
+        "body": "The formula is designed for men seeking additional support for mild symptoms such as a weaker stream or frequent urination."
+      },
+      {
+        "title": "Sexual function and vitality",
+        "body": "Black maca broadens the formula with support for normal sexual function, vitality and overall male well-being."
+      }
+    ]
+  },
+  "formula": {
+    "eyebrow": "Formula",
+    "heading": "Different roles, one clear purpose",
+    "intro": "Urinary symptoms are not always caused by prostate enlargement alone, so medical assessment is important. In uncomplicated mild to moderate symptoms, Nordoprost provides combined nutritional and botanical support: three ingredients focus on the prostate and urinary tract, while black maca adds support for sexual function and vitality.",
+    "calloutLabel": "Why this combination",
+    "calloutBody": "Unlike formulas based on saw palmetto alone, Nordoprost combines four active ingredients. Rye pollen, saw palmetto and willowherb provide broader prostate and urinary support, while black maca adds a sexual-function and vitality component."
+  },
+  "ingredients": {
+    "eyebrow": "Active ingredients",
+    "heading": "Composition and the role of each ingredient",
+    "items": [
+      {
+        "name": "Graminex® G63® polen raži",
+        "amount": "250 mg daily",
+        "role": "A standardized rye pollen extract and the central ingredient in the formula. Rye pollen extracts have been studied in men with mild to moderate urinary symptoms associated with benign prostate enlargement."
+      },
+      {
+        "name": "Testerasta palma",
+        "amount": "200 mg daily",
+        "role": "Serenoa repens fruit extract standardized to 25% fatty acids. Supports normal prostate and urinary tract function."
+      },
+      {
+        "name": "Vrbovica",
+        "amount": "120 mg daily",
+        "role": "Epilobium parviflorum has a tradition of use in formulations intended to support normal prostate and urinary tract function."
+      },
+      {
+        "name": "Crna maka",
+        "amount": "200 mg daily",
+        "role": "A 20:1 root extract. Supports vitality, energy and normal sexual function, contributing to overall male health and well-being."
+      }
+    ]
+  },
+  "useCases": {
+    "eyebrow": "When it may be used",
+    "heading": "Practical situations for use",
+    "items": [
+      "For mild to moderate uncomplicated urinary symptoms",
+      "For a weak or intermittent stream and frequent urination",
+      "For nighttime urination and a feeling of incomplete emptying",
+      "When support for normal sexual function and vitality is also desired alongside urinary support"
+    ]
+  },
+  "notes": {
+    "eyebrow": "Important information",
+    "heading": "Safe and responsible use",
+    "warnings": "Do not exceed the recommended daily dose. Not recommended for children or anyone hypersensitive to an ingredient. Nordoprost does not replace medical evaluation of urinary symptoms. Inability to urinate, blood in the urine, recurrent infections, severe pain or concern about another condition require medical assessment.",
+    "legalNote": "Food supplements are not a substitute for a varied and balanced diet and a healthy lifestyle. Keep out of the reach of small children."
+  },
   "purpose": "NORDOPROST, 30 kapsula je dodatak ishrani na bazi ekstrakata polena raži (Secale cereale), ploda testeraste palme (Serenoa repens), korena make (Lepidium meyenii) i herbe vrbovice (Epilobium parviflorum).",
-  "regulatoryNote": ""
+  "regulatoryNote": "",
+  "metaTitle": "",
+  "metaDescription": ""
 }

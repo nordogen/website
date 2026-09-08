@@ -10,6 +10,7 @@ const TONE = {
 const PAD = {
   default: 'py-12 lg:py-[5.125rem]',
   band: 'py-11 lg:py-16',
+  product: 'py-11 lg:py-[4.5rem]',
 } as const
 
 export function Section({
@@ -26,7 +27,15 @@ export function Section({
   className?: string
 }) {
   return (
-    <section id={id} className={[TONE[tone], PAD[pad], className].filter(Boolean).join(' ')}>
+    <section
+      id={id}
+      /* An id means something links to it, and everything that links to it has
+         to clear the sticky header. Applied here rather than at each call site
+         because forgetting it looks like a scrolling bug, not a missing class. */
+      className={[TONE[tone], PAD[pad], id && 'section-anchor', className]
+        .filter(Boolean)
+        .join(' ')}
+    >
       <Container>{children}</Container>
     </section>
   )

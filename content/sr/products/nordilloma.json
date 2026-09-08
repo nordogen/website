@@ -1,12 +1,92 @@
 {
   "name": "Nordilloma",
   "order": 2,
-  "group": "HPV i zdravlje epitela",
-  "accent": "crimson",
+  "family": "gynaecology",
   "category": "supplement",
+  "group": "HPV i zdravlje epitela",
   "summary": "Podrška normalnom funkcionisanju ćelija i imunskog sistema",
-  "ingredients": "EGCG · Hijaluronska kiselina · Vitamin B12 · Folna kiselina",
-  "pack": "30 kapsula",
+  "hero": {
+    "subtitle": "Ciljana nutritivna podrška kod HPV infekcije i tokom perioda praćenja",
+    "intro": "Nordilloma kombinuje EGCG, hijaluronsku kiselinu, folnu kiselinu i vitamin B12 u formuli osmišljenoj kao podrška imunskom sistemu, normalnim ćelijskim procesima i zdravlju epitela.",
+    "dose": "1 do 2 kapsule dnevno",
+    "doseNote": "Ne uzimati na prazan želudac.",
+    "pack": "30 kapsula",
+    "duration": ""
+  },
+  "audience": {
+    "eyebrow": "Kome je namenjen",
+    "heading": "Jasno definisana namena, bez komplikovanja",
+    "body": "Namenjena je odraslim osobama sa HPV pozitivnim nalazom, uključujući one kod kojih se infekcija zadržava tokom vremena ili postoje blage epitelne promene koje se prate. Redovne kontrole ostaju osnovni deo praćenja HPV infekcije."
+  },
+  "benefits": {
+    "eyebrow": "Glavne prednosti",
+    "heading": "Šta formula pruža",
+    "items": [
+      {
+        "title": "Podrška imunskom sistemu",
+        "body": "Vitamin B12 i folat doprinose normalnoj funkciji imunskog sistema."
+      },
+      {
+        "title": "Normalni ćelijski procesi",
+        "body": "Vitamin B12 i folat imaju ulogu u procesu deobe ćelija, dok se EGCG istražuje zbog delovanja na procese relevantne za HPV."
+      },
+      {
+        "title": "Podrška epitelu",
+        "body": "Hijaluronska kiselina je prirodna komponenta vezivnog i epitelnog tkiva i uključena je u formulu kao podrška hidrataciji i očuvanju tkiva."
+      }
+    ]
+  },
+  "formula": {
+    "eyebrow": "Formula",
+    "heading": "Različite uloge, jedan jasan cilj",
+    "intro": "HPV infekcija je veoma česta i kod većine ljudi prolazi spontano. Kada se infekcija zadržava, posebno je važno redovno praćenje. Nordilloma je osmišljena kao dodatna nutritivna podrška kroz četiri komponente koje imaju različite uloge: antioksidativnu, imunološku, nutritivnu i podršku epitelu.",
+    "calloutLabel": "Zašto ova kombinacija",
+    "calloutBody": "Formula objedinjuje četiri sastojka sa različitim ulogama umesto da se oslanja na samo jednu komponentu. EGCG pruža polifenolnu i antioksidativnu osnovu, folat i vitamin B12 podržavaju imunski sistem i deobu ćelija, a hijaluronska kiselina dodaje komponentu usmerenu na epitelno tkivo."
+  },
+  "ingredients": {
+    "eyebrow": "Aktivni sastojci",
+    "heading": "Sastav i uloga svake komponente",
+    "items": [
+      {
+        "name": "EGCG",
+        "amount": "150 mg po kapsuli",
+        "role": "95% standardizovani ekstrakt zelenog čaja. EGCG se istražuje u vezi sa HPV-pozitivnim ćelijama, ćelijskom proliferacijom i antivirusnim odgovorom."
+      },
+      {
+        "name": "Hijaluronska kiselina",
+        "amount": "50 mg po kapsuli",
+        "role": "Prirodna komponenta ekstracelularnog matriksa. U formuli ima ulogu podrške hidrataciji i očuvanju normalne strukture epitelnog tkiva."
+      },
+      {
+        "name": "Vitamin B12",
+        "amount": "250 µg po kapsuli",
+        "role": "Doprinosi normalnoj funkciji imunskog sistema i ima ulogu u procesu deobe ćelija."
+      },
+      {
+        "name": "Folna kiselina",
+        "amount": "200 µg po kapsuli",
+        "role": "Doprinosi normalnoj funkciji imunskog sistema, deobi ćelija, sintezi aminokiselina i normalnom stvaranju krvi."
+      }
+    ]
+  },
+  "useCases": {
+    "eyebrow": "Kada se može koristiti",
+    "heading": "Praktične situacije za primenu",
+    "items": [
+      "Kod HPV pozitivnog nalaza uz redovno praćenje",
+      "Kod perzistentnog HPV nalaza, kao dodatna nutritivna podrška",
+      "Kod blagih promena na grliću materice (LSIL/CIN1) kada je prema proceni lekara odabrano praćenje",
+      "Nakon lokalnog tretmana HPV promena, uz nastavak redovnih kontrola"
+    ]
+  },
+  "notes": {
+    "eyebrow": "Važne napomene",
+    "heading": "Bezbedna i odgovorna primena",
+    "warnings": "Preporučena dnevna doza se ne sme prekoračiti. Ne konzumirati više od 300 mg EGCG dnevno i ne koristiti istog dana druge proizvode koji sadrže zeleni čaj. Proizvod nije namenjen trudnicama, dojiljama i osobama mlađim od 18 godina. Nordilloma ne zamenjuje HPV vakcinaciju, Papa test, HPV tipizaciju, kolposkopiju niti druge preglede i tretmane koje preporuči lekar.",
+    "legalNote": "Dodaci ishrani nisu zamena za raznovrsnu i uravnoteženu ishranu i zdrav način života. Čuvati van domašaja male dece."
+  },
   "purpose": "NORDILLOMA je dodatak ishrani na bazi ekstrakta lista zelenog čaja, hijaluronske kiseline, vitamina B12 i folne kiseline.",
-  "regulatoryNote": ""
+  "regulatoryNote": "",
+  "metaTitle": "",
+  "metaDescription": ""
 }

@@ -23,6 +23,14 @@ type Chrome = {
   footerLegalHeading: string
   companyLinks: { hash: string; label: string }[]
   legalLinks: string[]
+  breadcrumbHome: string
+  relatedHeading: string
+  /** Short labels for the on-page nav. Kept apart from the section headings,
+      which are authored per product and far too long for a single row. */
+  toc: Record<ProductSection, string>
+  tocLabel: string
+  breadcrumbLabel: string
+  spec: { dose: string; pack: string; duration: string }
 }
 
 export const UI: Record<Locale, Chrome> = {
@@ -44,6 +52,18 @@ export const UI: Record<Locale, Chrome> = {
       { hash: '#kontakt', label: 'Kontakt' },
     ],
     legalLinks: ['Politika privatnosti', 'Uslovi korišćenja'],
+    breadcrumbHome: 'Početna',
+    relatedHeading: 'Iz iste grupe',
+    toc: {
+      audience: 'Kome je namenjen',
+      benefits: 'Prednosti',
+      formula: 'Formula',
+      ingredients: 'Sastav',
+      useCases: 'Praktična primena',
+    },
+    tocLabel: 'Na ovoj strani',
+    breadcrumbLabel: 'Putanja',
+    spec: { dose: 'Doziranje', pack: 'Pakovanje', duration: 'Trajanje' },
   },
   en: {
     skipToContent: 'Skip to content',
@@ -63,6 +83,18 @@ export const UI: Record<Locale, Chrome> = {
       { hash: '#kontakt', label: 'Contact' },
     ],
     legalLinks: ['Privacy policy', 'Terms of use'],
+    breadcrumbHome: 'Home',
+    relatedHeading: 'More in this range',
+    toc: {
+      audience: 'Who it is for',
+      benefits: 'Benefits',
+      formula: 'Formula',
+      ingredients: 'Ingredients',
+      useCases: 'How to use',
+    },
+    tocLabel: 'On this page',
+    breadcrumbLabel: 'Breadcrumb',
+    spec: { dose: 'Dosage', pack: 'Pack size', duration: 'Duration' },
   },
 }
 
@@ -72,3 +104,20 @@ export const SECTION_ID = {
   why: 'zasto',
   contact: 'kontakt',
 } as const
+
+/**
+ * The product page's own sections, in the order the on-page nav lists them.
+ * Benefits and use cases are optional per product, so the nav is built from
+ * the sections that actually render — never from a stored link list.
+ */
+export const PRODUCT_SECTION_ID = {
+  audience: 'namena',
+  benefits: 'prednosti',
+  formula: 'formula',
+  ingredients: 'sastav',
+  useCases: 'primena',
+} as const
+
+export type ProductSection = keyof typeof PRODUCT_SECTION_ID
+
+export const PRODUCT_SECTIONS = Object.keys(PRODUCT_SECTION_ID) as ProductSection[]
