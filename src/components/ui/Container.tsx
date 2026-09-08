@@ -6,7 +6,11 @@ export function Container({
   className?: string
 }) {
   return (
-    <div className={['mx-auto w-full max-w-6xl px-5 sm:px-6 lg:px-8', className].filter(Boolean).join(' ')}>
+    <div
+      className={['mx-auto w-full max-w-[1240px] px-5 lg:px-14', className]
+        .filter(Boolean)
+        .join(' ')}
+    >
       {children}
     </div>
   )

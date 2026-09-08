@@ -1,18 +1,15 @@
 import Link from 'next/link'
-import { LOCALES, type Locale } from '@/i18n/locales'
+import type { Locale } from '@/i18n/locales'
+import { UI } from '@/i18n/ui'
 
+/** EN first, SR second, as drawn. */
+const ORDER: Locale[] = ['en', 'sr']
 const LABEL: Record<Locale, string> = { sr: 'SR', en: 'EN' }
 
-export function LanguageSwitcher({
-  locale,
-  path,
-}: {
-  locale: Locale
-  path: string
-}) {
+export function LanguageSwitcher({ locale, path = '' }: { locale: Locale; path?: string }) {
   return (
-    <div className="flex items-center gap-1">
-      {LOCALES.map((target) => {
+    <div className="flex items-center" aria-label={UI[locale].languageLabel}>
+      {ORDER.map((target) => {
         const active = target === locale
         return (
           <Link
@@ -20,12 +17,21 @@ export function LanguageSwitcher({
             href={`/${target}${path}`}
             hrefLang={target}
             aria-current={active ? 'true' : undefined}
-            className={[
-              'inline-flex min-h-11 min-w-11 items-center justify-center rounded-full px-3 text-sm font-medium',
-              active ? 'bg-brand-teal text-white' : 'text-brand-teal hover:bg-brand-blue-tint/40',
-            ].join(' ')}
+            /* A full 44x44 target — "EN" alone is barely 20px wide. The box
+               carries the size, the inner span carries the underline, so the
+               rule still hugs the text. The parent has no gap because these
+               boxes already hold the spacing the artboards draw. */
+            className="inline-flex min-h-11 min-w-11 items-center justify-center text-[0.8125rem] font-semibold"
           >
-            {LABEL[target]}
+            <span
+              className={
+                active
+                  ? 'border-b-2 border-accent pb-0.5 text-ink'
+                  : 'border-b-2 border-transparent pb-0.5 text-inactive hover:text-ink'
+              }
+            >
+              {LABEL[target]}
+            </span>
           </Link>
         )
       })}

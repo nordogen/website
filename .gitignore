@@ -16,5 +16,9 @@ playwright-report/
 /data/
 /logos/
 
+# Design handoff: artboards, PNG exports and the unoptimised source images.
+# Everything the site needs is already extracted into public/ and content/.
+/design/
+
 # Superseded by docs/superpowers/specs/ — kept locally for reference only
 /bolt-prompt.md

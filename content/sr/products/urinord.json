@@ -1,0 +1,12 @@
+{
+  "name": "Urinord",
+  "order": 6,
+  "group": "Urinarni trakt",
+  "accent": "blue",
+  "category": "fsmp",
+  "summary": "Podrška zdravlju urinarnog trakta",
+  "ingredients": "D-manoza · Kleka · Kukuruzna svila",
+  "pack": "10 kesica",
+  "purpose": "URINORD je dijetetski proizvod - hrana za posebne medicinske namene za potrebe ishrane osoba sa infekcijom urinarnog trakta izazvanih bakterijom E. Coli kao i za očuvanje normalne funkcije urinarnog trakta.",
+  "regulatoryNote": "Proizvod mora da se koristi pod medicinskim nadzorom. Proizvod predstavlja nutritivno nepotpunu namirnicu i nije pogodan za upotrebu kao jedini izvor hrane za osobe kojima je namenjen."
+}
