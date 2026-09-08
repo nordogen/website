@@ -158,7 +158,15 @@ export default async function ProductPage({
 
             <IngredientPills names={product.ingredients.items.map((item) => item.name)} />
 
-            <div className="grid grid-cols-3 gap-3 border-y border-ink/12 py-[18px] lg:flex lg:gap-9 lg:py-[22px]">
+            {/* Equal columns across the full width at every size, and two
+                columns when a product has no duration — a fixed three-column
+                grid left a dead cell there, and a left-packed flex row left
+                dead space to the right of all three. */}
+            <div
+              className={`grid gap-3 border-y border-ink/12 py-[18px] lg:gap-9 lg:py-[22px] ${
+                spec.length === 2 ? 'grid-cols-2' : 'grid-cols-3'
+              }`}
+            >
               {spec.map((cell) => (
                 <div key={cell.label}>
                   <div className="mb-1 text-[0.875rem] text-muted">{cell.label}</div>

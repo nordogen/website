@@ -15,10 +15,28 @@ export type TocItem = { id: string; label: string }
  * the highlight pointing at the wrong section.
  */
 export function ProductToc({ items, label }: { items: TocItem[]; label: string }) {
-  const [activeId, setActiveId] = useState<string | null>(items[0]?.id ?? null)
+  const [isDesktop, setIsDesktop] = useState(false)
+  const [activeId, setActiveId] = useState<string | null>(null)
   const barRef = useRef<HTMLDivElement>(null)
 
+  // Only desktop pins this bar, so only desktop can show "you are here". On
+  // mobile the bar has scrolled out of sight long before the highlight would
+  // move, and a stale highlight is worse than none — including for a screen
+  // reader, which would still hear `aria-current`.
   useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 64rem)')
+    const sync = () => setIsDesktop(desktop.matches)
+    sync()
+    desktop.addEventListener('change', sync)
+    return () => desktop.removeEventListener('change', sync)
+  }, [])
+
+  useEffect(() => {
+    if (!isDesktop) {
+      setActiveId(null)
+      return
+    }
+
     const offset = () => {
       const styles = getComputedStyle(document.documentElement)
       const read = (name: string) => parseFloat(styles.getPropertyValue(name)) || 0
@@ -42,7 +60,7 @@ export function ProductToc({ items, label }: { items: TocItem[]; label: string }
     )
     for (const section of sections) observer.observe(section)
     return () => observer.disconnect()
-  }, [items])
+  }, [items, isDesktop])
 
   return (
     <div

@@ -77,9 +77,20 @@ says where you are.
 plus `scroll-behavior: smooth`, which the global reduced-motion block turns back into a jump.
 The client component exists only to highlight the section in view.
 
-**It sticks on desktop only.** Five stacked 44px rows pinned under the header would eat a third
-of a 375px viewport, so on mobile the bar scrolls away with the page — which is also why
-`--toc-height` is `0` there and mobile anchors offset for the header alone.
+**It sticks on desktop only, and only desktop shows a highlight.** Five stacked 44px rows
+pinned under the header would eat a third of a 375px viewport, so on mobile the bar scrolls away
+with the page — which is also why `--toc-height` is `0` there and mobile anchors offset for the
+header alone. The highlight follows: the bar is long out of sight before the active section
+would change, so on mobile nothing is marked and no `aria-current` is set. The component watches
+`matchMedia('(min-width: 64rem)')` and clears the active id below it.
+
+Nothing is highlighted at the very top of the page either, at any width. The first section has
+not crossed the band yet, and saying otherwise would be a guess.
+
+**The spec row shares the full width.** The artboards left-pack the three cells with 36px gaps,
+which leaves dead space to their right, and a fixed three-column grid leaves a dead *cell* on
+the products with no duration. It is equal columns across the full width instead — three, or two
+when `hero.duration` is empty.
 
 ## The two CSS variables
 
