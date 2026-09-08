@@ -219,9 +219,15 @@ must stay byte-identical:
 Dodaci ishrani nisu zamena za raznovrsnu i uravnoteženu ishranu i zdrav način života.
 ```
 
-It carries **no** `[REVIEW]` marker because it is established regulatory text. In the `en`
-file the field holds the English rendering *followed by* the Serbian original — intentional,
-since the Serbian wording is the legally binding one.
+It carries **no** `[REVIEW]` marker because it is established regulatory text. The Serbian
+wording above is the legally binding one and must appear on the Serbian pages byte-identical.
+
+**The English pages carry the English rendering alone.** They used to append the Serbian
+original after a slash; the client asked for English only on 2026-09-08. The same goes for each
+product's `notes.legalNote`, which is the same statement plus "Keep out of the reach of small
+children" (and the food-for-special-medical-purposes wording on Urinord). Do not re-append the
+Serbian — and note the consequence: the binding Serbian text is now reachable only via the
+Serbian pages.
 
 **Copy has two sources, and they rank.** `design/copy/index.html` is the client's own
 bilingual copy and wins wherever a slot clearly matches — it is why the hero, the products
