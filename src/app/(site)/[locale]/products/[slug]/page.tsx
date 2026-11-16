@@ -16,6 +16,7 @@ import {
   getSettings,
   type Product,
 } from '@/content/queries'
+import { productBoxSrc, productSceneSrc } from '@/content/product-images'
 import { LOCALES, isLocale, type Locale } from '@/i18n/locales'
 import { PRODUCT_SECTION_ID, SECTION_ID, UI } from '@/i18n/ui'
 import { absoluteUrl } from '@/i18n/urls'
@@ -158,19 +159,21 @@ export default async function ProductPage({
       {/* Hero. Mobile puts the panel above the copy as a full-width band. */}
       <div className="flex flex-col bg-panel lg:bg-transparent">
         <Container className="lg:grid lg:grid-cols-[1fr_1.05fr] lg:items-start lg:gap-14 lg:py-16 lg:pb-[3.75rem]">
-          <div className="-mx-5 flex items-center justify-center bg-panel px-5 py-8 lg:mx-0 lg:min-h-[480px] lg:rounded-card lg:p-12">
+          {/* The pharmacy scene fills the panel edge to edge: an opaque photo,
+              cropped 4:5 at source. On mobile it is a full-bleed band above
+              the copy; on desktop a rounded card beside it. */}
+          <div className="relative -mx-5 aspect-[4/5] overflow-hidden bg-panel lg:mx-0 lg:rounded-card">
             <Image
-              src={`/products/${product.slug}.webp`}
+              src={productSceneSrc(product.slug)}
               /* The one product image that is the subject of its page rather
                  than decoration beside a heading, so it carries real alt text
                  for image search. Card and related-product thumbs stay empty. */
               alt={`${product.name}, ${product.hero.pack}`}
-              width={900}
-              height={900}
+              fill
               priority
               fetchPriority="high"
-              sizes="(min-width: 1024px) 560px, 82vw"
-              className="max-h-[300px] w-auto max-w-[82%] object-contain lg:max-h-[440px] lg:max-w-full"
+              sizes="(min-width: 1024px) 560px, 100vw"
+              className="object-cover"
             />
           </div>
 
@@ -406,7 +409,7 @@ function RelatedCard({ product, locale }: { product: Product; locale: Locale }) 
       className="flex h-full items-center gap-4 rounded-card border border-ink/12 bg-white p-4 transition-colors duration-[140ms] ease-out hover:border-accent lg:gap-[18px] lg:p-5"
     >
       <Image
-        src={`/products/${product.slug}.webp`}
+        src={productBoxSrc(product.slug)}
         alt=""
         width={96}
         height={96}

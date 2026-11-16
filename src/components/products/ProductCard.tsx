@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { Product } from '@/content/queries'
 import type { Locale } from '@/i18n/locales'
+import { productBoxSrc } from '@/content/product-images'
 import { IngredientPills } from './IngredientPills'
 
 /**
@@ -30,7 +31,7 @@ export function ProductCard({ product, locale }: { product: Product; locale: Loc
 
       <div className="relative h-[180px] bg-well lg:h-[210px]">
         <Image
-          src={`/products/${product.slug}.webp`}
+          src={productBoxSrc(product.slug)}
           /* Decorative: the product name is the adjacent heading, so alt text
              here would just make a screen reader say it twice. */
           alt=""

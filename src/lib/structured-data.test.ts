@@ -1,6 +1,7 @@
 import { readFileSync, readdirSync } from 'node:fs'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { repoPath } from '@/test/paths'
+import { productBoxSrc } from '@/content/product-images'
 
 const ORIGIN = 'https://www.nordogen.com'
 
@@ -65,7 +66,7 @@ describe('product structured data', () => {
     for (const slug of SLUGS) {
       const n = await node(slug)
       expect(n.url).toBe(`${ORIGIN}/sr/products/${slug}`)
-      expect(n.image).toBe(`${ORIGIN}/products/${slug}.webp`)
+      expect(n.image).toBe(`${ORIGIN}${productBoxSrc(slug)}`)
     }
   })
 

@@ -1,5 +1,6 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
+import { productBoxSrc, productSceneSrc } from '@/content/product-images'
 import { LOCALES, type Locale } from '@/i18n/locales'
 import { repoPath } from '@/test/paths'
 
@@ -35,10 +36,13 @@ describe('product content', () => {
     for (const locale of LOCALES) expect(slugsIn(locale)).toEqual(SLUGS)
   })
 
-  it('ships a photo for every slug', () => {
-    // The photo is derived from the slug rather than stored as a CMS field, so
-    // a renamed product silently loses its image unless this holds.
-    for (const slug of SLUGS) expect(existsSync(repoPath(`public/products/${slug}.webp`)), slug).toBe(true)
+  it('ships both photos for every slug', () => {
+    // The photos are derived from the slug rather than stored as CMS fields, so
+    // a renamed product silently loses its images unless this holds.
+    for (const slug of SLUGS) {
+      expect(existsSync(repoPath(`public${productBoxSrc(slug)}`)), `${slug} box`).toBe(true)
+      expect(existsSync(repoPath(`public${productSceneSrc(slug)}`)), `${slug} scene`).toBe(true)
+    }
   })
 
   it('keeps name, order, family and category identical across locales', () => {
