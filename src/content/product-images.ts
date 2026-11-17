@@ -7,12 +7,11 @@
  * - The **scene** is the box on a pharmacy counter, opaque, cropped 4:5: the
  *   product page hero.
  *
- * The directory is versioned on purpose. `next/image` caches its optimised
- * output by URL, not by content, and so do browsers and the CDN — replace a
- * picture at the same path and the old one keeps being served. When the photos
- * change, put them in a new directory and change it here, once.
+ * Paths are flat and unversioned by choice. `next/image`, browsers and the CDN
+ * cache by URL, not by content, so a picture replaced at the same path can keep
+ * showing the old one for a while after deploy — accepted for simplicity.
  */
-const PHOTO_DIR = '/products/2026-11-v2'
+const PHOTO_DIR = '/products'
 
 export function productBoxSrc(slug: string): string {
   return `${PHOTO_DIR}/${slug}.webp`

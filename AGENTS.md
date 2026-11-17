@@ -139,9 +139,9 @@ ingredient cards.
 scene, for the product page hero) in `src/content/product-images.ts`. They are identical in both
 locales, and a per-locale image field is a per-locale way to get them out of sync.
 `src/content/products.test.ts` asserts every slug has both files, so a rename cannot silently
-blank a card or a hero. **The photo directory is versioned** (`public/products/2026-11-v2/`): when
-the photos change, add a new directory and change `PHOTO_DIR` — never overwrite in place (see
-the image-cache trap under Verification).
+blank a card or a hero. Paths are flat (`public/products/<slug>.webp`,
+`<slug>-pharmacy.webp`) and unversioned by choice: a photo replaced in place may show stale for a
+while after deploy (see the image-cache trap under Verification).
 
 Queries **throw** on missing content rather than returning empty strings, so a missing file
 is a build error instead of a page of silent blanks. Keep that posture.
@@ -291,11 +291,11 @@ scrolling bug and is really an arithmetic one. Measure both after any change to 
 
 **Replacing an image file does not change what a screenshot shows.** `next/image` caches
 optimised output in `.next/cache/images` keyed by URL, not by content, and the browser caches on
-top of that. Swap `public/products/2026-11-v2/myonord.webp` for a different picture at the same path and two
+top of that. Swap `public/products/myonord.webp` for a different picture at the same path and two
 consecutive verification passes will keep showing the old one — which reads exactly like "the new
 asset is wrong". Delete `.next/cache/images` **and** drive Chrome with
-`Network.setCacheDisabled`. The same staleness can outlive a deployment, so bump the path when an
-image changes meaningfully.
+`Network.setCacheDisabled`. The same staleness can outlive a deployment; product photos
+deliberately accept that rather than versioning their paths.
 
 **A screenshot proves pixels, not markup.** `/keystatic` rendered a perfect-looking admin UI
 while serving no `<html>` or `<body>` at all.
@@ -337,8 +337,8 @@ Everything the repo actually needs from them is already extracted and tracked:
 - `public/brand/logo-mark.svg`, `logo-wordmark.svg` — the generated logo assets
 - `public/brand/favicon-source.png` and `src/app/icon.png` — from `logos/nordogen1.png`
 - `public/images/hero.jpg`, `lab.jpg` — resized to 1920w, mozjpeg q78
-- `public/products/2026-11-v2/<slug>.webp` — the six box cutouts, longest side 900px, q82
-- `public/products/2026-11-v2/<slug>-pharmacy.webp` — the six pharmacy scenes, centre-cropped to
+- `public/products/<slug>.webp` — the six box cutouts, longest side 900px, q82
+- `public/products/<slug>-pharmacy.webp` — the six pharmacy scenes, centre-cropped to
   4:5 at 1000×1250, q80. Source PNGs (~2 MB each) came from the client in Nov 2026 and are not
   in the repo; do not commit them.
 
@@ -355,20 +355,13 @@ The logo tagline is **live text**, not paths, so it localises (`UROLOGIJA • GI
 REGENERACIJA` / `UROLOGY • GYNECOLOGY • REGENERATION`).
 
 **There is photography now** — this reverses the pre-redesign rule. Two art-directed stills
-(`public/images/hero.jpg`, `lab.jpg`) plus six product box cutouts and six pharmacy scenes (`public/products/2026-11-v2/`).
+(`public/images/hero.jpg`, `lab.jpg`) plus six product box cutouts and six pharmacy scenes (`public/products/`).
 
 The renders are **background-removed cutouts with a real alpha channel**, so they need no blend
 mode and sit correctly on any ground. The handoff's originals were shot on a light grey backdrop
 and the artboards masked that with `mix-blend-mode: multiply`, which does not remove grey — it
 leaves a visible rectangle and darkens the packaging colour. If a new product photo ever shows a
 box in a tinted rectangle, it is an opaque render and needs cutting out, not a blend mode.
-
-**Cutout status (Nov 2026).** Myonord, Nordilloma and Renord are the designer's v2 re-exports:
-clean alpha, and Myonord/Nordilloma carry a deliberate floor reflection. Their box alpha came
-out at 252–253 rather than 255, so the conversion snaps alpha ≥ 250 to fully opaque. Litonord,
-Nordoprost and Urinord are still the first export, with a semi-transparent white haze under
-the box that shows in the home card well — accepted pending the designer. Ship replacements into
-a new versioned directory, not over these.
 
 `ArcMotif` is no longer used anywhere. Still no emoji and no icon fonts.
 
