@@ -1,6 +1,7 @@
 import type { Locale } from '@/i18n/locales'
 import { SITE_ORIGIN, absoluteUrl } from '@/i18n/urls'
 import { SITE_NAME } from './seo'
+import { productBoxSrc } from '@/content/product-images'
 import type { Product } from '@/content/queries'
 import type { getSettings } from '@/content/queries'
 
@@ -109,7 +110,7 @@ export function productNode({
   const shared: Node = {
     name: product.name,
     url: absoluteUrl(locale, `/products/${product.slug}`),
-    image: `${SITE_ORIGIN}/products/${product.slug}.webp`,
+    image: `${SITE_ORIGIN}${productBoxSrc(product.slug)}`,
     description: product.hero.intro,
     brand: { '@id': ORGANIZATION_ID },
     manufacturer: { '@type': 'Organization', name: settings.manufacturer },

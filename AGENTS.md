@@ -134,10 +134,14 @@ array is empty**, taking their band and their on-page-nav entry with them. `ingr
 feeds three things at once: the pills on the home card, the pills in the product hero, and the
 ingredient cards.
 
-**A product's photo is derived from its slug** (`public/products/<slug>.webp`), not stored as a
-CMS image field. The photo is identical in both locales, and a per-locale image field is a
-per-locale way to get them out of sync. `src/content/products.test.ts` asserts every slug has a
-file, so a rename cannot silently blank a card.
+**A product's two photos are derived from its slug**, not stored as CMS image fields:
+`productBoxSrc` (the cutout, for cards and structured data) and `productSceneSrc` (the pharmacy
+scene, for the product page hero) in `src/content/product-images.ts`. They are identical in both
+locales, and a per-locale image field is a per-locale way to get them out of sync.
+`src/content/products.test.ts` asserts every slug has both files, so a rename cannot silently
+blank a card or a hero. Paths are flat (`public/products/<slug>.webp`,
+`<slug>-pharmacy.webp`) and unversioned by choice: a photo replaced in place may show stale for a
+while after deploy (see the image-cache trap under Verification).
 
 Queries **throw** on missing content rather than returning empty strings, so a missing file
 is a build error instead of a page of silent blanks. Keep that posture.
@@ -149,7 +153,7 @@ Write them for that reader.
 
 **Colour.** The full palette is the `@theme` block in `src/app/globals.css` and nothing else.
 Surfaces `paper` `#FCFCFA`, `soft` `#F6F5F1`, `well` `#F4F3EF`, `panel` `#EEF2F4` (the product
-page's hero panel), `white`. Text `ink` `#14201F`,
+page's hero, behind the photo while it loads), `white`. Text `ink` `#14201F`,
 `ink-soft` `#41504E`, `muted` `#5F6C6A`, `nav` `#3D4A49`, `inactive` `#647371`, `on-ink`
 `#A7B4B3`. Accent `accent` `#2E7391`, `accent-light` `#7FB4C9`. Per-product `product-blue`
 `#4C88A8`, `product-teal` `#0F4249`, `product-crimson` `#8E2A3E`, plus `badge-blue` `#3A6E88`.
@@ -290,8 +294,8 @@ optimised output in `.next/cache/images` keyed by URL, not by content, and the b
 top of that. Swap `public/products/myonord.webp` for a different picture at the same path and two
 consecutive verification passes will keep showing the old one — which reads exactly like "the new
 asset is wrong". Delete `.next/cache/images` **and** drive Chrome with
-`Network.setCacheDisabled`. The same staleness can outlive a deployment, so bump the path when an
-image changes meaningfully.
+`Network.setCacheDisabled`. The same staleness can outlive a deployment; product photos
+deliberately accept that rather than versioning their paths.
 
 **A screenshot proves pixels, not markup.** `/keystatic` rendered a perfect-looking admin UI
 while serving no `<html>` or `<body>` at all.
@@ -333,8 +337,10 @@ Everything the repo actually needs from them is already extracted and tracked:
 - `public/brand/logo-mark.svg`, `logo-wordmark.svg` — the generated logo assets
 - `public/brand/favicon-source.png` and `src/app/icon.png` — from `logos/nordogen1.png`
 - `public/images/hero.jpg`, `lab.jpg` — resized to 1920w, mozjpeg q78
-- `public/products/<slug>.webp` — the six renders at 900px, q82. 12 MB of source PNGs became
-  ~240 KB; do not commit the originals back.
+- `public/products/<slug>.webp` — the six box cutouts, longest side 900px, q82
+- `public/products/<slug>-pharmacy.webp` — the six pharmacy scenes, centre-cropped to
+  4:5 at 1000×1250, q80. Source PNGs (~2 MB each) came from the client in Nov 2026 and are not
+  in the repo; do not commit them.
 
 The one consequence: `scripts/extract-logo.mjs` reads `data/nordogen logo 1 v1.pdf`, so it
 cannot run on a checkout without `data/`. That only matters if the logo artwork changes; the
@@ -349,7 +355,7 @@ The logo tagline is **live text**, not paths, so it localises (`UROLOGIJA • GI
 REGENERACIJA` / `UROLOGY • GYNECOLOGY • REGENERATION`).
 
 **There is photography now** — this reverses the pre-redesign rule. Two art-directed stills
-(`public/images/hero.jpg`, `lab.jpg`) plus six product box renders (`public/products/*.webp`).
+(`public/images/hero.jpg`, `lab.jpg`) plus six product box cutouts and six pharmacy scenes (`public/products/`).
 
 The renders are **background-removed cutouts with a real alpha channel**, so they need no blend
 mode and sit correctly on any ground. The handoff's originals were shot on a light grey backdrop

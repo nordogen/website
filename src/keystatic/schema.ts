@@ -97,10 +97,10 @@ export function homeSchema() {
  * One product, in one locale — the card on the home page and the whole product
  * page behind it.
  *
- * The file name is the slug, and the slug is also the product photo:
- * `public/products/<slug>.webp`. The photo is deliberately not a CMS field — it
- * is identical in both locales, and a per-locale image field is a per-locale
- * way to get them out of sync.
+ * The file name is the slug, and the slug also names the product's two photos
+ * (see `src/content/product-images.ts`). The photos are deliberately not CMS
+ * fields — they are identical in both locales, and a per-locale image field is
+ * a per-locale way to get them out of sync.
  */
 export function productSchema() {
   return {
@@ -109,7 +109,7 @@ export function productSchema() {
       slug: {
         label: 'File name and photo',
         description:
-          'Lowercase, no spaces. Must match the photo in public/products, e.g. “myonord” for myonord.webp.',
+          'Lowercase, no spaces. Must match the product photos, e.g. “myonord” for myonord.webp and myonord-pharmacy.webp. Ask a developer before changing it.',
       },
     }),
     order: fields.integer({

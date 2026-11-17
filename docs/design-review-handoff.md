@@ -107,6 +107,7 @@ Each was reviewed and parked with a ruling rather than fixed.
 | Duplicated className strings; three different composition styles | Cheap now, worth a shared `cn()` before more pages |
 | `localePath()` helper missing — `` `/${locale}/…` `` hand-built at 12 sites | Same root cause as the switcher issue |
 | Logo SVG inlined 4× per page (~27KB of 83KB HTML, 10.9KB gzipped) | A `<symbol>`/`<use>` sprite would recover the spec's intent |
+| Pharmacy hero scenes are AI-generated and show a background pharmacist | Client-supplied; flag if a real-person likeness or a pharmacy's branding ever appears |
 
 ## Before the first Vercel deploy
 
