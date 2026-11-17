@@ -12,7 +12,7 @@
  * picture at the same path and the old one keeps being served. When the photos
  * change, put them in a new directory and change it here, once.
  */
-const PHOTO_DIR = '/products/2026-11'
+const PHOTO_DIR = '/products/2026-11-v2'
 
 export function productBoxSrc(slug: string): string {
   return `${PHOTO_DIR}/${slug}.webp`
